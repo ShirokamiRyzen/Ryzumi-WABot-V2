@@ -8,6 +8,7 @@ import botHandler from './middlewares/handler.js';
 import { extractMessageData } from './libs/adapter/messageAdapter.js';
 import { logMessage } from './libs/console.js';
 import fs from 'fs';
+import { startCronJobs } from './libs/cronjob.js';
 
 // Pastikan inisialisasi database hanya berjalan sekali di luar loop agar tidak memanggil berkali-kali saat reconnect
 let isDbConnected = false;
@@ -22,6 +23,9 @@ async function connectToWhatsApp() {
             await sequelize.sync({ alter: true });
             console.log('✅ Database berhasil di-synchronize (Migrations selesai).');
             isDbConnected = true;
+            
+            // Inisialisasi jadwal Cron (Reset limit harian dll)
+            startCronJobs();
         } catch (error) {
             console.error('❌ Gagal menghubungkan ke database:', error.message);
             return;
