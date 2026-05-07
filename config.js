@@ -32,6 +32,10 @@ const config = {
   // API Service
   API_RYZUMI: process.env.API_RYZUMI,
 
+  // Image Link
+  RYZUMI_DEFAULT_PP: process.env.RYZUMI_DEFAULT_PP,
+  RYZUMI_BANNER: process.env.RYZUMI_BANNER,
+
   // Ryzumi Message
   RYZUMI_MSG_REGISTER: process.env.RYZUMI_MSG_REGISTER,
   RYZUMI_MSG_DISABLE: process.env.RYZUMI_MSG_DISABLE,

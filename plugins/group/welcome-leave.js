@@ -5,7 +5,7 @@ import { resolveLidToJid } from '../../libs/lid-resolver.js';
 
 export default {
     category: 'group',
-    description: 'Menangani pesan selamat datang dan selamat tinggal',
+    description: 'Menangani pesan selamat datang dan selamat tinggal dengan gaya Moe (˶˃ ᵕ ˂˶)',
     async onParticipantsUpdate(sock, { id, participants, action }) {
         try {
             const group = await Group.findOne({ where: { jid: id } });
@@ -18,41 +18,52 @@ export default {
                 if (!participant) continue;
                 
                 const resolvedJid = resolveLidToJid(participant);
-
-                let user = await User.findOne({ where: { jid: resolvedJid } });
+                const user = await User.findOne({ where: { jid: resolvedJid } });
+                
                 const username = user?.name || resolvedJid.split('@')[0];
                 const memberCount = metadata.participants.length;
             
+                // Ambil PP dengan fallback ke config
                 let ppUrl;
                 try {
                     ppUrl = await sock.profilePictureUrl(resolvedJid, 'image');
                 } catch {
-                    ppUrl = 'https://s3.ryzumi.net/administrator/ryzumi-perm/bot-whatsapp/default_pp.jpg';
+                    ppUrl = config.RYZUMI_DEFAULT_PP;
                 }
 
+                // Gunakan banner utama sebagai background
+                const bg = config.RYZUMI_BANNER;
+
                 if (action === 'add') {
-                    const bg = 'https://s3.ryzumi.net/administrator/ryzumi-perm/bot-whatsapp/welcome.jpg';
                     const apiUrl = `${config.API_RYZUMI}/api/image/welcome?username=${encodeURIComponent(username)}&group=${encodeURIComponent(metadata.subject)}&avatar=${encodeURIComponent(ppUrl)}&bg=${encodeURIComponent(bg)}&member=${memberCount}`;
                     
+                    const welcomeText = `Uwaaa! Selamat datang @${resolvedJid.split('@')[0]} di grup *${metadata.subject}*! (˶˃ ᵕ ˂˶)\n\n` +
+                        `Semoga kakak betah main di sini bareng kita semua yaa! Jangan lupa baca aturan grupnya kakak manis~ (๑>ᴗ<๑)`;
+
                     await sock.sendMessage(id, {
                         image: { url: apiUrl },
-                        caption: `Selamat datang @${resolvedJid.split('@')[0]} di ${metadata.subject}`
-                    }, { mentions: [resolvedJid] });
+                        caption: welcomeText,
+                        mentions: [resolvedJid]
+                    });
 
                 } else if (action === 'remove') {
-                    const bg = 'https://s3.ryzumi.net/administrator/ryzumi-perm/bot-whatsapp/goodbye.jpg';
                     const apiUrl = `${config.API_RYZUMI}/api/image/leave?username=${encodeURIComponent(username)}&group=${encodeURIComponent(metadata.subject)}&avatar=${encodeURIComponent(ppUrl)}&bg=${encodeURIComponent(bg)}&member=${memberCount}`;
+
+                    const leaveText = `Yahhh... Sayang sekali, Kakak @${resolvedJid.split('@')[0]} sudah meninggalkan grup.. (｡T ω T｡)\n\n` +
+                        `Selamat jalan ya kak, terima kasih sudah mampir! Ryzumi bakal kangen uwooo~ (╥﹏╥)`;
 
                     await sock.sendMessage(id, {
                         image: { url: apiUrl },
-                        caption: `Selamat tinggal @${resolvedJid.split('@')[0]}`
-                    }, { mentions: [resolvedJid] });
+                        caption: leaveText,
+                        mentions: [resolvedJid]
+                    });
                 }
             }
         } catch (error) {
             console.error('Welcome-Leave Error:', error);
+            // Hanya kirim log ke owner jika terjadi error fatal
             const ownerJid = config.OWNER_NUMBER.includes('@') ? config.OWNER_NUMBER : `${config.OWNER_NUMBER}@s.whatsapp.net`;
-            await sock.sendMessage(ownerJid, { text: `[CRITICAL ERROR] Welcome-Leave:\n\n${error.message}\n\nStack:\n${error.stack}` });
+            await sock.sendMessage(ownerJid, { text: `[CRITICAL ERROR] Welcome-Leave:\n\n${error.message}` }).catch(() => {});
         }
     }
 };

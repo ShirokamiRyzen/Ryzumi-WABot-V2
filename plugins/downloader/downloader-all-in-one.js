@@ -9,23 +9,23 @@ export default {
     description: 'Mengunduh media dari berbagai platform sosial media (All-In-One).',
     async execute(sock, m, msgData) {
         if (msgData.args.length === 0) {
-            return sock.sendMessage(msgData.remoteJid, { text: `Penggunaan: .${msgData.commandName} <url>` }, { quoted: m });
+            return sock.sendMessage(msgData.remoteJid, { text: `Kakak manis~ Cara pakainya: .${msgData.commandName} <url> yaa! (˶˃ ᵕ ˂˶)` }, { quoted: m });
         }
 
         const url = msgData.args[0];
 
-        await sock.sendMessage(msgData.remoteJid, { react: { text: 'WAIT', key: m.key } });
+        await sock.sendMessage(msgData.remoteJid, { react: { text: '⏳', key: m.key } });
 
         try {
             const response = await axios.get(`${config.API_RYZUMI}/api/downloader/all-in-one?url=${encodeURIComponent(url)}`);
             const data = response.data;
 
             if (!data || !data.medias || data.medias.length === 0) {
-                return sock.sendMessage(msgData.remoteJid, { text: 'Media tidak ditemukan atau link tidak valid.' }, { quoted: m });
+                return sock.sendMessage(msgData.remoteJid, { text: 'Aduuh, medianya nggak ketemu atau link-nya rusak kak.. Maafin aku yaa~ (╥﹏╥)' }, { quoted: m });
             }
 
             const { title, source, author, medias } = data;
-            const caption = `*${title || 'Deskripsi tidak ditemukan...'}*\n\n*Sumber:* ${source || 'Unknown'}\n*Pembuat:* ${author?.name || author?.username || 'Unknown'}`.trim();
+            const caption = `*${title || 'Gak ada deskripsinya kak...'}*\n\n*Asalnya dari:* ${source || 'Misterius'} (´･ᴗ･ \` )\n*Dibuat oleh:* ${author?.name || author?.username || 'Seseorang'} (๑>ᴗ<๑)`.trim();
 
             for (let i = 0; i < medias.length; i++) {
                 const media = medias[i];
@@ -51,15 +51,15 @@ export default {
                 }
             }
 
-            await sock.sendMessage(msgData.remoteJid, { react: { text: 'OK', key: m.key } });
+            await sock.sendMessage(msgData.remoteJid, { react: { text: '✅', key: m.key } });
 
         } catch (error) {
             console.error('All-In-One Downloader Error:', error);
 
-            await sock.sendMessage(msgData.remoteJid, { react: { text: 'ERROR', key: m.key } });
+            await sock.sendMessage(msgData.remoteJid, { react: { text: '❌', key: m.key } });
 
             const errMsg = error.response?.data?.message || error.message;
-            await sock.sendMessage(msgData.remoteJid, { text: `Terjadi kesalahan saat mengunduh: ${errMsg}` }, { quoted: m });
+            await sock.sendMessage(msgData.remoteJid, { text: `Uwaaa gawat! Ada error pas download: ${errMsg}.. Tolong dibantu kak~ (｡T ω T｡)` }, { quoted: m });
         }
     }
 };

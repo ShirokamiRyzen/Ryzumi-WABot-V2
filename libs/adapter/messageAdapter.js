@@ -59,7 +59,51 @@ export const extractMessageData = (m, sock) => {
         isMedia,
         mime,
         quotedMime,
+        isQuotedMedia,
+        mentions: contextInfo.mentionedJid || [],
         isAdmin: false, // Will be set in handler
+        
+        // Helper to parse target JID from various sources
+        parseTargetJid: () => {
+            let targetJid = null;
+            if (contextInfo.mentionedJid && contextInfo.mentionedJid.length > 0) {
+                targetJid = contextInfo.mentionedJid[0];
+            } else if (isQuoted) {
+                targetJid = contextInfo.participant || contextInfo.remoteJid;
+                if (quotedType === 'contactMessage') {
+                    const vcard = quotedMsg.contactMessage.vcard;
+                    if (vcard && vcard.includes('waid=')) {
+                        targetJid = vcard.split('waid=')[1].split(/[\n:]/)[0] + '@s.whatsapp.net';
+                    }
+                }
+            } else if (args[0]) {
+                let num = args[0].replace(/[^0-9]/g, '');
+                if (num.length >= 10) {
+                    targetJid = num + '@s.whatsapp.net';
+                }
+            }
+            return targetJid ? (targetJid.split(':')[0] + '@s.whatsapp.net') : null;
+        },
+
+        // Helper to download media from the current or quoted message
+        downloadMedia: async () => {
+            const q = isQuoted ? quotedMsg : msg;
+            const type = isQuoted ? quotedType : messageType;
+            if (!/image|video|audio|sticker|document/i.test(type)) return null;
+
+            const mediaType = type.replace('Message', '');
+            const stream = await import('@whiskeysockets/baileys').then(mod => mod.downloadContentFromMessage(
+                q[type] || q, 
+                mediaType === 'sticker' ? 'image' : mediaType
+            ));
+            
+            let buffer = Buffer.from([]);
+            for await (const chunk of stream) {
+                buffer = Buffer.concat([buffer, chunk]);
+            }
+            return buffer;
+        },
+
         reply: async (text) => sock.sendMessage(remoteJid, { text }, { quoted: m }),
         react: async (emoji) => sock.sendMessage(remoteJid, { react: { text: emoji, key: m.key } })
     };
