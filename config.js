@@ -5,7 +5,6 @@ const config = {
   // Bot Config
   BOT_NUMBER: process.env.BOT_NUMBER,
   OWNER_NUMBER: process.env.OWNER_NUMBER,
-  BOT_SESSION_NAME: process.env.BOT_SESSION_NAME,
   PORT: process.env.PORT,
 
   // Database Config
