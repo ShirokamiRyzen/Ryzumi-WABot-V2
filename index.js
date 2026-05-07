@@ -106,6 +106,15 @@ async function connectToWhatsApp() {
         // Limpahkan pesan masuk ke handler
         await botHandler(sock, m, msgData);
     });
+
+    sock.ev.on('group-participants.update', async (update) => {
+        const { plugins } = await import('./libs/hot-reload.js');
+        for (const plugin of plugins) {
+            if (plugin.onParticipantsUpdate) {
+                await plugin.onParticipantsUpdate(sock, update);
+            }
+        }
+    });
 }
 
 connectToWhatsApp();

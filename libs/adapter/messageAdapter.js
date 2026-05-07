@@ -5,13 +5,11 @@ export const extractMessageData = (m, sock) => {
     const isGroup = m.key.remoteJid.endsWith('@g.us');
     const rawRemoteJid = m.key.remoteJid;
     const fromMe = m.key.fromMe;
-
-    const remoteJid = isGroup ? rawRemoteJid : resolveLidToJid(rawRemoteJid);
+    const botJid = sock?.user?.id?.split(':')[0] + '@s.whatsapp.net';
 
     let rawSenderJid;
     if (fromMe) {
-        const botJid = sock?.user?.id?.split(':')[0] + '@s.whatsapp.net';
-        rawSenderJid = botJid || (isGroup ? (m.key.participant || rawRemoteJid) : rawRemoteJid);
+        rawSenderJid = botJid;
     } else {
         rawSenderJid = isGroup ? (m.key.participant || rawRemoteJid) : rawRemoteJid;
     }
@@ -41,6 +39,8 @@ export const extractMessageData = (m, sock) => {
     const isQuotedMedia = isQuoted && /imageMessage|videoMessage|audioMessage|stickerMessage|documentMessage/.test(quotedType);
     const quotedMime = isQuoted ? (quotedMsg[quotedType]?.mimetype || '') : '';
 
+    const remoteJid = resolveLidToJid(rawRemoteJid);
+
     return {
         isGroup,
         remoteJid,
@@ -58,8 +58,10 @@ export const extractMessageData = (m, sock) => {
         quotedType,
         isMedia,
         mime,
-        isQuotedMedia,
-        quotedMime
+        quotedMime,
+        isAdmin: false, // Will be set in handler
+        reply: async (text) => sock.sendMessage(remoteJid, { text }, { quoted: m }),
+        react: async (emoji) => sock.sendMessage(remoteJid, { react: { text: emoji, key: m.key } })
     };
 };
 
