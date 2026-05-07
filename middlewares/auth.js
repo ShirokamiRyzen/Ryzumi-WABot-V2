@@ -3,6 +3,11 @@ import Group from '../databases/orm/Group.js';
 import config from '../config.js';
 
 export const processAuth = async (sock, msgData) => {
+    // Jangan simpan grup atau status broadcast ke tabel User
+    if (msgData.senderJid.endsWith('@g.us') || msgData.senderJid === 'status@broadcast') {
+        return { is_registered: false, is_premium: false, is_banned: false, limit: 0 };
+    }
+
     const [user] = await User.findOrCreate({
         where: { jid: msgData.senderJid },
         defaults: {
