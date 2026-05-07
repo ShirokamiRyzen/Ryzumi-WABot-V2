@@ -17,7 +17,7 @@ export default {
             }, { quoted: m });
         }
 
-        // Normalisasi URL biar nggak error uwooo~
+        // Normalisasi URL biar nggak error~
         if (!/^https?:\/\//.test(text)) text = 'https://' + text;
 
         try {
@@ -43,7 +43,7 @@ export default {
             if (/^image\//.test(contentType)) {
                 await sock.sendMessage(msgData.remoteJid, {
                     image: { url: res.url },
-                    caption: `Horeee~! Ini gambar yang kakak minta uwooo~! (๑>ᴗ<๑)\n\n*URL:* ${text}`
+                    caption: `Horeee~! Ini gambar yang kakak minta~! (๑>ᴗ<๑)\n\n*URL:* ${text}`
                 }, { quoted: m });
             }
             // 2. Jika kontennya teks atau JSON

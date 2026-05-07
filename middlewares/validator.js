@@ -16,6 +16,16 @@ export const validatePlugin = async (sock, m, msgData, user, plugin) => {
         return false;
     }
 
+    if (plugin.isAdmin && !msgData.isAdmin && !user.isOwner) {
+        await sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_ADMIN }, { quoted: m });
+        return false;
+    }
+
+    if (plugin.isBotAdmin && !msgData.isBotAdmin) {
+        await sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_BOTADMIN }, { quoted: m });
+        return false;
+    }
+
     if (plugin.limit) {
         const isLimitBypassed = user.isOwner || user.is_premium;
 

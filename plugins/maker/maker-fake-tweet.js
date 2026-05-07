@@ -49,8 +49,8 @@ export default {
 
             const url = `${config.API_RYZUMI}/api/image/faketweet?${params.toString()}`;
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
-            
-            await sock.sendMessage(msgData.remoteJid, { image: Buffer.from(response.data), caption: `Waaa! Tweet Kakak ${displayName} viral banget nih uwooo~! (˶˃ ᵕ ˂˶)` }, { quoted: m });
+
+            await sock.sendMessage(msgData.remoteJid, { image: Buffer.from(response.data), caption: `Waaa! Tweet Kakak ${displayName} viral banget nih~! (˶˃ ᵕ ˂˶)` }, { quoted: m });
             await sock.sendMessage(msgData.remoteJid, { react: { text: '✅', key: m.key } });
 
         } catch (error) {

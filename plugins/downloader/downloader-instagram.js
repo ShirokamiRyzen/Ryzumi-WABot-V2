@@ -40,7 +40,7 @@ export default {
             }
 
             if (allMedia.length === 0) {
-                throw new Error('Waaa, nggak ada media yang bisa aku ambil dari sini uwooo~ (｡T ω T｡)');
+                throw new Error('Waaa, nggak ada media yang bisa aku ambil dari sini~ (｡T ω T｡)');
             }
 
             let first = true;

@@ -21,14 +21,14 @@ export default {
         }
 
         if (!caption) {
-            return sock.sendMessage(msgData.remoteJid, { 
-                text: `Kakak manis~ Cara pakainya gini yaa:\n*.fakestory username|caption*\n\nAtau balas pesan teks dengan *.fakestory username* uwooo~ (˶˃ ᵕ ˂˶)` 
+            return sock.sendMessage(msgData.remoteJid, {
+                text: `Kakak manis~ Cara pakainya gini yaa:\n*.fakestory username|caption*\n\nAtau balas pesan teks dengan *.fakestory username*~ (˶˃ ᵕ ˂˶)`
             }, { quoted: m });
         }
 
         // Ambil target untuk avatar (default ke pengirim)
         const targetJid = msgData.parseTargetJid() || msgData.senderJid;
-        
+
         // Fallback untuk username jika tidak diisi
         if (!username) {
             const targetUser = await User.findOne({ where: { jid: targetJid } });
@@ -49,18 +49,18 @@ export default {
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
             const buffer = Buffer.from(response.data);
 
-            await sock.sendMessage(msgData.remoteJid, { 
-                image: buffer, 
-                caption: `Horeee~! Ini dia Fake Story buat Kakak ${msgData.pushName}! Keren kan? (๑>ᴗ<๑)` 
+            await sock.sendMessage(msgData.remoteJid, {
+                image: buffer,
+                caption: `Horeee~! Ini dia Fake Story buat Kakak ${msgData.pushName}! Keren kan? (๑>ᴗ<๑)`
             }, { quoted: m });
-            
+
             await sock.sendMessage(msgData.remoteJid, { react: { text: '✅', key: m.key } });
 
         } catch (error) {
             console.error('Fake Story Error:', error);
             await sock.sendMessage(msgData.remoteJid, { react: { text: '❌', key: m.key } });
-            await sock.sendMessage(msgData.remoteJid, { 
-                text: `Aduuh gawat! Ryzumi gagal bikin story-nya kak: ${error.message}.. (╥﹏╥)` 
+            await sock.sendMessage(msgData.remoteJid, {
+                text: `Aduuh gawat! Ryzumi gagal bikin story-nya kak: ${error.message}.. (╥﹏╥)`
             }, { quoted: m });
         }
     }

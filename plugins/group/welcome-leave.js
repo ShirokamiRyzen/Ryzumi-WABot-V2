@@ -12,17 +12,17 @@ export default {
             if (!group || !group.is_welcome) return;
 
             const metadata = await sock.groupMetadata(id);
-            
+
             for (const part of participants) {
                 const participant = typeof part === 'string' ? part : (part.id || part.jid);
                 if (!participant) continue;
-                
+
                 const resolvedJid = resolveLidToJid(participant);
                 const user = await User.findOne({ where: { jid: resolvedJid } });
-                
+
                 const username = user?.name || resolvedJid.split('@')[0];
                 const memberCount = metadata.participants.length;
-            
+
                 // Ambil PP dengan fallback ke config
                 let ppUrl;
                 try {
@@ -36,7 +36,7 @@ export default {
 
                 if (action === 'add') {
                     const apiUrl = `${config.API_RYZUMI}/api/image/welcome?username=${encodeURIComponent(username)}&group=${encodeURIComponent(metadata.subject)}&avatar=${encodeURIComponent(ppUrl)}&bg=${encodeURIComponent(bg)}&member=${memberCount}`;
-                    
+
                     const welcomeText = `Uwaaa! Selamat datang @${resolvedJid.split('@')[0]} di grup *${metadata.subject}*! (˶˃ ᵕ ˂˶)\n\n` +
                         `Semoga kakak betah main di sini bareng kita semua yaa! Jangan lupa baca aturan grupnya kakak manis~ (๑>ᴗ<๑)`;
 
@@ -50,7 +50,7 @@ export default {
                     const apiUrl = `${config.API_RYZUMI}/api/image/leave?username=${encodeURIComponent(username)}&group=${encodeURIComponent(metadata.subject)}&avatar=${encodeURIComponent(ppUrl)}&bg=${encodeURIComponent(bg)}&member=${memberCount}`;
 
                     const leaveText = `Yahhh... Sayang sekali, Kakak @${resolvedJid.split('@')[0]} sudah meninggalkan grup.. (｡T ω T｡)\n\n` +
-                        `Selamat jalan ya kak, terima kasih sudah mampir! Ryzumi bakal kangen uwooo~ (╥﹏╥)`;
+                        `Selamat jalan ya kak, terima kasih sudah mampir! Ryzumi bakal kangen~ (╥﹏╥)`;
 
                     await sock.sendMessage(id, {
                         image: { url: apiUrl },
@@ -63,7 +63,7 @@ export default {
             console.error('Welcome-Leave Error:', error);
             // Hanya kirim log ke owner jika terjadi error fatal
             const ownerJid = config.OWNER_NUMBER.includes('@') ? config.OWNER_NUMBER : `${config.OWNER_NUMBER}@s.whatsapp.net`;
-            await sock.sendMessage(ownerJid, { text: `[CRITICAL ERROR] Welcome-Leave:\n\n${error.message}` }).catch(() => {});
+            await sock.sendMessage(ownerJid, { text: `[CRITICAL ERROR] Welcome-Leave:\n\n${error.message}` }).catch(() => { });
         }
     }
 };

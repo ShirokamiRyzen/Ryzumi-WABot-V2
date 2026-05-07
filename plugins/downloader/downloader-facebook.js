@@ -38,7 +38,7 @@ export default {
             const allMedia = [...selectedVideos, ...selectedImages];
 
             if (allMedia.length === 0) {
-                throw new Error('Maafin aku kak, nggak ada media yang bisa aku download nih uwooo~ (｡T ω T｡)');
+                throw new Error('Maafin aku kak, nggak ada media yang bisa aku download nih~ (｡T ω T｡)');
             }
 
             let first = true;

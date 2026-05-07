@@ -9,10 +9,10 @@ export default {
     description: 'Mengunggah berkas ke Ryzumi CDN untuk mendapatkan tautan (URL).',
     async execute(sock, m, msgData) {
         const buffer = await msgData.downloadMedia();
-        
+
         if (!buffer) {
-            return sock.sendMessage(msgData.remoteJid, { 
-                text: `Kakak manis~ (˶˃ ᵕ ˂˶) Kirim atau balas berkas apa saja (gambar/video/audio/dokumen/stiker) dengan perintah *.upload* biar Ryzumi buatkan link-nya yaa! (๑>ᴗ<๑)` 
+            return sock.sendMessage(msgData.remoteJid, {
+                text: `Kakak manis~ (˶˃ ᵕ ˂˶) Kirim atau balas berkas apa saja (gambar/video/audio/dokumen/stiker) dengan perintah *.upload* biar Ryzumi buatkan link-nya yaa! (๑>ᴗ<๑)`
             }, { quoted: m });
         }
 
@@ -21,8 +21,8 @@ export default {
         try {
             const result = await ryzumiCDN(buffer);
             await sock.sendMessage(msgData.remoteJid, { react: { text: '✅', key: m.key } });
-            
-            const responseText = `Horeee~! Berkas kakak sudah berhasil diunggah uwooo~! (˶˃ ᵕ ˂˶)\n\n` +
+
+            const responseText = `Horeee~! Berkas kakak sudah berhasil diunggah~! (˶˃ ᵕ ˂˶)\n\n` +
                 `*Link:* ${result.url}\n` +
                 `*Nama:* ${result.filename || 'berkas-ryzumi'}\n` +
                 `*Ukuran:* ${result.size || 'Misterius'} bytes (๑>ᴗ<๑)`;
@@ -32,8 +32,8 @@ export default {
         } catch (error) {
             console.error('Upload Tool Error:', error);
             await sock.sendMessage(msgData.remoteJid, { react: { text: '❌', key: m.key } });
-            await sock.sendMessage(msgData.remoteJid, { 
-                text: `Aduuh gawat! Ryzumi gagal mengunggah berkasnya kak: ${error.message}.. (╥﹏╥)` 
+            await sock.sendMessage(msgData.remoteJid, {
+                text: `Aduuh gawat! Ryzumi gagal mengunggah berkasnya kak: ${error.message}.. (╥﹏╥)`
             }, { quoted: m });
         }
     }

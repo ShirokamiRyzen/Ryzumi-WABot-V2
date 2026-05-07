@@ -21,7 +21,7 @@ export default {
             const mime = isTargetQuoted ? msgData.quotedMime : msgData.mime;
 
             if (!/image|video|webp/.test(mime)) {
-                return sock.sendMessage(msgData.remoteJid, { text: 'Uwaaa gomenasai kak, format medianya nggak didukung uwooo~ (╥﹏╥)' }, { quoted: m });
+                return sock.sendMessage(msgData.remoteJid, { text: 'Uwaaa gomenasai kak, format medianya nggak didukung~ (╥﹏╥)' }, { quoted: m });
             }
 
             const isVideoLike = /video|gif/.test(mime) || messageType === 'videoMessage';
@@ -43,7 +43,6 @@ export default {
                     }
                 );
             } catch (err) {
-                await sock.sendMessage(msgData.remoteJid, { react: { text: 'ERROR', key: m.key } });
                 return sock.sendMessage(msgData.remoteJid, { text: 'Maafin aku ya kak, gagal download medianya.. Coba lagi nanti yaa~ (｡T ω T｡)' }, { quoted: m });
             }
 
@@ -57,11 +56,9 @@ export default {
             const finalSticker = await writeExif(webpBuffer, exifData);
 
             await sock.sendMessage(msgData.remoteJid, { sticker: finalSticker }, { quoted: m });
-            await sock.sendMessage(msgData.remoteJid, { react: { text: 'OK', key: m.key } });
 
         } catch (error) {
             console.error('Error in sticker plugin:', error);
-            await sock.sendMessage(msgData.remoteJid, { react: { text: 'ERROR', key: m.key } });
             await sock.sendMessage(msgData.remoteJid, { text: `Waaa gawat! Stikernya gagal dibuat: ${error.message}.. (´･ᴗ･ \` )` }, { quoted: m });
         }
     }

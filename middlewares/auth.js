@@ -41,6 +41,9 @@ export const processAuth = async (sock, msgData) => {
 
         const participant = metadata.participants.find(p => p.id.split(':')[0] === msgData.senderJid.split(':')[0]);
         msgData.isAdmin = participant?.admin !== null && participant?.admin !== undefined;
+
+        const botParticipant = metadata.participants.find(p => p.id.split(':')[0] === botJid.split(':')[0]);
+        msgData.isBotAdmin = botParticipant?.admin !== null && botParticipant?.admin !== undefined;
     }
 
     user.isOwner = isOwner;
