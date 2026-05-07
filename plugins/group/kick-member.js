@@ -1,4 +1,5 @@
 import config from '../../config.js';
+import { resolveLidToJid } from '../../libs/lid-resolver.js';
 
 export default {
     command: ['kick', 'tendang'],
@@ -18,7 +19,10 @@ export default {
         const jidToNum = (jid) => jid?.split('@')[0].split(':')[0];
         const botId = sock.user?.id;
         const botLid = sock.user?.lid;
-        const normalizedTarget = jidToNum(target);
+        
+        // Terjemahkan target (LID ke JID Nomor) untuk perbandingan yang akurat
+        const resolvedTarget = resolveLidToJid(target);
+        const normalizedTarget = jidToNum(resolvedTarget);
         const normalizedBot = jidToNum(botId);
 
         if (target === botId || target === botLid || normalizedTarget === normalizedBot) {
