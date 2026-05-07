@@ -20,6 +20,7 @@ const Group = sequelize.define('Group', {
         defaultValue: false
     }
 }, {
+    tableName: 'groups',
     timestamps: true
 });
 
