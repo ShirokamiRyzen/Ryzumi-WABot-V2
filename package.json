@@ -25,6 +25,7 @@
     "mime-types": "^3.0.2",
     "moment-timezone": "^0.6.2",
     "node-cron": "^4.2.1",
+    "node-fetch": "^3.3.2",
     "node-os-utils": "^2.0.3",
     "node-webpmux": "^3.2.1",
     "nodemon": "^3.1.14",
