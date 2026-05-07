@@ -1,6 +1,7 @@
 import User from '../databases/orm/User.js';
 import Group from '../databases/orm/Group.js';
 import config from '../config.js';
+import { resolveLidToJid } from '../libs/lid-resolver.js';
 
 export const processAuth = async (sock, msgData) => {
     // Jangan simpan grup atau status broadcast ke tabel User
@@ -44,10 +45,21 @@ export const processAuth = async (sock, msgData) => {
         const normalizedSender = jidToNum(msgData.senderJid);
         const normalizedBot = jidToNum(botJid);
 
-        const participant = metadata.participants.find(p => jidToNum(p.id) === normalizedSender);
+        // Ambil ID mentah untuk perbandingan cadangan
+        const botId = sock.user?.id;
+        const botLid = sock.user?.lid;
+
+        const participant = metadata.participants.find(p => 
+            p.id === msgData.senderJid || 
+            jidToNum(resolveLidToJid(p.id)) === normalizedSender
+        );
         msgData.isAdmin = participant?.admin !== null && participant?.admin !== undefined;
 
-        const botParticipant = metadata.participants.find(p => jidToNum(p.id) === normalizedBot);
+        const botParticipant = metadata.participants.find(p => 
+            p.id === botId || 
+            p.id === botLid || 
+            jidToNum(resolveLidToJid(p.id)) === normalizedBot
+        );
         msgData.isBotAdmin = botParticipant?.admin !== null && botParticipant?.admin !== undefined;
     }
 

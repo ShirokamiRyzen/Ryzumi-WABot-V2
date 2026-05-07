@@ -83,7 +83,10 @@ export const extractMessageData = (m, sock) => {
                     targetJid = num + '@s.whatsapp.net';
                 }
             }
-            return targetJid ? (targetJid.split(':')[0] + '@s.whatsapp.net') : null;
+            if (!targetJid) return null;
+            if (targetJid.endsWith('@lid')) return targetJid;
+            if (targetJid.endsWith('@g.us')) return targetJid;
+            return targetJid.split(':')[0].split('@')[0] + '@s.whatsapp.net';
         },
 
         // Helper to download media from the current or quoted message
