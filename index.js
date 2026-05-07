@@ -92,10 +92,11 @@ async function connectToWhatsApp() {
             if (!m.message) continue;
 
             // Abaikan pesan sistem/dummy messageContextInfo atau senderKeyDistributionMessage agar tidak membebani log
-            const msgKeys = Object.keys(m.message);
-            if (msgKeys.length === 1 && (msgKeys[0] === 'messageContextInfo' || msgKeys[0] === 'senderKeyDistributionMessage')) continue;
-
             const msgData = extractMessageData(m, sock);
+            
+            // Abaikan pesan sistem/metadata/protokol agar tidak mengganggu log dan eksekusi
+            const protocolTypes = ['messageContextInfo', 'senderKeyDistributionMessage', 'protocolMessage', 'peerDataOperationRequestMessage'];
+            if (protocolTypes.includes(msgData.messageType)) continue;
 
             // Jika pesan berasal dari bot sendiri (balasan atau owner ngetik dari nomor bot)
             if (m.key.fromMe) {

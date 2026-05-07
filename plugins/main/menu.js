@@ -12,6 +12,13 @@ export default {
         const limit = user.limit;
         const time = moment.tz('Asia/Jakarta').format('HH:mm:ss');
         const date = moment.tz('Asia/Jakarta').format('DD MMMM YYYY');
+        
+        // Greeting dinamis sesuai jam (WIB)
+        const hour = moment.tz('Asia/Jakarta').hour();
+        let greeting = 'Konbanwa'; 
+        if (hour >= 4 && hour < 11) greeting = 'Ohayou';
+        else if (hour >= 11 && hour < 15) greeting = 'Konichiwa';
+        else if (hour >= 15 && hour < 19) greeting = 'Konbanwa';
 
         const categories = {};
 
@@ -23,7 +30,7 @@ export default {
             categories[cat].push(plugin.command[0]);
         }
 
-        let menuText = `Konichiwa ${name}~! (˶˃ ᵕ ˂˶)\n`;
+        let menuText = `${greeting} ${name}~! (˶˃ ᵕ ˂˶)\n`;
         menuText += `Aku Ryzumi-Bot, asisten pribadi kakak~ 🌸✨\n\n`;
 
         menuText += `╭─「 *STATUS KAKAK* 」\n`;

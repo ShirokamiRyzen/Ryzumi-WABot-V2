@@ -8,8 +8,9 @@ export const logMessage = (sock, msgData) => {
     
     const type = msgData.messageType || 'unknown';
     
-    // Jangan print log untuk sistem WhatsApp seperti 'protocolMessage' atau 'senderKeyDistributionMessage' untuk menghindari spam
-    if (type === 'protocolMessage' || type === 'senderKeyDistributionMessage') return;
+    // Jangan print log untuk sistem WhatsApp untuk menghindari spam
+    const protocolTypes = ['protocolMessage', 'senderKeyDistributionMessage', 'messageContextInfo', 'peerDataOperationRequestMessage'];
+    if (protocolTypes.includes(type)) return;
 
     let content = msgData.messageContent;
     if (!content && type !== 'conversation' && type !== 'extendedTextMessage') {
