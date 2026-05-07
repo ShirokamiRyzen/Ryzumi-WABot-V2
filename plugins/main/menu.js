@@ -16,17 +16,16 @@ export default {
         let text = `Halo ${user.name || 'Kak'}!\nIni adalah menu Ryzumi-WABot.\n\n`;
 
         for (const [cat, commands] of Object.entries(categories)) {
-            // Capitalize category name
             const catName = cat.charAt(0).toUpperCase() + cat.slice(1);
-            text += `*❖ ${catName}*\n`;
-            // Unique commands just in case
+            text += `[ ${catName} ]\n`;
+            
             const uniqueCmds = [...new Set(commands)];
             for (const cmd of uniqueCmds) {
-                text += `  ◦ .${cmd}\n`;
+                text += `  - .${cmd}\n`;
             }
             text += '\n';
         }
 
-        await sock.sendMessage(m.key.remoteJid, { text: text.trim() }, { quoted: m });
+        await sock.sendMessage(msgData.remoteJid, { text: text.trim() }, { quoted: m });
     }
 };

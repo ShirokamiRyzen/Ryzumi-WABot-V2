@@ -33,6 +33,7 @@ const config = {
   API_RYZUMI: process.env.API_RYZUMI,
 
   // Ryzumi Message
+  RYZUMI_MSG_REGISTER: process.env.RYZUMI_MSG_REGISTER,
   RYZUMI_MSG_DISABLE: process.env.RYZUMI_MSG_DISABLE,
   RYZUMI_MSG_GROUP: process.env.RYZUMI_MSG_GROUP,
   RYZUMI_MSG_PRIVATE: process.env.RYZUMI_MSG_PRIVATE,

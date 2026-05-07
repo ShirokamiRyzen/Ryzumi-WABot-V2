@@ -12,7 +12,7 @@ export default {
         }
 
         const name = msgData.args.join(' ') || msgData.pushName || 'User';
-        
+
         await User.update({ is_registered: true, name: name }, { where: { jid: user.jid } });
 
         await sock.sendMessage(msgData.remoteJid, { text: `Registrasi berhasil! Selamat datang, ${name}!` }, { quoted: m });

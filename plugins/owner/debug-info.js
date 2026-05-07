@@ -44,17 +44,17 @@ export default {
             rawString = rawString.substring(0, 3000) + '\n... [Data terpotong karena terlalu panjang]';
         }
 
-        let text = `*❖ DEBUG INFO ❖*\n\n` +
-                   `*Target:* ${debugData.type}\n` +
-                   `*JID:* ${debugData.jid}\n`;
+        let text = `--- DEBUG INFO ---\n\n` +
+                   `Target: ${debugData.type}\n` +
+                   `JID: ${debugData.jid}\n`;
                    
         if (debugData.pushName) {
-            text += `*PushName:* ${debugData.pushName}\n`;
+            text += `PushName: ${debugData.pushName}\n`;
         }
 
-        text += `*Message ID:* ${debugData.messageId}\n` +
-                `*Message Type:* ${debugData.messageType}\n\n` +
-                `*Raw JSON:*\n\`\`\`json\n${rawString}\n\`\`\``;
+        text += `Message ID: ${debugData.messageId}\n` +
+                `Message Type: ${debugData.messageType}\n\n` +
+                `Raw JSON:\n\`\`\`json\n${rawString}\n\`\`\``;
 
         await sock.sendMessage(m.key.remoteJid, { text: text.trim() }, { quoted: m });
     }

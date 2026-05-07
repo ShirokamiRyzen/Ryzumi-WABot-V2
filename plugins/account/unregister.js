@@ -1,18 +1,16 @@
 import User from '../../databases/orm/User.js';
-import config from '../../config.js';
 
 export default {
     command: ['unregister', 'unreg'],
     category: 'account',
     description: 'Menghapus pendaftaran diri dari database bot',
-    isPrivate: true, // Hanya bisa di chat pribadi
+    isPrivate: true,
     async execute(sock, m, msgData, user) {
         if (!user.is_registered) {
-            return sock.sendMessage(msgData.remoteJid, { text: 'Kamu belum terdaftar di database kami.' }, { quoted: m });
+            return sock.sendMessage(msgData.remoteJid, { text: 'Kamu belum terdaftar sebelumnya!' }, { quoted: m });
         }
 
         await User.update({ is_registered: false }, { where: { jid: user.jid } });
-
-        await sock.sendMessage(msgData.remoteJid, { text: 'Pendaftaranmu telah dibatalkan. Terima kasih!' }, { quoted: m });
+        await sock.sendMessage(msgData.remoteJid, { text: 'Pendaftaran berhasil dihapus!' }, { quoted: m });
     }
 };
