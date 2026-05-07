@@ -14,8 +14,14 @@ export default {
             return msgData.reply(config.RYZUMI_MSG_QUOTED || 'Tag atau balas pesan anggota yang ingin dikeluarkan ya kakak~ (๑>ᴗ<๑)');
         }
 
-        const botJid = sock.user?.id?.split(':')[0] + '@s.whatsapp.net';
-        if (target === botJid) {
+        // Cek jika target adalah bot itu sendiri (menggunakan JID atau LID)
+        const jidToNum = (jid) => jid?.split('@')[0].split(':')[0];
+        const botId = sock.user?.id;
+        const botLid = sock.user?.lid;
+        const normalizedTarget = jidToNum(target);
+        const normalizedBot = jidToNum(botId);
+
+        if (target === botId || target === botLid || normalizedTarget === normalizedBot) {
             return msgData.reply('Nooo! Kenapa kakak mau mengeluarkan aku? Aku kan imut~ (╥﹏╥)');
         }
 
