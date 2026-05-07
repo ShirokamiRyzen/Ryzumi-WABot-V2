@@ -92,7 +92,7 @@ export const extractMessageData = (m, sock) => {
             if (!/image|video|audio|sticker|document/i.test(type)) return null;
 
             const mediaType = type.replace('Message', '');
-            const stream = await import('@whiskeysockets/baileys').then(mod => mod.downloadContentFromMessage(
+            const stream = await import('baileys').then(mod => mod.downloadContentFromMessage(
                 q[type] || q, 
                 mediaType === 'sticker' ? 'image' : mediaType
             ));
