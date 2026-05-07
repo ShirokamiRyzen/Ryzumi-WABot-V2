@@ -9,9 +9,52 @@ import { extractMessageData } from './libs/adapter/messageAdapter.js';
 import { logMessage } from './libs/console.js';
 import fs from 'fs';
 import { startCronJobs } from './libs/cronjob.js';
+import Group from './databases/orm/Group.js';
 
 // Pastikan inisialisasi database hanya berjalan sekali di luar loop agar tidak memanggil berkali-kali saat reconnect
 let isDbConnected = false;
+
+/**
+ * Sinkronisasi semua grup yang diikuti bot ke database secara otomatis.
+ * Menggunakan groupFetchAllParticipating untuk menghindari spam request (rate limit).
+ */
+async function syncGroups(sock) {
+    try {
+        console.log('⏳ Sedang menyinkronkan data grup ke database...');
+        const groups = await sock.groupFetchAllParticipating();
+        const groupJids = Object.keys(groups);
+        
+        let newGroups = 0;
+        let updatedGroups = 0;
+
+        for (const jid of groupJids) {
+            const groupData = groups[jid];
+            const [group, created] = await Group.findOrCreate({
+                where: { jid: jid },
+                defaults: { 
+                    name: groupData.subject,
+                    is_welcome: false,
+                    is_ban: false
+                }
+            });
+
+            if (created) {
+                newGroups++;
+            } else if (group.name !== groupData.subject) {
+                await group.update({ name: groupData.subject });
+                updatedGroups++;
+            }
+        }
+        
+        if (newGroups > 0 || updatedGroups > 0) {
+            console.log(`✅ Sinkronisasi grup selesai! (${newGroups} baru, ${updatedGroups} diperbarui)`);
+        } else {
+            console.log('✅ Data grup sudah sesuai dengan database.');
+        }
+    } catch (e) {
+        console.error('❌ Gagal sinkronisasi grup:', e.message);
+    }
+}
 
 async function connectToWhatsApp() {
     // Mengecek dan melakukan sinkronisasi database (Auto Migrate layaknya Laravel)
@@ -81,6 +124,9 @@ async function connectToWhatsApp() {
             }
         } else if (connection === 'open') {
             console.log('✅ Bot berhasil terhubung ke WhatsApp dan siap digunakan!');
+            
+            // Jalankan sinkronisasi grup secara asinkron agar tidak menghambat koneksi
+            syncGroups(sock);
         }
     });
 
@@ -110,6 +156,27 @@ async function connectToWhatsApp() {
 
             // Limpahkan pesan masuk ke handler
             await botHandler(sock, m, msgData);
+        }
+    });
+
+    // Deteksi Grup Baru secara Real-time
+    sock.ev.on('groups.upsert', async (groups) => {
+        for (const group of groups) {
+            try {
+                const [record, created] = await Group.findOrCreate({
+                    where: { jid: group.id },
+                    defaults: { 
+                        name: group.subject,
+                        is_welcome: false,
+                        is_ban: false
+                    }
+                });
+                if (created) {
+                    console.log(`✨ Terdeteksi masuk ke grup baru: ${group.subject} (${group.id}) - Berhasil didaftarkan ke database.`);
+                }
+            } catch (e) {
+                console.error('❌ Gagal mendaftarkan grup baru dari upsert:', e.message);
+            }
         }
     });
 
