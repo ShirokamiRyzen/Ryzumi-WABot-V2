@@ -21,11 +21,11 @@ export const processAuth = async (sock, msgData) => {
     }
 
     const ownerJid = config.OWNER_NUMBER.includes('@') ? config.OWNER_NUMBER : `${config.OWNER_NUMBER}@s.whatsapp.net`;
-    const botJid = sock.user?.id?.split(':')[0] + '@s.whatsapp.net';
+    const botJid = sock.user?.id?.split(':')[0].split('@')[0] + '@s.whatsapp.net';
     
     // Bandingkan JID yang sudah di-resolve (senderJid)
-    const isOwner = (msgData.senderJid.split(':')[0] === ownerJid.split(':')[0]) || 
-                    (msgData.senderJid.split(':')[0] === botJid.split(':')[0]) || 
+    const isOwner = (msgData.senderJid.split(':')[0].split('@')[0] === ownerJid.split(':')[0].split('@')[0]) || 
+                    (msgData.senderJid.split(':')[0].split('@')[0] === botJid.split(':')[0].split('@')[0]) || 
                     msgData.fromMe;
 
     if (msgData.isGroup) {
@@ -39,10 +39,15 @@ export const processAuth = async (sock, msgData) => {
             await group.update({ name: metadata.subject });
         }
 
-        const participant = metadata.participants.find(p => p.id.split(':')[0] === msgData.senderJid.split(':')[0]);
+        // Fungsi pembantu untuk normalisasi JID ke format nomor murni
+        const jidToNum = (jid) => jid?.split('@')[0].split(':')[0];
+        const normalizedSender = jidToNum(msgData.senderJid);
+        const normalizedBot = jidToNum(botJid);
+
+        const participant = metadata.participants.find(p => jidToNum(p.id) === normalizedSender);
         msgData.isAdmin = participant?.admin !== null && participant?.admin !== undefined;
 
-        const botParticipant = metadata.participants.find(p => p.id.split(':')[0] === botJid.split(':')[0]);
+        const botParticipant = metadata.participants.find(p => jidToNum(p.id) === normalizedBot);
         msgData.isBotAdmin = botParticipant?.admin !== null && botParticipant?.admin !== undefined;
     }
 

@@ -5,7 +5,7 @@ export const extractMessageData = (m, sock) => {
     const isGroup = m.key.remoteJid.endsWith('@g.us');
     const rawRemoteJid = m.key.remoteJid;
     const fromMe = m.key.fromMe;
-    const botJid = sock?.user?.id?.split(':')[0] + '@s.whatsapp.net';
+    const botJid = sock?.user?.id?.split(':')[0].split('@')[0] + '@s.whatsapp.net';
 
     let rawSenderJid;
     if (fromMe) {
@@ -62,6 +62,7 @@ export const extractMessageData = (m, sock) => {
         isQuotedMedia,
         mentions: contextInfo.mentionedJid || [],
         isAdmin: false, // Will be set in handler
+        isBotAdmin: false, // Will be set in handler
         
         // Helper to parse target JID from various sources
         parseTargetJid: () => {
