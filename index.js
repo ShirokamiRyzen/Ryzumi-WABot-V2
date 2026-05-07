@@ -86,25 +86,30 @@ async function connectToWhatsApp() {
 
     // Event Handler Pesan Masuk via Middleware
     sock.ev.on('messages.upsert', async ({ messages, type }) => {
-        const m = messages[0];
-        if (!m.message) return;
+        if (type !== 'notify') return;
 
-        const msgData = extractMessageData(m, sock);
+        for (const m of messages) {
+            if (!m.message) continue;
 
-        // Jika pesan berasal dari bot sendiri (balasan atau owner ngetik dari nomor bot)
-        if (m.key.fromMe) {
-            logMessage(sock, msgData);
-            
-            // Jika bot ngetik command sendiri, biarkan lanjut ke handler
-            if (!msgData.commandName) return;
-        } else {
-            // Abaikan pesan jika tipenya bukan notify (pesan baru dari user)
-            if (type !== 'notify') return;
-            logMessage(sock, msgData);
+            // Abaikan pesan sistem/dummy messageContextInfo atau senderKeyDistributionMessage agar tidak membebani log
+            const msgKeys = Object.keys(m.message);
+            if (msgKeys.length === 1 && (msgKeys[0] === 'messageContextInfo' || msgKeys[0] === 'senderKeyDistributionMessage')) continue;
+
+            const msgData = extractMessageData(m, sock);
+
+            // Jika pesan berasal dari bot sendiri (balasan atau owner ngetik dari nomor bot)
+            if (m.key.fromMe) {
+                logMessage(sock, msgData);
+                
+                // Jika bot ngetik command sendiri, biarkan lanjut ke handler
+                if (!msgData.commandName) continue;
+            } else {
+                logMessage(sock, msgData);
+            }
+
+            // Limpahkan pesan masuk ke handler
+            await botHandler(sock, m, msgData);
         }
-
-        // Limpahkan pesan masuk ke handler
-        await botHandler(sock, m, msgData);
     });
 
     sock.ev.on('group-participants.update', async (update) => {
