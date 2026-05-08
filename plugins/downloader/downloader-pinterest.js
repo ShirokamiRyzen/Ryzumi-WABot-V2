@@ -2,10 +2,10 @@ import axios from 'axios';
 import config from '../../config.js';
 
 export default {
-    command: ['pindl', 'pinterestdl'],
+    command: ['pinterest', 'pin'],
     category: 'downloader',
     isRegistered: true,
-    limit: true,
+    limit: 1,
     description: 'Mengunduh media (gambar/video) dari Pinterest.',
     async execute(sock, m, msgData) {
         if (msgData.args.length === 0) {

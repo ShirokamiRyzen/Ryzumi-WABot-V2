@@ -1,7 +1,5 @@
 import fetch from 'node-fetch';
-import { format } from 'util';
 import path from 'path';
-import config from '../../config.js';
 
 export default {
     command: ['fetch', 'get'],

@@ -17,8 +17,6 @@ export default {
             return sock.sendMessage(msgData.remoteJid, { text: 'Hee? Itu kan bukan stiker kak, bakaaa~ (๑>ᴗ<๑)' }, { quoted: m });
         }
 
-        await sock.sendMessage(msgData.remoteJid, { react: { text: '⏳', key: m.key } });
-
         try {
             // Mengunduh stiker
             const buffer = await downloadMediaMessage(
@@ -35,7 +33,6 @@ export default {
             await img.load(buffer);
 
             if (!img.exif) {
-                await sock.sendMessage(msgData.remoteJid, { react: { text: '❌', key: m.key } });
                 return sock.sendMessage(msgData.remoteJid, { text: 'Yaaah, stiker ini nggak punya metadata EXIF-nya kak.. (╥﹏╥)' }, { quoted: m });
             }
 
@@ -54,12 +51,8 @@ export default {
                     text: `*Raw Metadata:*\n\n${rawExif}`
                 }, { quoted: m });
             }
-
-            await sock.sendMessage(msgData.remoteJid, { react: { text: '✅', key: m.key } });
-
         } catch (error) {
             console.error('Get Exif Error:', error);
-            await sock.sendMessage(msgData.remoteJid, { react: { text: '❌', key: m.key } });
             await sock.sendMessage(msgData.remoteJid, {
                 text: `Uwaaa, ada yang salah pas baca EXIF-nya: ${error.message}.. Maafin aku ya kak~ (｡T ω T｡)`
             }, { quoted: m });

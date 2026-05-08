@@ -1,5 +1,4 @@
 import { ryzumiCDN } from '../../libs/uploader.js';
-import config from '../../config.js';
 
 export default {
     command: ['upload', 'cdn', 'tourl'],

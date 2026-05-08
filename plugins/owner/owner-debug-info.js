@@ -1,4 +1,3 @@
-import config from '../../config.js';
 import { resolveLidToJid } from '../../libs/lid-resolver.js';
 
 export default {
@@ -6,7 +5,7 @@ export default {
     category: 'owner',
     isOwner: true,
     description: 'Menampilkan data debug dari pesan (termasuk info JID, tipe pesan, dll)',
-    async execute(sock, m, msgData, user, plugins) {
+    async execute(sock, m, msgData) {
         // Cek apakah pesan meng-quote (balas) pesan lain
         const contextInfo = m.message?.extendedTextMessage?.contextInfo;
         const isQuoted = !!contextInfo?.quotedMessage;
@@ -41,16 +40,16 @@ export default {
         }
 
         let text = `--- DEBUG INFO ---\n\n` +
-                   `Target: ${debugData.type}\n` +
-                   `JID: ${debugData.jid}\n`;
-                   
+            `Target: ${debugData.type}\n` +
+            `JID: ${debugData.jid}\n`;
+
         if (debugData.pushName) {
             text += `PushName: ${debugData.pushName}\n`;
         }
 
         text += `Message ID: ${debugData.messageId}\n` +
-                `Message Type: ${debugData.messageType}\n\n` +
-                `Raw JSON:\n\`\`\`json\n${rawString}\n\`\`\``;
+            `Message Type: ${debugData.messageType}\n\n` +
+            `Raw JSON:\n\`\`\`json\n${rawString}\n\`\`\``;
 
         await sock.sendMessage(m.key.remoteJid, { text: text.trim() }, { quoted: m });
     }

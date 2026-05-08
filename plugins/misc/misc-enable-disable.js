@@ -1,5 +1,4 @@
 import Group from '../../databases/orm/Group.js';
-import config from '../../config.js';
 
 export default {
     command: ['enable', 'disable', 'on', 'off'],
