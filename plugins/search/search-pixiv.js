@@ -1,6 +1,6 @@
 import axios from 'axios';
 import sharp from 'sharp';
-import pkg from '@whiskeysockets/baileys';
+import pkg from 'baileys';
 const { generateWAMessageContent, generateWAMessageFromContent, proto } = pkg;
 import config from '../../config.js';
 
