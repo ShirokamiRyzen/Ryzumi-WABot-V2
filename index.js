@@ -10,6 +10,7 @@ import { logMessage } from './libs/console.js';
 import fs from 'fs';
 import { startCronJobs } from './libs/cronjob.js';
 import Group from './databases/orm/Group.js';
+import { setGroupMetadata } from './libs/groupCache.js';
 
 // Pastikan inisialisasi database hanya berjalan sekali di luar loop agar tidak memanggil berkali-kali saat reconnect
 let isDbConnected = false;
@@ -24,6 +25,11 @@ async function syncGroups(sock) {
         const groups = await sock.groupFetchAllParticipating();
         const groupJids = Object.keys(groups);
         
+        // Populasikan cache segera agar middleware bisa langsung menggunakan data yang ada
+        for (const jid of groupJids) {
+            setGroupMetadata(jid, groups[jid]);
+        }
+
         let newGroups = 0;
         let updatedGroups = 0;
 
@@ -174,6 +180,10 @@ async function connectToWhatsApp() {
                 if (created) {
                     console.log(`✨ Terdeteksi masuk ke grup baru: ${group.subject} (${group.id}) - Berhasil didaftarkan ke database.`);
                 }
+                
+                // Update Cache Metadata
+                const metadata = await sock.groupMetadata(group.id);
+                setGroupMetadata(group.id, metadata);
             } catch (e) {
                 console.error('❌ Gagal mendaftarkan grup baru dari upsert:', e.message);
             }

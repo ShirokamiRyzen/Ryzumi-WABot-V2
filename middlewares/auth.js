@@ -2,6 +2,7 @@ import User from '../databases/orm/User.js';
 import Group from '../databases/orm/Group.js';
 import config from '../config.js';
 import { resolveLidToJid } from '../libs/lid-resolver.js';
+import { getGroupMetadata, setGroupMetadata } from '../libs/groupCache.js';
 
 export const processAuth = async (sock, msgData) => {
     // Jangan simpan grup atau status broadcast ke tabel User
@@ -30,13 +31,38 @@ export const processAuth = async (sock, msgData) => {
                     msgData.fromMe;
 
     if (msgData.isGroup) {
-        const metadata = await sock.groupMetadata(msgData.remoteJid);
+        let metadata = getGroupMetadata(msgData.remoteJid);
+        
+        if (!metadata) {
+            try {
+                console.log(`[Auth] Metadata tidak ditemukan di cache untuk ${msgData.remoteJid}, mencoba fetch...`);
+                
+                // Tambahkan timeout agar tidak menggantung jika WA lambat merespon metadata
+                const timeout = (ms) => new Promise((_, reject) => setTimeout(() => reject(new Error('Fetch metadata timeout')), ms));
+                metadata = await Promise.race([
+                    sock.groupMetadata(msgData.remoteJid),
+                    timeout(5000)
+                ]);
+                
+                setGroupMetadata(msgData.remoteJid, metadata);
+                console.log(`[Auth] Metadata berhasil di-fetch dan disimpan ke cache untuk ${msgData.remoteJid}`);
+            } catch (err) {
+                console.error(`[Auth] Gagal mengambil metadata grup ${msgData.remoteJid}:`, err.message);
+                // Jika gagal, gunakan data minimal agar bot tetap bisa memproses pesan (meskipun fitur admin mungkin terbatas sementara)
+                metadata = {
+                    id: msgData.remoteJid,
+                    subject: 'Unknown Group',
+                    participants: []
+                };
+            }
+        }
+
         const [group] = await Group.findOrCreate({
             where: { jid: msgData.remoteJid },
             defaults: { name: metadata.subject }
         });
 
-        if (group.name !== metadata.subject) {
+        if (group.name !== metadata.subject && metadata.subject !== 'Unknown Group') {
             await group.update({ name: metadata.subject });
         }
 
@@ -64,7 +90,6 @@ export const processAuth = async (sock, msgData) => {
     }
 
     user.isOwner = isOwner;
-
 
     return user;
 };

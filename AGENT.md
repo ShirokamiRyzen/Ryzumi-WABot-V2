@@ -27,8 +27,7 @@ Contoh struktur:
 - Implementasi *websocket* dan *HTTP server* menggunakan framework **Express** dan dijalankan melalui file `server.js`.
 
 ## Session & Autentikasi
-- **Folder Session Utama**: `/sessions`
-- **File Session Detail**: File `ryzumi-sesion.json` diletakkan di *root* direktori `/`.
+- **Folder Session Utama**: `/sessions`.
 
 ## Database
 Sistem database mendukung dua tipe driver: **MariaDB/MySQL** dan **SQLite3**.

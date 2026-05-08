@@ -1,5 +1,5 @@
 export default {
-    command: ['gc-info', 'info-gc'],
+    command: ['gc-info'],
     category: 'group',
     isGroup: true, // Memastikan hanya bisa dijalankan di grup
     description: 'Menampilkan informasi dari grup saat ini.',
