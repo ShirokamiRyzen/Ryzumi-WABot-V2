@@ -5,14 +5,11 @@ export default {
     command: ['join'],
     category: 'misc',
     isRegistered: true,
+    isOwner: true,
+    isPremium: true,
     isPrivate: true, // Biar divalidasi otomatis oleh validator.js
     description: 'Bot bergabung ke grup melalui tautan undangan.',
     async execute(sock, m, msgData, user) {
-        // Gunakan pesan dari config untuk pengecekan Owner/Premium
-        if (!user.isOwner && !user.is_premium && !msgData.fromMe) {
-            return sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_OWNER }, { quoted: m });
-        }
-
         // Ambil link dari argumen atau dari pesan yang di-reply (quote)
         let text = msgData.args[0];
         if (!text && msgData.isQuoted) {

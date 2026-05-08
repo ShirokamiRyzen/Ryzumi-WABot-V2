@@ -8,10 +8,6 @@ export default {
     isAdmin: true,
     description: 'Mengaktifkan atau menonaktifkan fitur grup',
     async execute(sock, m, msgData, user) {
-        if (msgData.isGroup && !msgData.isAdmin && !user.isOwner) {
-            return sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_ADMIN }, { quoted: m });
-        }
-
         const availableFeatures = ['welcome'];
         const feature = msgData.args[0]?.toLowerCase();
         const action = msgData.commandName;

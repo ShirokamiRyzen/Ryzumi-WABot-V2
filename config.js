@@ -46,7 +46,8 @@ const config = {
   RYZUMI_MSG_MODERATOR: process.env.RYZUMI_MSG_MODERATOR,
   RYZUMI_MSG_BOTADMIN: process.env.RYZUMI_MSG_BOTADMIN,
   RYZUMI_MSG_ADMIN: process.env.RYZUMI_MSG_ADMIN,
-  RYZUMI_MSG_QUOTED: process.env.RYZUMI_MSG_QUOTED
+  RYZUMI_MSG_QUOTED: process.env.RYZUMI_MSG_QUOTED,
+  RYZUMI_MSG_PREMIUM: process.env.RYZUMI_MSG_PREMIUM,
 };
 
 export default config;

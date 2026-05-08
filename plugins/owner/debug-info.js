@@ -4,13 +4,9 @@ import { resolveLidToJid } from '../../libs/lid-resolver.js';
 export default {
     command: ['debug'],
     category: 'owner',
+    isOwner: true,
     description: 'Menampilkan data debug dari pesan (termasuk info JID, tipe pesan, dll)',
     async execute(sock, m, msgData, user, plugins) {
-        // Validasi Owner menggunakan bypass dari handler
-        if (!user.isOwner) {
-            return sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_OWNER || 'Akses ditolak.' }, { quoted: m });
-        }
-
         // Cek apakah pesan meng-quote (balas) pesan lain
         const contextInfo = m.message?.extendedTextMessage?.contextInfo;
         const isQuoted = !!contextInfo?.quotedMessage;

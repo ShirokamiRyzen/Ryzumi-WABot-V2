@@ -33,36 +33,35 @@ export const processAuth = async (sock, msgData) => {
     if (msgData.isGroup) {
         let metadata = getGroupMetadata(msgData.remoteJid);
         
+        // Jika tidak ada di cache, coba ambil dari database dulu sebagai cadangan (biar cepet)
+        let dbGroup = await Group.findOne({ where: { jid: msgData.remoteJid } });
+
         if (!metadata) {
             try {
-                console.log(`[Auth] Metadata tidak ditemukan di cache untuk ${msgData.remoteJid}, mencoba fetch...`);
-                
-                // Tambahkan timeout agar tidak menggantung jika WA lambat merespon metadata
-                const timeout = (ms) => new Promise((_, reject) => setTimeout(() => reject(new Error('Fetch metadata timeout')), ms));
+                // Tambahkan timeout yang lebih singkat agar tidak membuat user menunggu lama
+                const timeout = (ms) => new Promise((_, reject) => setTimeout(() => reject(new Error('Fetch timeout')), ms));
                 metadata = await Promise.race([
                     sock.groupMetadata(msgData.remoteJid),
-                    timeout(5000)
+                    timeout(2000) // 2 detik saja, lebih dari itu kelamaan
                 ]);
                 
                 setGroupMetadata(msgData.remoteJid, metadata);
-                console.log(`[Auth] Metadata berhasil di-fetch dan disimpan ke cache untuk ${msgData.remoteJid}`);
             } catch (err) {
-                console.error(`[Auth] Gagal mengambil metadata grup ${msgData.remoteJid}:`, err.message);
-                // Jika gagal, gunakan data minimal agar bot tetap bisa memproses pesan (meskipun fitur admin mungkin terbatas sementara)
+                // Jika gagal fetch metadata (timeout/error), gunakan data dari DB atau dummy
                 metadata = {
                     id: msgData.remoteJid,
-                    subject: 'Unknown Group',
-                    participants: []
+                    subject: dbGroup?.name || 'Unknown Group',
+                    participants: [] // Fitur admin mungkin tidak jalan di command pertama jika ini terjadi
                 };
             }
         }
 
-        const [group] = await Group.findOrCreate({
+        const [group, created] = await Group.findOrCreate({
             where: { jid: msgData.remoteJid },
             defaults: { name: metadata.subject }
         });
 
-        if (group.name !== metadata.subject && metadata.subject !== 'Unknown Group') {
+        if (!created && group.name !== metadata.subject && metadata.subject !== 'Unknown Group') {
             await group.update({ name: metadata.subject });
         }
 

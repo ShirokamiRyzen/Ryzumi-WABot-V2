@@ -105,7 +105,7 @@ async function connectToWhatsApp() {
 
     sock.ev.on('creds.update', saveCreds);
 
-    sock.ev.on('connection.update', (update) => {
+    sock.ev.on('connection.update', async (update) => {
         const { connection, lastDisconnect, qr } = update;
         
         // Menampilkan QR
@@ -129,10 +129,16 @@ async function connectToWhatsApp() {
                 setTimeout(connectToWhatsApp, 2000);
             }
         } else if (connection === 'open') {
-            console.log('✅ Bot berhasil terhubung ke WhatsApp dan siap digunakan!');
+            console.log('✅ Bot berhasil terhubung ke WhatsApp! Sedang menyinkronkan data...');
             
-            // Jalankan sinkronisasi grup secara asinkron agar tidak menghambat koneksi
-            syncGroups(sock);
+            // Tunggu sinkronisasi awal maksimal 3 detik agar cache terisi sebelum melayani pesan
+            const syncPromise = syncGroups(sock);
+            await Promise.race([
+                syncPromise, 
+                new Promise(resolve => setTimeout(resolve, 3000))
+            ]);
+            
+            console.log('✅ Bot siap digunakan!');
         }
     });
 

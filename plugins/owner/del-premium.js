@@ -4,13 +4,9 @@ import config from '../../config.js';
 export default {
     command: ['delprem', 'delpremium'],
     category: 'owner',
-    isRegistered: true,
+    isOwner: true,
     description: 'Menghapus status premium dari pengguna (Hanya Owner).',
     async execute(sock, m, msgData, user) {
-        if (!user.isOwner && !msgData.fromMe) {
-            return sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_OWNER }, { quoted: m });
-        }
-
         const targetJid = msgData.parseTargetJid();
         if (!targetJid) {
             return sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_QUOTED }, { quoted: m });
