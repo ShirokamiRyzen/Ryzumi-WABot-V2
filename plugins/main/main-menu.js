@@ -5,11 +5,11 @@ export default {
     command: ['menu', 'help'],
     category: 'main',
     description: 'Menampilkan daftar menu bot dengan informasi lengkap dan tampilan cantik.',
-    async execute(sock, m, msgData, user, plugins) {
+    async execute(sock, m, msgData, user, group, plugins) {
         const name = user.name || msgData.pushName || 'Kakak manis';
         const jid = msgData.senderJid.split('@')[0];
         const premium = user.is_premium ? 'Premium VIP 💎' : 'Gratis 🌸';
-        const limit = user.limit;
+        const limit = (group && !group.is_limited) ? 'Unlimited ✨' : user.limit;
         const time = moment.tz('Asia/Jakarta').format('HH:mm:ss');
         const date = moment.tz('Asia/Jakarta').format('DD MMMM YYYY');
         

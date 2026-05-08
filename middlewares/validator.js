@@ -1,6 +1,6 @@
 import config from '../config.js';
 
-export const validatePlugin = async (sock, m, msgData, user, plugin) => {
+export const validatePlugin = async (sock, m, msgData, user, group, plugin) => {
     if (plugin.isPrivate && msgData.isGroup) {
         await sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_PRIVATE }, { quoted: m });
         return false;
@@ -37,7 +37,7 @@ export const validatePlugin = async (sock, m, msgData, user, plugin) => {
     }
 
     if (plugin.limit) {
-        const isLimitBypassed = user.isOwner || user.is_premium;
+        const isLimitBypassed = user.isOwner || user.is_premium || (group && !group.is_limited);
 
         if (user.limit < plugin.limit && !isLimitBypassed) {
             await sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_LIMIT }, { quoted: m });
@@ -48,6 +48,7 @@ export const validatePlugin = async (sock, m, msgData, user, plugin) => {
             await user.save();
         }
     }
+
 
     return true;
 };

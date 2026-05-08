@@ -30,6 +30,9 @@ export const processAuth = async (sock, msgData) => {
                     (msgData.senderJid.split(':')[0].split('@')[0] === botJid.split(':')[0].split('@')[0]) || 
                     msgData.fromMe;
 
+    user.isOwner = isOwner;
+    
+    let group = null;
     if (msgData.isGroup) {
         let metadata = getGroupMetadata(msgData.remoteJid);
         
@@ -56,10 +59,12 @@ export const processAuth = async (sock, msgData) => {
             }
         }
 
-        const [group, created] = await Group.findOrCreate({
+        const [groupData, created] = await Group.findOrCreate({
             where: { jid: msgData.remoteJid },
             defaults: { name: metadata.subject }
         });
+
+        group = groupData;
 
         if (!created && group.name !== metadata.subject && metadata.subject !== 'Unknown Group') {
             await group.update({ name: metadata.subject });
@@ -88,7 +93,6 @@ export const processAuth = async (sock, msgData) => {
         msgData.isBotAdmin = botParticipant?.admin !== null && botParticipant?.admin !== undefined;
     }
 
-    user.isOwner = isOwner;
-
-    return user;
+    return { user, group };
 };
+

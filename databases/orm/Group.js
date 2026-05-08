@@ -18,6 +18,10 @@ const Group = sequelize.define('Group', {
     is_ban: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    is_limited: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     }
 }, {
     tableName: 'groups',

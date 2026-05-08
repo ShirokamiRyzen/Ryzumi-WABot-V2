@@ -12,16 +12,16 @@ watchPlugins(pluginDir);
 
 export default async function botHandler(sock, m, msgData) {
     try {
-        const user = await processAuth(sock, msgData);
+        const { user, group } = await processAuth(sock, msgData);
 
         if (!msgData.commandName) return;
 
         for (const plugin of plugins) {
             if (plugin.command && plugin.command.includes(msgData.commandName)) {
-                const isValid = await validatePlugin(sock, m, msgData, user, plugin);
+                const isValid = await validatePlugin(sock, m, msgData, user, group, plugin);
                 if (!isValid) return;
                 
-                await plugin.execute(sock, m, msgData, user, plugins);
+                await plugin.execute(sock, m, msgData, user, group, plugins);
                 break;
             }
         }
