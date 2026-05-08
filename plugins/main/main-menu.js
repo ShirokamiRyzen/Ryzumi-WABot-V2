@@ -16,7 +16,7 @@ export default {
 
         // Greeting dinamis sesuai jam (WIB)
         const hour = moment.tz('Asia/Jakarta').hour();
-        let greeting = 'Konbanwa'; 
+        let greeting = 'Konbanwa';
         if (hour >= 4 && hour < 11) greeting = 'Ohayou';
         else if (hour >= 11 && hour < 15) greeting = 'Konichiwa';
         else if (hour >= 15 && hour < 19) greeting = 'Konbanwa';
@@ -48,10 +48,10 @@ export default {
             // Tampilan Kategori Saja
             menuText += `*DAFTAR KATEGORI MENU:* ୨୧\n\n`;
             Object.keys(categories).sort().forEach(cat => {
-                menuText += `  🌸 .menu ${cat}\n`;
+                menuText += `  🌸 ${cat}\n`;
             });
             menuText += `\n  ✨ .menu all (Tampilkan semua)\n\n`;
-            menuText += `_Klik salah satu kategori di atas atau ketik .menu all untuk melihat semua perintah yaa kak! (๑>ᴗ<๑)_`;
+            menuText += `_Silakan ketik *.menu [nama_kategori]* untuk melihat daftar perintahnya, atau ketik *.menu all* untuk melihat semua menu yaa kak! (๑>ᴗ<๑)_`;
         } else if (arg === 'all') {
             // Tampilan Semua Command
             for (const [cat, commands] of Object.entries(categories).sort()) {
