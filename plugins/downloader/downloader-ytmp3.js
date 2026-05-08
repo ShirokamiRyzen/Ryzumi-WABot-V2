@@ -63,8 +63,7 @@ export default {
                 `👤 *Author:* ${author}\n` +
                 `⏳ *Duration:* ${lengthSeconds} sec\n` +
                 `👀 *Views:* ${views}\n` +
-                `📅 *Uploaded:* ${uploadDate}\n\n` +
-                `Sabar ya kak, Ryzumi kirim filenya sekarang~ ✨`;
+                `📅 *Uploaded:* ${uploadDate}\n\n`;
 
             // Kirim file audio sebagai dokumen
             await sock.sendMessage(msgData.remoteJid, {
