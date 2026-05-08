@@ -51,7 +51,7 @@ export default {
                 menuText += `  🌸 ${cat}\n`;
             });
             menuText += `\n  ✨ .menu all (Tampilkan semua)\n\n`;
-            menuText += `_Silakan ketik *.menu [nama_kategori]* untuk melihat daftar perintahnya, atau ketik *.menu all* untuk melihat semua menu yaa kak! (๑>ᴗ<๑)_`;
+            menuText += `Silakan ketik *.menu [nama_kategori]* untuk melihat daftar perintahnya, atau ketik *.menu all* untuk melihat semua menu yaa kak! (๑>ᴗ<๑)`;
         } else if (arg === 'all') {
             // Tampilan Semua Command
             for (const [cat, commands] of Object.entries(categories).sort()) {
