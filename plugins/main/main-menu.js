@@ -12,7 +12,8 @@ export default {
         const limit = (group && !group.is_limited) ? 'Unlimited ✨' : user.limit;
         const time = moment.tz('Asia/Jakarta').format('HH:mm:ss');
         const date = moment.tz('Asia/Jakarta').format('DD MMMM YYYY');
-        
+        const arg = msgData.args[0]?.toLowerCase();
+
         // Greeting dinamis sesuai jam (WIB)
         const hour = moment.tz('Asia/Jakarta').hour();
         let greeting = 'Konbanwa'; 
@@ -21,11 +22,9 @@ export default {
         else if (hour >= 15 && hour < 19) greeting = 'Konbanwa';
 
         const categories = {};
-
-        // Group plugins by category
         for (const plugin of plugins) {
             if (!plugin.command) continue;
-            const cat = plugin.category || 'Lainnya';
+            const cat = plugin.category?.toLowerCase() || 'lainnya';
             if (!categories[cat]) categories[cat] = [];
             categories[cat].push(plugin.command[0]);
         }
@@ -45,18 +44,40 @@ export default {
         menuText += `│ ⏰ *Waktu:* ${time}\n`;
         menuText += `╰─────────────┈\n\n`;
 
-        for (const [cat, commands] of Object.entries(categories)) {
-            const catName = cat.charAt(0).toUpperCase() + cat.slice(1);
+        if (!arg) {
+            // Tampilan Kategori Saja
+            menuText += `*DAFTAR KATEGORI MENU:* ୨୧\n\n`;
+            Object.keys(categories).sort().forEach(cat => {
+                menuText += `  🌸 .menu ${cat}\n`;
+            });
+            menuText += `\n  ✨ .menu all (Tampilkan semua)\n\n`;
+            menuText += `_Klik salah satu kategori di atas atau ketik .menu all untuk melihat semua perintah yaa kak! (๑>ᴗ<๑)_`;
+        } else if (arg === 'all') {
+            // Tampilan Semua Command
+            for (const [cat, commands] of Object.entries(categories).sort()) {
+                const catName = cat.charAt(0).toUpperCase() + cat.slice(1);
+                menuText += `୨୧ [ *${catName}* ] ୨୧\n`;
+                const uniqueCmds = [...new Set(commands)];
+                for (const cmd of uniqueCmds) {
+                    menuText += `  🌸 .${cmd}\n`;
+                }
+                menuText += '\n';
+            }
+            menuText += `*Note:* Gunakan bot dengan bijak yaa kak~ (๑>ᴗ<๑)`;
+        } else if (categories[arg]) {
+            // Tampilan Per Kategori
+            const catName = arg.charAt(0).toUpperCase() + arg.slice(1);
             menuText += `୨୧ [ *${catName}* ] ୨୧\n`;
-
-            const uniqueCmds = [...new Set(commands)];
+            const uniqueCmds = [...new Set(categories[arg])];
             for (const cmd of uniqueCmds) {
                 menuText += `  🌸 .${cmd}\n`;
             }
-            menuText += '\n';
+            menuText += `\n*Note:* Gunakan bot dengan bijak yaa kak~ (๑>ᴗ<๑)`;
+        } else {
+            // Jika kategori tidak ditemukan
+            menuText += `Aduuh! Kategori *${arg}* nggak Ryzumi temukan kak.. (｡T ω T｡)\n\nKetik \`.menu\` saja untuk melihat daftar kategori yang tersedia yaa!`;
         }
 
-        menuText += `\n*Note:* Gunakan bot dengan bijak yaa kak~ (๑>ᴗ<๑)`;
 
         // Fake Contact Card (fkon)
         const fkon = {
