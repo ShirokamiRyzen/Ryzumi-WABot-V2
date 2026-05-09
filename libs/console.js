@@ -5,9 +5,9 @@ export const logMessage = (sock, msgData) => {
     const botNumber = sock.user?.id?.split(':')[0] || 'Bot';
     const targetNumber = msgData.remoteJid.split('@')[0];
     const senderNumber = msgData.senderJid.split('@')[0];
-    
+
     const type = msgData.messageType || 'unknown';
-    
+
     // Jangan print log untuk sistem WhatsApp untuk menghindari spam
     const protocolTypes = ['protocolMessage', 'senderKeyDistributionMessage', 'messageContextInfo', 'peerDataOperationRequestMessage'];
     if (protocolTypes.includes(type)) return;
@@ -23,7 +23,7 @@ export const logMessage = (sock, msgData) => {
 
     console.log(`\n=========================================`);
     console.log(`[⏰ Waktu]      : ${time}`);
-    
+
     if (msgData.fromMe) {
         console.log(`[🤖 OUTGOING]   : BOT (${botNumber}) ➔ ${targetNumber}`);
         console.log(`[💬 Tipe Pesan] : ${type}`);

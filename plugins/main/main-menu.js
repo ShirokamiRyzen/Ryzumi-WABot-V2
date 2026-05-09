@@ -46,7 +46,7 @@ export default {
 
         if (!arg) {
             // Tampilan Kategori Saja
-            menuText += `*DAFTAR KATEGORI MENU:* ୨୧\n\n`;
+            menuText += `*DAFTAR KATEGORI MENU:*\n\n`;
             Object.keys(categories).sort().forEach(cat => {
                 menuText += `  🌸 ${cat}\n`;
             });
@@ -79,27 +79,18 @@ export default {
         }
 
 
-        // Fetch Thumbnail as Buffer for maximum compatibility
-        let thumbnail;
-        try {
-            const { default: axios } = await import('axios');
-            const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
-            thumbnail = Buffer.from(res.data);
-        } catch (err) {
-            console.error('Menu Thumbnail Error:', err.message);
-        }
-
-        // Fake Contact Card (fkon) - Standard and stable structure
+        // Fake Contact Card (fkon)
         const fkon = {
             key: {
                 fromMe: false,
-                participant: msgData.senderJid,
-                ...(msgData.isGroup ? { remoteJid: msgData.remoteJid } : {})
+                participant: `${msgData.senderJid.split('@')[0]}@s.whatsapp.net`,
+                remoteJid: msgData.remoteJid
             },
             message: {
                 contactMessage: {
                     displayName: name,
-                    vcard: `BEGIN:VCARD\nVERSION:3.0\nN:;${name};;;\nFN:${name}\nitem1.TEL;waid=${msgData.senderJid.split('@')[0]}:${msgData.senderJid.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`
+                    vcard: `BEGIN:VCARD\nVERSION:3.0\nN:;${name};;;\nFN:${name}\nitem1.TEL;waid=${msgData.senderJid.split('@')[0]}:${msgData.senderJid.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`,
+                    verified: true
                 }
             }
         };
@@ -112,10 +103,10 @@ export default {
                     title: config.BOT_NAME,
                     body: 'Daftar Menu Bot Terlengkap ✨',
                     mediaType: 1,
+                    previewType: 0,
                     renderLargerThumbnail: true,
-                    showAdAttribution: false,
                     sourceUrl: config.SOC_WA_GROUP,
-                    thumbnail: thumbnail, // Using Buffer is much more stable
+                    thumbnailUrl: config.RYZUMI_BANNER,
                 }
             }
         }, { quoted: fkon });
