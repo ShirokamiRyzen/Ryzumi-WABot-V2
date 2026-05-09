@@ -32,10 +32,11 @@ export default {
                 }
 
                 // Gunakan banner utama sebagai background
-                const bg = config.RYZUMI_BANNER;
+                const bg_welcome = config.RYZUMI_WELCOME_BANNER;
+                const bg_leave = config.RYZUMI_LEAVE_BANNER;
 
                 if (action === 'add') {
-                    const apiUrl = `${config.API_RYZUMI}/api/image/welcome?username=${encodeURIComponent(username)}&group=${encodeURIComponent(metadata.subject)}&avatar=${encodeURIComponent(ppUrl)}&bg=${encodeURIComponent(bg)}&member=${memberCount}`;
+                    const apiUrl = `${config.API_RYZUMI}/api/image/welcome?username=${encodeURIComponent(username)}&group=${encodeURIComponent(metadata.subject)}&avatar=${encodeURIComponent(ppUrl)}&bg=${encodeURIComponent(bg_welcome)}&member=${memberCount}`;
 
                     const welcomeText = `Uwaaa! Selamat datang @${resolvedJid.split('@')[0]} di grup *${metadata.subject}*! (˶˃ ᵕ ˂˶)\n\n` +
                         `Semoga kakak betah main di sini bareng kita semua yaa! Jangan lupa baca aturan grupnya kakak manis~ (๑>ᴗ<๑)`;
@@ -47,7 +48,7 @@ export default {
                     });
 
                 } else if (action === 'remove') {
-                    const apiUrl = `${config.API_RYZUMI}/api/image/leave?username=${encodeURIComponent(username)}&group=${encodeURIComponent(metadata.subject)}&avatar=${encodeURIComponent(ppUrl)}&bg=${encodeURIComponent(bg)}&member=${memberCount}`;
+                    const apiUrl = `${config.API_RYZUMI}/api/image/leave?username=${encodeURIComponent(username)}&group=${encodeURIComponent(metadata.subject)}&avatar=${encodeURIComponent(ppUrl)}&bg=${encodeURIComponent(bg_leave)}&member=${memberCount}`;
 
                     const leaveText = `Yahhh... Sayang sekali, Kakak @${resolvedJid.split('@')[0]} sudah meninggalkan grup.. (｡T ω T｡)\n\n` +
                         `Selamat jalan ya kak, terima kasih sudah mampir! Ryzumi bakal kangen~ (╥﹏╥)`;

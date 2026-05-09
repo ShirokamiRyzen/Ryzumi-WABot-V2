@@ -34,6 +34,8 @@ const config = {
   // Image Link
   RYZUMI_DEFAULT_PP: process.env.RYZUMI_DEFAULT_PP,
   RYZUMI_BANNER: process.env.RYZUMI_BANNER,
+  RYZUMI_WELCOME_BANNER: process.env.RYZUMI_WELCOME_BANNER,
+  RYZUMI_LEAVE_BANNER: process.env.RYZUMI_LEAVE_BANNER,
 
   // Ryzumi Message
   RYZUMI_MSG_REGISTER: process.env.RYZUMI_MSG_REGISTER,
