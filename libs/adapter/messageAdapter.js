@@ -5,7 +5,8 @@ export const extractMessageData = (m, sock) => {
     const isGroup = m.key.remoteJid.endsWith('@g.us');
     const rawRemoteJid = m.key.remoteJid;
     const fromMe = m.key.fromMe;
-    const botJid = sock?.user?.id?.split(':')[0].split('@')[0] + '@s.whatsapp.net';
+    const rawBotId = sock?.user?.id || '';
+    const botJid = resolveLidToJid(rawBotId.split(':')[0].split('@')[0] + (rawBotId.includes('@lid') ? '@lid' : '@s.whatsapp.net'));
 
     let rawSenderJid;
     if (fromMe) {

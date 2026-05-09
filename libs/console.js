@@ -32,7 +32,7 @@ export const logMessage = (sock, msgData) => {
         const cmd = msgData.commandName ? `.${msgData.commandName}` : '-';
         console.log(`[🤖 Bot]        : ${botNumber}`);
         console.log(`[👤 Pengirim]   : ${senderNumber} (${msgData.pushName})`);
-        console.log(`[👥 Chat]       : ${msgData.isGroup ? 'Group' : 'Private'}`);
+        console.log(`[👥 Chat]       : ${msgData.isGroup ? 'Group' : 'Private'} (${msgData.remoteJid})`);
         console.log(`[💬 Tipe Pesan] : ${type}`);
         console.log(`[⚙️  Command]    : ${cmd}`);
         console.log(`[📄 Isi Pesan]  : ${content}`);

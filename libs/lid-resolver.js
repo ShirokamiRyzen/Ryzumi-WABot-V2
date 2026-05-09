@@ -16,8 +16,8 @@ export const resolveLidToJid = (jid) => {
         return jid;
     }
 
-    // Ekstrak angka LID
-    const lidMatch = jid.match(/^(\d+)@lid$/);
+    // Ekstrak ID LID (bisa berupa angka atau string acak)
+    const lidMatch = jid.match(/^([^@]+)@lid$/);
     if (!lidMatch) return jid;
 
     const lidNumber = lidMatch[1];

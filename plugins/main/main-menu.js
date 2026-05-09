@@ -84,7 +84,7 @@ export default {
             key: {
                 fromMe: false,
                 participant: `${msgData.senderJid.split('@')[0]}@s.whatsapp.net`,
-                ...(msgData.remoteJid ? { remoteJid: 'status@broadcast' } : {})
+                remoteJid: msgData.remoteJid
             },
             message: {
                 contactMessage: {
