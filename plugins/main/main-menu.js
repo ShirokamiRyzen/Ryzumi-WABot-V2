@@ -81,17 +81,16 @@ export default {
             menuText += `Aduuh! Kategori *${arg}* nggak Ryzumi temukan kak.. (｡T ω T｡)\n\nKetik \`.menu\` saja untuk melihat daftar kategori yang tersedia yaa!`;
         }
 
-        let thumbnail, width, height, lqThumbnail;
+        const finalUrl = config.SOC_GITHUB;
+
+        let thumbnail, width, height;
         try {
             const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
-            const bannerBuffer = Buffer.from(res.data);
-
-            const metadata = await sharp(bannerBuffer).metadata();
+            thumbnail = Buffer.from(res.data);
+            
+            const metadata = await sharp(thumbnail).metadata();
             width = metadata.width;
             height = metadata.height;
-            thumbnail = bannerBuffer;
-
-            lqThumbnail = await sharp(bannerBuffer).resize(50).jpeg().toBuffer();
         } catch (err) {
             console.error('Menu Thumbnail Error:', err.message);
         }
@@ -101,12 +100,12 @@ export default {
 
         const message = await generateWAMessageFromContent(msgData.remoteJid, {
             extendedTextMessage: {
-                text: `${config.SOC_WA_GROUP}\n\n${menuText.trim()}`,
-                matchedText: config.SOC_WA_GROUP,
+                text: `${finalUrl}\n\n${menuText.trim()}`,
+                matchedText: finalUrl,
                 title: config.BOT_NAME,
                 description: 'Daftar Menu Bot Terlengkap ✨',
                 previewType: 0,
-                jpegThumbnail: lqThumbnail,
+                jpegThumbnail: thumbnail,
                 thumbnailDirectPath: upload.directPath,
                 thumbnailSHA256: upload.fileSha256,
                 thumbnailEncSHA256: upload.fileEncSHA256,
