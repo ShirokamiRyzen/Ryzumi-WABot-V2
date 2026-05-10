@@ -79,53 +79,11 @@ export default {
         }
 
 
-        // Fetch Thumbnail as Buffer for maximum compatibility
-        let thumbnail;
-        try {
-            const { default: axios } = await import('axios');
-            const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
-            thumbnail = Buffer.from(res.data);
-        } catch (err) {
-            console.error('Menu Thumbnail Error:', err.message);
-        }
-
-        // Fake Contact Card (fkon)
-        const fkon = {
-            key: {
-                fromMe: false,
-                participant: msgData.senderJid,
-                ...(msgData.isGroup ? { remoteJid: msgData.remoteJid } : {})
-            },
-            message: {
-                contactMessage: {
-                    displayName: name,
-                    vcard: `BEGIN:VCARD\nVERSION:3.0\nN:;${name};;;\nFN:${name}\nitem1.TEL;waid=${msgData.senderJid.split('@')[0]}:${msgData.senderJid.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`,
-                    verified: true
-                }
+        await sock.sendMessage(msgData.remoteJid, {
+            text: menuText.trim(),
+            contextInfo: {
+                mentionedJid: [msgData.senderJid]
             }
-        };
-
-        // Generate message secara manual untuk bypass validasi media Baileys
-        const { generateWAMessageFromContent } = await import('baileys');
-        const message = await generateWAMessageFromContent(msgData.remoteJid, {
-            extendedTextMessage: {
-                text: menuText.trim(),
-                contextInfo: {
-                    mentionedJid: [msgData.senderJid],
-                    externalAdReply: {
-                        title: config.BOT_NAME,
-                        body: 'Daftar Menu Bot Terlengkap ✨',
-                        mediaType: 1,
-                        previewType: 0,
-                        renderLargerThumbnail: true,
-                        thumbnail: thumbnail,
-                        sourceUrl: config.SOC_WA_GROUP
-                    }
-                }
-            }
-        }, { quoted: fkon });
-
-        // Kirim lewat relayMessage agar struktur protobuf-nya utuh sampai ke tujuan
-        await sock.relayMessage(msgData.remoteJid, message.message, { messageId: message.key.id });
+        }, { quoted: m });
     }
 };
