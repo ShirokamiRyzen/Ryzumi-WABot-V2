@@ -1,3 +1,6 @@
+import axios from 'axios';
+import sharp from 'sharp';
+import { generateWAMessageFromContent, prepareWAMessageMedia } from 'baileys';
 import moment from 'moment-timezone';
 import config from '../../config.js';
 
@@ -82,8 +85,6 @@ export default {
         // Fetch Banner and get dimensions for High Quality Preview
         let thumbnail, width, height;
         try {
-            const { default: axios } = await import('axios');
-            const sharp = (await import('sharp')).default;
             const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
             thumbnail = Buffer.from(res.data);
             
@@ -94,11 +95,11 @@ export default {
             console.error('Menu Thumbnail Error:', err.message);
         }
 
-        // Upload to WhatsApp server for HQ metadata
-        const upload = await sock.waUploadToServer(thumbnail, { fileType: 'image' });
+        // Upload using prepareWAMessageMedia (More robust than waUploadToServer directly)
+        const media = await prepareWAMessageMedia({ image: thumbnail }, { upload: sock.waUploadToServer });
+        const upload = media.imageMessage;
 
         // Generate message with CLASSIC HQ PREVIEW structure
-        const { generateWAMessageFromContent } = await import('baileys');
         const message = await generateWAMessageFromContent(msgData.remoteJid, {
             extendedTextMessage: {
                 text: `${config.SOC_WA_GROUP}\n\n${menuText.trim()}`,
@@ -111,7 +112,7 @@ export default {
                 thumbnailSHA256: upload.fileSha256,
                 thumbnailEncSHA256: upload.fileEncSha256,
                 mediaKey: upload.mediaKey,
-                mediaKeyTimestamp: Math.floor(Date.now() / 1000),
+                mediaKeyTimestamp: upload.mediaKeyTimestamp || Math.floor(Date.now() / 1000),
                 thumbnailWidth: width,
                 thumbnailHeight: height,
                 contextInfo: {
