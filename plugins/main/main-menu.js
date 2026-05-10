@@ -79,12 +79,22 @@ export default {
         }
 
 
+        // Fetch Thumbnail as Buffer for maximum compatibility
+        let thumbnail;
+        try {
+            const { default: axios } = await import('axios');
+            const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
+            thumbnail = Buffer.from(res.data);
+        } catch (err) {
+            console.error('Menu Thumbnail Error:', err.message);
+        }
+
         // Fake Contact Card (fkon)
         const fkon = {
             key: {
                 fromMe: false,
-                participant: `${msgData.senderJid.split('@')[0]}@s.whatsapp.net`,
-                remoteJid: msgData.remoteJid
+                participant: msgData.senderJid,
+                ...(msgData.isGroup ? { remoteJid: msgData.remoteJid } : {})
             },
             message: {
                 contactMessage: {
@@ -106,7 +116,7 @@ export default {
                     previewType: 0,
                     renderLargerThumbnail: true,
                     sourceUrl: config.SOC_WA_GROUP,
-                    thumbnailUrl: config.RYZUMI_BANNER,
+                    thumbnail: thumbnail,
                 }
             }
         }, { quoted: fkon });
