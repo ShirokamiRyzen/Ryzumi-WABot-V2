@@ -89,17 +89,17 @@ export default {
             console.error('Menu Thumbnail Error:', err.message);
         }
 
-        await sock.sendMessage(msgData.remoteJid, {
-            text: menuText.trim(),
-            contextInfo: {
-                mentionedJid: [msgData.senderJid],
-                externalAdReply: {
-                    title: config.BOT_NAME,
-                    body: 'Ryzumi Bot - Overview ✨',
-                    mediaType: 1,
-                    renderLargerThumbnail: true,
-                    thumbnail: thumbnail,
-                    sourceUrl: config.SOC_WA_GROUP
+        // Generate message with CLASSIC PREVIEW structure
+        const { generateWAMessageFromContent } = await import('baileys');
+        const message = await generateWAMessageFromContent(msgData.remoteJid, {
+            extendedTextMessage: {
+                text: `${config.SOC_WA_GROUP}\n\n${menuText.trim()}`,
+                matchedText: config.SOC_WA_GROUP,
+                title: config.BOT_NAME,
+                description: 'Daftar Menu Bot Terlengkap ✨',
+                jpegThumbnail: thumbnail,
+                contextInfo: {
+                    mentionedJid: [msgData.senderJid]
                 }
             }
         }, { quoted: m });
