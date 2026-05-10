@@ -1,6 +1,6 @@
 import axios from 'axios';
 import sharp from 'sharp';
-import { generateWAMessageFromContent, prepareWAMessageMedia } from 'baileys';
+import { generateWAMessageFromContent } from 'baileys';
 import moment from 'moment-timezone';
 import config from '../../config.js';
 
@@ -83,28 +83,24 @@ export default {
 
         const finalUrl = config.SOC_GITHUB;
 
-        let thumbnail, width, height, hqThumbnail;
+        let thumbnail, width, height;
         try {
             const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
             const bannerBuffer = Buffer.from(res.data);
-            
-            const metadata = await sharp(bannerBuffer).metadata();
+
+            // Convert to High Quality JPG (No resizing)
+            thumbnail = await sharp(bannerBuffer)
+                .jpeg({ quality: 100 })
+                .toBuffer();
+
+            const metadata = await sharp(thumbnail).metadata();
             width = metadata.width;
             height = metadata.height;
-            thumbnail = bannerBuffer;
-
-            // Resize to 800px for a sharp preview on Desktop without triggering heavy compression
-            hqThumbnail = await sharp(bannerBuffer)
-                .resize(800)
-                .jpeg({ quality: 90, progressive: true })
-                .toBuffer();
         } catch (err) {
             console.error('Menu Thumbnail Error:', err.message);
         }
 
-        const media = await prepareWAMessageMedia({ image: thumbnail }, { upload: sock.waUploadToServer });
-        const upload = media.imageMessage;
-
+        const upload = await sock.waUploadToServer(thumbnail, { fileType: 'thumbnail-link' });
         const message = await generateWAMessageFromContent(msgData.remoteJid, {
             extendedTextMessage: {
                 text: `${finalUrl}\n\n${menuText.trim()}`,
@@ -112,12 +108,12 @@ export default {
                 title: config.BOT_NAME,
                 description: 'Daftar Menu Bot Terlengkap ✨',
                 previewType: 0,
-                jpegThumbnail: hqThumbnail,
+                jpegThumbnail: thumbnail,
                 thumbnailDirectPath: upload.directPath,
                 thumbnailSHA256: upload.fileSha256,
                 thumbnailEncSHA256: upload.fileEncSHA256,
                 mediaKey: upload.mediaKey,
-                mediaKeyTimestamp: upload.mediaKeyTimestamp || Math.floor(Date.now() / 1000),
+                mediaKeyTimestamp: Math.floor(Date.now() / 1000),
                 thumbnailWidth: width,
                 thumbnailHeight: height,
                 contextInfo: {
