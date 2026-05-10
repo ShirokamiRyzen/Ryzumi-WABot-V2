@@ -106,17 +106,19 @@ export default {
         };
 
         await sock.sendMessage(msgData.remoteJid, {
-            text: menuText.trim(),
-            contextInfo: {
-                mentionedJid: [msgData.senderJid],
-                externalAdReply: {
-                    title: config.BOT_NAME,
-                    body: 'Daftar Menu Bot Terlengkap ✨',
-                    mediaType: 1,
-                    previewType: 0,
-                    renderLargerThumbnail: true,
-                    sourceUrl: config.SOC_WA_GROUP,
-                    thumbnail: thumbnail,
+            extendedTextMessage: {
+                text: menuText.trim(),
+                contextInfo: {
+                    mentionedJid: [msgData.senderJid],
+                    externalAdReply: {
+                        title: config.BOT_NAME,
+                        body: 'Daftar Menu Bot Terlengkap ✨',
+                        mediaType: 1,
+                        previewType: 0,
+                        renderLargerThumbnail: true,
+                        sourceUrl: config.SOC_WA_GROUP,
+                        thumbnail: thumbnail,
+                    }
                 }
             }
         }, { quoted: fkon });
