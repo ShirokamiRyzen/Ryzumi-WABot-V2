@@ -83,14 +83,21 @@ export default {
 
         const finalUrl = config.SOC_GITHUB;
 
-        let thumbnail, width, height;
+        let thumbnail, width, height, hqThumbnail;
         try {
             const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
-            thumbnail = Buffer.from(res.data);
+            const bannerBuffer = Buffer.from(res.data);
             
-            const metadata = await sharp(thumbnail).metadata();
+            const metadata = await sharp(bannerBuffer).metadata();
             width = metadata.width;
             height = metadata.height;
+            thumbnail = bannerBuffer;
+
+            // Resize to 800px for a sharp preview on Desktop without triggering heavy compression
+            hqThumbnail = await sharp(bannerBuffer)
+                .resize(800)
+                .jpeg({ quality: 90, progressive: true })
+                .toBuffer();
         } catch (err) {
             console.error('Menu Thumbnail Error:', err.message);
         }
@@ -105,7 +112,7 @@ export default {
                 title: config.BOT_NAME,
                 description: 'Daftar Menu Bot Terlengkap ✨',
                 previewType: 0,
-                jpegThumbnail: thumbnail,
+                jpegThumbnail: hqThumbnail,
                 thumbnailDirectPath: upload.directPath,
                 thumbnailSHA256: upload.fileSha256,
                 thumbnailEncSHA256: upload.fileEncSHA256,
