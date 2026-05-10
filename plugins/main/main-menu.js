@@ -105,7 +105,9 @@ export default {
             }
         };
 
-        await sock.sendMessage(msgData.remoteJid, {
+        // Generate message secara manual untuk bypass validasi media Baileys
+        const { generateWAMessageFromContent } = await import('baileys');
+        const message = await generateWAMessageFromContent(msgData.remoteJid, {
             extendedTextMessage: {
                 text: menuText.trim(),
                 contextInfo: {
@@ -116,11 +118,14 @@ export default {
                         mediaType: 1,
                         previewType: 0,
                         renderLargerThumbnail: true,
-                        sourceUrl: config.SOC_WA_GROUP,
                         thumbnail: thumbnail,
+                        sourceUrl: config.SOC_WA_GROUP
                     }
                 }
             }
         }, { quoted: fkon });
+
+        // Kirim lewat relayMessage agar struktur protobuf-nya utuh sampai ke tujuan
+        await sock.relayMessage(msgData.remoteJid, message.message, { messageId: message.key.id });
     }
 };
