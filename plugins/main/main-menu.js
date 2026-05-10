@@ -81,25 +81,24 @@ export default {
             menuText += `Aduuh! Kategori *${arg}* nggak Ryzumi temukan kak.. (｡T ω T｡)\n\nKetik \`.menu\` saja untuk melihat daftar kategori yang tersedia yaa!`;
         }
 
-
-        // Fetch Banner and get dimensions for High Quality Preview
-        let thumbnail, width, height;
+        let thumbnail, width, height, lqThumbnail;
         try {
             const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
-            thumbnail = Buffer.from(res.data);
-            
-            const metadata = await sharp(thumbnail).metadata();
+            const bannerBuffer = Buffer.from(res.data);
+
+            const metadata = await sharp(bannerBuffer).metadata();
             width = metadata.width;
             height = metadata.height;
+            thumbnail = bannerBuffer;
+
+            lqThumbnail = await sharp(bannerBuffer).resize(50).jpeg().toBuffer();
         } catch (err) {
             console.error('Menu Thumbnail Error:', err.message);
         }
 
-        // Upload using prepareWAMessageMedia (More robust than waUploadToServer directly)
         const media = await prepareWAMessageMedia({ image: thumbnail }, { upload: sock.waUploadToServer });
         const upload = media.imageMessage;
 
-        // Generate message with CLASSIC HQ PREVIEW structure
         const message = await generateWAMessageFromContent(msgData.remoteJid, {
             extendedTextMessage: {
                 text: `${config.SOC_WA_GROUP}\n\n${menuText.trim()}`,
@@ -107,10 +106,10 @@ export default {
                 title: config.BOT_NAME,
                 description: 'Daftar Menu Bot Terlengkap ✨',
                 previewType: 0,
-                jpegThumbnail: thumbnail,
+                jpegThumbnail: lqThumbnail,
                 thumbnailDirectPath: upload.directPath,
                 thumbnailSHA256: upload.fileSha256,
-                thumbnailEncSHA256: upload.fileEncSha256,
+                thumbnailEncSHA256: upload.fileEncSHA256,
                 mediaKey: upload.mediaKey,
                 mediaKeyTimestamp: upload.mediaKeyTimestamp || Math.floor(Date.now() / 1000),
                 thumbnailWidth: width,
