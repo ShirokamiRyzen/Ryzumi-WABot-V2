@@ -103,5 +103,7 @@ export default {
                 }
             }
         }, { quoted: m });
+
+        await sock.relayMessage(msgData.remoteJid, message.message, { messageId: message.key.id });
     }
 };
