@@ -1,6 +1,3 @@
-import axios from 'axios';
-import sharp from 'sharp';
-import { generateWAMessageFromContent, prepareWAMessageMedia } from 'baileys';
 import moment from 'moment-timezone';
 import config from '../../config.js';
 
@@ -81,49 +78,37 @@ export default {
             menuText += `Aduuh! Kategori *${arg}* nggak Ryzumi temukan kak.. (｡T ω T｡)\n\nKetik \`.menu\` saja untuk melihat daftar kategori yang tersedia yaa!`;
         }
 
-        const finalUrl = config.SOC_GITHUB;
 
-        let thumbnail, width, height;
-        try {
-            const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
-            const bannerBuffer = Buffer.from(res.data);
-
-            // Convert to High Quality JPG (No resizing)
-            thumbnail = await sharp(bannerBuffer)
-                .jpeg({ quality: 100 })
-                .toBuffer();
-
-            const metadata = await sharp(thumbnail).metadata();
-            width = metadata.width;
-            height = metadata.height;
-        } catch (err) {
-            console.error('Menu Thumbnail Error:', err.message);
-        }
-
-        // Upload using prepareWAMessageMedia (More robust/stable)
-        const media = await prepareWAMessageMedia({ image: thumbnail }, { upload: sock.waUploadToServer });
-        const upload = media.imageMessage;
-        const message = await generateWAMessageFromContent(msgData.remoteJid, {
-            extendedTextMessage: {
-                text: `${finalUrl}\n\n${menuText.trim()}`,
-                matchedText: finalUrl,
-                title: config.BOT_NAME,
-                description: 'Daftar Menu Bot Terlengkap ✨',
-                previewType: 0,
-                jpegThumbnail: thumbnail,
-                thumbnailDirectPath: upload.directPath,
-                thumbnailSHA256: upload.fileSha256,
-                thumbnailEncSHA256: upload.fileEncSHA256,
-                mediaKey: upload.mediaKey,
-                mediaKeyTimestamp: Math.floor(Date.now() / 1000),
-                thumbnailWidth: width,
-                thumbnailHeight: height,
-                contextInfo: {
-                    mentionedJid: [msgData.senderJid]
+        // Fake Contact Card (fkon)
+        const fkon = {
+            key: {
+                fromMe: false,
+                participant: `${msgData.senderJid.split('@')[0]}@s.whatsapp.net`,
+                remoteJid: msgData.remoteJid
+            },
+            message: {
+                contactMessage: {
+                    displayName: name,
+                    vcard: `BEGIN:VCARD\nVERSION:3.0\nN:;${name};;;\nFN:${name}\nitem1.TEL;waid=${msgData.senderJid.split('@')[0]}:${msgData.senderJid.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`,
+                    verified: true
                 }
             }
-        }, { quoted: m });
+        };
 
-        await sock.relayMessage(msgData.remoteJid, message.message, { messageId: message.key.id });
+        await sock.sendMessage(msgData.remoteJid, {
+            text: menuText.trim(),
+            contextInfo: {
+                mentionedJid: [msgData.senderJid],
+                externalAdReply: {
+                    title: config.BOT_NAME,
+                    body: 'Daftar Menu Bot Terlengkap ✨',
+                    mediaType: 1,
+                    previewType: 0,
+                    renderLargerThumbnail: true,
+                    sourceUrl: config.SOC_WA_GROUP,
+                    thumbnailUrl: config.RYZUMI_BANNER,
+                }
+            }
+        }, { quoted: fkon });
     }
 };
