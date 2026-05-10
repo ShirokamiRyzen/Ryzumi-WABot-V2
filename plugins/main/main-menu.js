@@ -79,10 +79,28 @@ export default {
         }
 
 
+        // Fetch Banner as Buffer for Large Thumbnail
+        let thumbnail;
+        try {
+            const { default: axios } = await import('axios');
+            const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
+            thumbnail = Buffer.from(res.data);
+        } catch (err) {
+            console.error('Menu Thumbnail Error:', err.message);
+        }
+
         await sock.sendMessage(msgData.remoteJid, {
             text: menuText.trim(),
             contextInfo: {
-                mentionedJid: [msgData.senderJid]
+                mentionedJid: [msgData.senderJid],
+                externalAdReply: {
+                    title: config.BOT_NAME,
+                    body: 'Ryzumi Bot - Overview ✨',
+                    mediaType: 1,
+                    renderLargerThumbnail: true,
+                    thumbnail: thumbnail,
+                    sourceUrl: config.SOC_WA_GROUP
+                }
             }
         }, { quoted: m });
     }
