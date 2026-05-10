@@ -79,17 +79,25 @@ export default {
         }
 
 
-        // Fetch Banner as Buffer for Large Thumbnail
-        let thumbnail;
+        // Fetch Banner and get dimensions for High Quality Preview
+        let thumbnail, width, height;
         try {
             const { default: axios } = await import('axios');
+            const sharp = (await import('sharp')).default;
             const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
             thumbnail = Buffer.from(res.data);
+            
+            const metadata = await sharp(thumbnail).metadata();
+            width = metadata.width;
+            height = metadata.height;
         } catch (err) {
             console.error('Menu Thumbnail Error:', err.message);
         }
 
-        // Generate message with CLASSIC PREVIEW structure
+        // Upload to WhatsApp server for HQ metadata
+        const upload = await sock.waUploadToServer(thumbnail, { fileType: 'image' });
+
+        // Generate message with CLASSIC HQ PREVIEW structure
         const { generateWAMessageFromContent } = await import('baileys');
         const message = await generateWAMessageFromContent(msgData.remoteJid, {
             extendedTextMessage: {
@@ -97,7 +105,15 @@ export default {
                 matchedText: config.SOC_WA_GROUP,
                 title: config.BOT_NAME,
                 description: 'Daftar Menu Bot Terlengkap ✨',
+                previewType: 0,
                 jpegThumbnail: thumbnail,
+                thumbnailDirectPath: upload.directPath,
+                thumbnailSHA256: upload.fileSha256,
+                thumbnailEncSHA256: upload.fileEncSha256,
+                mediaKey: upload.mediaKey,
+                mediaKeyTimestamp: Math.floor(Date.now() / 1000),
+                thumbnailWidth: width,
+                thumbnailHeight: height,
                 contextInfo: {
                     mentionedJid: [msgData.senderJid]
                 }
