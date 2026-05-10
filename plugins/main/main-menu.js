@@ -1,6 +1,6 @@
 import axios from 'axios';
 import sharp from 'sharp';
-import { generateWAMessageFromContent } from 'baileys';
+import { generateWAMessageFromContent, prepareWAMessageMedia } from 'baileys';
 import moment from 'moment-timezone';
 import config from '../../config.js';
 
@@ -100,7 +100,9 @@ export default {
             console.error('Menu Thumbnail Error:', err.message);
         }
 
-        const upload = await sock.waUploadToServer(thumbnail, { fileType: 'thumbnail-link' });
+        // Upload using prepareWAMessageMedia (More robust/stable)
+        const media = await prepareWAMessageMedia({ image: thumbnail }, { upload: sock.waUploadToServer });
+        const upload = media.imageMessage;
         const message = await generateWAMessageFromContent(msgData.remoteJid, {
             extendedTextMessage: {
                 text: `${finalUrl}\n\n${menuText.trim()}`,
