@@ -1,4 +1,5 @@
 import moment from 'moment-timezone';
+import axios from 'axios';
 import config from '../../config.js';
 
 export default {
@@ -95,18 +96,27 @@ export default {
             }
         };
 
+        // Ambil banner sebagai buffer untuk preview (Landscape)
+        let thumbBuffer;
+        try {
+            const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
+            thumbBuffer = Buffer.from(res.data);
+        } catch {
+            thumbBuffer = null;
+        }
+
         await sock.sendMessage(msgData.remoteJid, {
             text: menuText.trim(),
             contextInfo: {
                 mentionedJid: [msgData.senderJid],
                 //externalAdReply: {
-                //    title: config.BOT_NAME,
-                //    body: 'Daftar Menu Bot Terlengkap ✨',
+                //    title: 'Ryzumi Starlette',
+                //    body: 'Hallom, Apa Kabar Kak?',
                 //    mediaType: 1,
-                //    previewType: 0,
                 //    renderLargerThumbnail: true,
-                //    sourceUrl: config.SOC_WA_GROUP,
-                //    thumbnailUrl: config.RYZUMI_BANNER,
+                //    sourceUrl: config.SOC_WEBSITE,
+                //    thumbnail: thumbBuffer,
+                //    thumbnailUrl: config.SOC_WEBSITE
                 //}
             }
         }, { quoted: fkon });
