@@ -17,10 +17,21 @@ export default {
                 const participant = typeof part === 'string' ? part : (part.id || part.jid);
                 if (!participant) continue;
 
-                const resolvedJid = resolveLidToJid(participant);
-                const user = await User.findOne({ where: { jid: resolvedJid } });
+                let resolvedJid = resolveLidToJid(participant);
 
-                const username = user?.name || resolvedJid.split('@')[0];
+                // Jika masih LID, coba cari di metadata grup untuk mendapatkan JID asli (nomor HP)
+                // Ini membantu jika Baileys belum sempat sinkronisasi mapping LID ke disk
+                if (resolvedJid.endsWith('@lid')) {
+                    const groupParticipant = metadata.participants.find(p => p.id === resolvedJid || p.lid === resolvedJid || p.id?.split('@')[0] === resolvedJid.split('@')[0]);
+                    if (groupParticipant && groupParticipant.id && !groupParticipant.id.endsWith('@lid')) {
+                        resolvedJid = groupParticipant.id;
+                    }
+                }
+
+                const user = await User.findOne({ where: { jid: resolvedJid } });
+                // Prioritas username: Nama Database > Pushname dari event (jika ada) > Nomor Telepon > LID
+                const pushname = typeof part === 'object' ? (part.pushname || part.notify) : null;
+                const username = user?.name || pushname || resolvedJid.split('@')[0];
                 const memberCount = metadata.participants.length;
 
                 // Ambil PP dengan fallback ke config
