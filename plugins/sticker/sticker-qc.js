@@ -41,7 +41,7 @@ export default {
                         }
                     });
                     if (ppRes.ok) {
-                        const ppBuffer = await ppRes.buffer();
+                        const ppBuffer = Buffer.from(await ppRes.arrayBuffer());
                         const uploadResult = await ryzumiCDN(ppBuffer);
                         avatar = uploadResult.url || (typeof uploadResult === 'string' ? uploadResult : ppUrl);
                         if (typeof avatar === 'object' && avatar.url) avatar = avatar.url;
