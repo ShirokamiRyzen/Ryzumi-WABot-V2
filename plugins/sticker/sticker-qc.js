@@ -3,6 +3,7 @@ import config from '../../config.js';
 import User from '../../databases/orm/User.js';
 import { getMessageContent } from '../../libs/adapter/messageUnwrapper.js';
 import { writeExif, imageToWebp } from '../../libs/sticker/sticker.js';
+import { ryzumiCDN } from '../../libs/uploader.js';
 
 export default {
     command: ['qc', 'quotly'],
@@ -37,14 +38,40 @@ export default {
             }
 
             // Ambil foto profil
-            const pp = await sock.profilePictureUrl(targetJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
+            const ppUrl = await sock.profilePictureUrl(targetJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
+            
+            // Upload avatar ke CDN
+            let avatar = ppUrl;
+            try {
+                const ppResponse = await axios.get(ppUrl, { responseType: 'arraybuffer' });
+                const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
+                avatar = uploadResult.url;
+            } catch (e) {
+                console.error('QC Avatar CDN Error:', e);
+            }
 
-            const url = `${config.API_RYZUMI}/api/image/quotly?` +
-                `text=${encodeURIComponent(text)}` +
-                `&name=${encodeURIComponent(targetName)}` +
-                `&avatar=${encodeURIComponent(pp)}`;
+            const params = new URLSearchParams({
+                text: text,
+                name: targetName,
+                avatar: avatar
+            });
+
+            const url = `${config.API_RYZUMI}/api/image/quotly?${params.toString()}`;
 
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
+            
+            // Cek apakah responnya beneran gambar
+            const contentType = response.headers['content-type'] || '';
+            if (!contentType.includes('image')) {
+                const errorText = Buffer.from(response.data).toString();
+                try {
+                    const errorJson = JSON.parse(errorText);
+                    throw new Error(errorJson.message || 'API gagal memproses stiker');
+                } catch (e) {
+                    throw new Error('API memberikan respon tidak valid (bukan gambar)');
+                }
+            }
+
             const stickerBuffer = await imageToWebp(Buffer.from(response.data));
 
             const exifData = { packName: config.BOT_NAME, packPublish: user.name };

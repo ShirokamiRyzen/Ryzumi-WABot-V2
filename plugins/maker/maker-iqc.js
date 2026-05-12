@@ -22,10 +22,23 @@ export default {
         await sock.sendMessage(msgData.remoteJid, { react: { text: '⏳', key: m.key } });
 
         try {
-            // URL encode teks biar aman~
-            const url = `${config.API_RYZUMI}/api/image/iqc?text=${encodeURIComponent(text)}`;
+            const params = new URLSearchParams({ text: text });
+            const url = `${config.API_RYZUMI}/api/image/iqc?${params.toString()}`;
 
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
+            
+            // Cek apakah responnya beneran gambar
+            const contentType = response.headers['content-type'] || '';
+            if (!contentType.includes('image')) {
+                const errorText = Buffer.from(response.data).toString();
+                try {
+                    const errorJson = JSON.parse(errorText);
+                    throw new Error(errorJson.message || 'API gagal memproses gambar');
+                } catch (e) {
+                    throw new Error('API memberikan respon tidak valid (bukan gambar)');
+                }
+            }
+
             const buffer = Buffer.from(response.data);
 
             // Kirim sebagai gambar (png)

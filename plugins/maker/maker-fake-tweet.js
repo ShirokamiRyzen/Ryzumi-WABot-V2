@@ -26,13 +26,23 @@ export default {
         await sock.sendMessage(msgData.remoteJid, { react: { text: '⏳', key: m.key } });
 
         try {
-            const avatar = await sock.profilePictureUrl(targetJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
+            const ppUrl = await sock.profilePictureUrl(targetJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
+            
+            // Upload avatar ke CDN
+            let avatar = ppUrl;
+            try {
+                const ppResponse = await axios.get(ppUrl, { responseType: 'arraybuffer' });
+                const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
+                avatar = uploadResult.url;
+            } catch (e) {
+                console.error('Fake Tweet Avatar CDN Error:', e);
+            }
 
             let imageUrl = '';
-            const buffer = await msgData.downloadMedia();
-            if (buffer && /imageMessage/.test(msgData.isQuoted ? msgData.quotedType : msgData.messageType)) {
+            const bufferMedia = await msgData.downloadMedia();
+            if (bufferMedia && /imageMessage/.test(msgData.isQuoted ? msgData.quotedType : msgData.messageType)) {
                 try {
-                    const uploadResult = await ryzumiCDN(buffer);
+                    const uploadResult = await ryzumiCDN(bufferMedia);
                     imageUrl = uploadResult.url;
                 } catch (e) {
                     console.error('Upload Media Error:', e);
@@ -49,6 +59,17 @@ export default {
 
             const url = `${config.API_RYZUMI}/api/image/faketweet?${params.toString()}`;
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
+
+            const contentType = response.headers['content-type'] || '';
+            if (!contentType.includes('image')) {
+                const errorText = Buffer.from(response.data).toString();
+                try {
+                    const errorJson = JSON.parse(errorText);
+                    throw new Error(errorJson.message || 'API gagal memproses gambar');
+                } catch (e) {
+                    throw new Error('API memberikan respon tidak valid (bukan gambar)');
+                }
+            }
 
             await sock.sendMessage(msgData.remoteJid, { image: Buffer.from(response.data), caption: `Waaa! Tweet Kakak ${displayName} viral banget nih~! (˶˃ ᵕ ˂˶)` }, { quoted: m });
             await sock.sendMessage(msgData.remoteJid, { react: { text: '✅', key: m.key } });

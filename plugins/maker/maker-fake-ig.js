@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from '../../config.js';
 import User from '../../databases/orm/User.js';
 import { getMessageContent } from '../../libs/adapter/messageUnwrapper.js';
+import { ryzumiCDN } from '../../libs/uploader.js';
 
 export default {
     command: ['fakestory', 'fakeig'],
@@ -39,14 +40,40 @@ export default {
 
         try {
             // Ambil foto profil target
-            const pp = await sock.profilePictureUrl(targetJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
+            const ppUrl = await sock.profilePictureUrl(targetJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
+            
+            // Download dan upload ke CDN biar API lancar (karena kadang API gagal ambil langsung dari WA)
+            let avatar = ppUrl;
+            try {
+                const ppResponse = await axios.get(ppUrl, { responseType: 'arraybuffer' });
+                const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
+                avatar = uploadResult.url;
+            } catch (e) {
+                console.error('Fake IG CDN Upload Error:', e);
+                // Tetap lanjut pakai URL asli kalau upload gagal
+            }
 
-            const url = `${config.API_RYZUMI}/api/image/fake-story?` +
-                `username=${encodeURIComponent(username)}` +
-                `&caption=${encodeURIComponent(caption)}` +
-                `&avatar=${encodeURIComponent(pp)}`;
+            const params = new URLSearchParams({
+                username: username,
+                caption: caption,
+                avatar: avatar
+            });
 
+            const url = `${config.API_RYZUMI}/api/image/fake-story?${params.toString()}`;
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
+            
+            // Cek apakah responnya beneran gambar
+            const contentType = response.headers['content-type'] || '';
+            if (!contentType.includes('image')) {
+                const errorText = Buffer.from(response.data).toString();
+                try {
+                    const errorJson = JSON.parse(errorText);
+                    throw new Error(errorJson.message || 'API gagal memproses gambar');
+                } catch (e) {
+                    throw new Error('API memberikan respon tidak valid (bukan gambar)');
+                }
+            }
+
             const buffer = Buffer.from(response.data);
 
             await sock.sendMessage(msgData.remoteJid, {
