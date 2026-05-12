@@ -40,9 +40,11 @@ const ryzumiCDN = async (inp) => {
         const json = await res.json();
         if (!json.success) throw new Error(json.message || 'Gagal mengunggah file ke CDN.. (╥﹏╥)');
 
-        // Mengembalikan hasil sesuai format input (array atau single object)
-        return Array.isArray(inp) ? json.result : json; 
-        
+        if (Array.isArray(inp)) {
+            return json.result || json.url || json;
+        }
+        return json;
+
     } catch (error) {
         throw new Error(`RyzenCDN Error: ${error.message}`);
     }

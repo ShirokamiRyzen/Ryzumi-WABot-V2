@@ -38,20 +38,25 @@ export default {
             }
 
             // Ambil foto profil
-            const ppUrl = config.RYZUMI_DEFAULT_PP;
-            let finalPpUrl = ppUrl;
+            let ppUrl = config.RYZUMI_DEFAULT_PP;
             try {
-                const waPp = await sock.profilePictureUrl(targetJid, 'image');
-                if (waPp) finalPpUrl = waPp;
+                const cleanJid = targetJid.split(':')[0].split('@')[0] + (targetJid.includes('@lid') ? '@lid' : '@s.whatsapp.net');
+                const waPp = await sock.profilePictureUrl(cleanJid, 'image');
+                if (waPp) ppUrl = waPp;
             } catch (e) {
-                // Use default
+                console.error('Failed to get WA PP:', e.message);
             }
-
+            
             // Upload avatar ke CDN
-            let avatar = finalPpUrl;
-            if (finalPpUrl && typeof finalPpUrl === 'string' && finalPpUrl.startsWith('http')) {
+            let avatar = ppUrl;
+            if (ppUrl && typeof ppUrl === 'string' && ppUrl.startsWith('http')) {
                 try {
-                    const ppResponse = await axios.get(finalPpUrl, { responseType: 'arraybuffer' });
+                    const ppResponse = await axios.get(ppUrl, { 
+                        responseType: 'arraybuffer',
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                        }
+                    });
                     const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
                     avatar = uploadResult.url;
                 } catch (e) {

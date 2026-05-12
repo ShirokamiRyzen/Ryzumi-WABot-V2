@@ -42,22 +42,28 @@ export default {
             // Ambil foto profil target
             let ppUrl = config.RYZUMI_DEFAULT_PP;
             try {
-                const waPp = await sock.profilePictureUrl(targetJid, 'image');
+                // Bersihkan JID dari device index (:1, :2 dst) agar profilePictureUrl lancar
+                const cleanJid = targetJid.split(':')[0].split('@')[0] + (targetJid.includes('@lid') ? '@lid' : '@s.whatsapp.net');
+                const waPp = await sock.profilePictureUrl(cleanJid, 'image');
                 if (waPp) ppUrl = waPp;
             } catch (e) {
-                // Gunakan default jika gagal
+                console.error('Failed to get WA PP:', e.message);
             }
-
+            
             // Download dan upload ke CDN biar API lancar (karena kadang API gagal ambil langsung dari WA)
             let avatar = ppUrl;
             if (ppUrl && typeof ppUrl === 'string' && ppUrl.startsWith('http')) {
                 try {
-                    const ppResponse = await axios.get(ppUrl, { responseType: 'arraybuffer' });
+                    const ppResponse = await axios.get(ppUrl, { 
+                        responseType: 'arraybuffer',
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                        }
+                    });
                     const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
                     avatar = uploadResult.url;
                 } catch (e) {
                     console.error('Fake IG CDN Upload Error:', e);
-                    // Tetap lanjut pakai URL asli kalau upload gagal
                 }
             }
 
