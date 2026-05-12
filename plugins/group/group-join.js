@@ -1,6 +1,3 @@
-import { getMessageContent } from '../../libs/adapter/messageUnwrapper.js';
-import config from '../../config.js';
-
 export default {
     command: ['join'],
     category: 'group',
@@ -10,31 +7,29 @@ export default {
     isPrivate: true,
     description: 'Bot bergabung ke grup melalui tautan undangan.',
     async execute(sock, m, msgData) {
-        let text = msgData.args[0];
-        if (!text && msgData.isQuoted) {
-            text = getMessageContent(msgData.quotedMsg, msgData.quotedType);
+        const { config, quotedContent, args, isQuoted } = msgData;
+
+        let text = args[0];
+        if (!text && isQuoted) {
+            text = quotedContent;
         }
 
         if (!text) {
-            return sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_QUOTED }, { quoted: m });
+            return msgData.reply(config.RYZUMI_MSG_QUOTED);
         }
 
         const linkRegex = /chat.whatsapp.com\/([0-9A-Za-z]{20,24})/i;
         const match = text.match(linkRegex);
 
         if (!match) {
-            return sock.sendMessage(msgData.remoteJid, {
-                text: 'Umm... sepertinya itu bukan link grup WhatsApp yang valid deh kak.. (´･ᴗ･ ` )'
-            }, { quoted: m });
+            return msgData.reply('Umm... sepertinya itu bukan link grup WhatsApp yang valid deh kak.. (´･ᴗ･ ` )');
         }
 
         const inviteCode = match[1];
 
         try {
-            const jid = await sock.groupAcceptInvite(inviteCode);
-            await sock.sendMessage(msgData.remoteJid, {
-                text: `Horeee~! Aku sudah berhasil bergabung ke grup-nya kak! Makasih yaa sudah diundang~ (๑>ᴗ<๑)`
-            }, { quoted: m });
+            await sock.groupAcceptInvite(inviteCode);
+            await msgData.reply(`Horeee~! Aku sudah berhasil bergabung ke grup-nya kak! Makasih yaa sudah diundang~ (๑>ᴗ<๑)`);
 
         } catch (error) {
             console.error('Group Join Error:', error);
@@ -46,9 +41,7 @@ export default {
                 errMsg = 'Uwaaa! Sepertinya aku pernah dikeluarkan dari grup itu atau link-nya sudah tidak berlaku lagi kak.. (╥﹏╥)';
             }
 
-            await sock.sendMessage(msgData.remoteJid, {
-                text: `${errMsg}\n\n*Pesan Error:* ${error.message}`
-            }, { quoted: m });
+            await msgData.reply(`${errMsg}\n\n*Pesan Error:* ${error.message}`);
         }
     }
 };

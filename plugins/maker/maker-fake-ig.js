@@ -1,10 +1,6 @@
 import axios from 'axios';
 import fetch from 'node-fetch';
-import config from '../../config.js';
-import User from '../../databases/orm/User.js';
-import { getMessageContent } from '../../libs/adapter/messageUnwrapper.js';
 import { ryzumiCDN } from '../../libs/uploader.js';
-import { getGroupMetadata } from '../../libs/groupCache.js';
 
 export default {
     command: ['fakestory', 'fakeig'],
@@ -13,15 +9,17 @@ export default {
     limit: 1,
     description: 'Membuat tampilan cerita Instagram palsu (Fake Story).',
     async execute(sock, m, msgData, user) {
+        const { config, db, quotedContent, args, isQuoted, pushName, remoteJid, senderJid } = msgData;
+        
         // Ambil data dari argumen atau quote
-        const fullArgs = msgData.args.join(' ');
+        const fullArgs = args.join(' ');
         let [usernameArg, ...captionArgs] = fullArgs.split('|');
         
         let username = usernameArg?.trim();
         let caption = captionArgs.join('|').trim();
 
-        if (!caption && msgData.isQuoted) {
-            caption = getMessageContent(msgData.quotedMsg, msgData.quotedType);
+        if (!caption && isQuoted) {
+            caption = quotedContent;
         }
 
         if (!caption && usernameArg && !fullArgs.includes('|')) {
@@ -30,41 +28,23 @@ export default {
         }
 
         if (!caption) {
-            return sock.sendMessage(msgData.remoteJid, {
-                text: `Kakak manis~ Cara pakainya gini yaa:\n*.fakestory username|caption*\n\nAtau balas pesan teks dengan *.fakestory username*~ (˶˃ ᵕ ˂˶)`
-            }, { quoted: m });
+            return msgData.reply(`Kakak manis~ Cara pakainya gini yaa:\n*.fakestory username|caption*\n\nAtau balas pesan teks dengan *.fakestory username*~ (˶˃ ᵕ ˂˶)`);
         }
 
         // Ambil target JID (default ke pengirim)
-        let targetJid = msgData.parseTargetJid() || msgData.senderJid;
+        const targetJid = msgData.parseTargetJid() || senderJid;
 
-        // Optimasi resolusi JID (LID ke JID) seperti di welcome/leave
-        if (targetJid.endsWith('@lid') && msgData.isGroup) {
-            const metadata = getGroupMetadata(msgData.remoteJid);
-            if (metadata) {
-                const groupParticipant = metadata.participants.find(p => p.id === targetJid || p.lid === targetJid || p.id?.split('@')[0] === targetJid.split('@')[0]);
-                if (groupParticipant && groupParticipant.id && !groupParticipant.id.endsWith('@lid')) {
-                    targetJid = groupParticipant.id;
-                }
-            }
-        }
-
-        // Fallback untuk username (Nama di Story)
+        // Fallback untuk username
         if (!username) {
-            const targetUser = await User.findOne({ where: { jid: targetJid } });
-            username = targetUser?.name || (targetJid === msgData.senderJid ? msgData.pushName : 'User');
+            const targetUser = await db.User.findOne({ where: { jid: targetJid } });
+            username = targetUser?.name || (targetJid === senderJid ? pushName : 'User');
         }
 
-        await sock.sendMessage(msgData.remoteJid, { react: { text: '⏳', key: m.key } });
+        await msgData.react('⏳');
 
         try {
-            // Ambil foto profil target dengan fallback berlapis
-            let ppUrl = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
-            try {
-                const cleanJid = targetJid.split(':')[0].split('@')[0] + (targetJid.includes('@lid') ? '@lid' : '@s.whatsapp.net');
-                const waPp = await sock.profilePictureUrl(cleanJid, 'image');
-                if (waPp) ppUrl = waPp;
-            } catch (e) {}
+            // Ambil foto profil target dengan Raw Query via msgData (Global)
+            const ppUrl = await msgData.getPP(targetJid, 'image');
             
             // Download dan upload ke CDN biar API lancar
             let avatar = ppUrl;
@@ -80,14 +60,15 @@ export default {
                         const ppBuffer = await ppRes.buffer();
                         const uploadResult = await ryzumiCDN(ppBuffer);
                         avatar = uploadResult.url || (typeof uploadResult === 'string' ? uploadResult : ppUrl);
+                        if (typeof avatar === 'object' && avatar.url) avatar = avatar.url;
                     }
                 } catch (e) {
                     console.error('Fake IG Avatar Upload Error:', e.message);
                 }
             }
 
-            // Pastikan avatar tidak undefined sebelum masuk params
-            if (!avatar) avatar = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
+            // Final check untuk avatar
+            if (!avatar || avatar === 'undefined') avatar = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
 
             const params = new URLSearchParams({
                 username: String(username),
@@ -98,24 +79,21 @@ export default {
             const url = `${config.API_RYZUMI}/api/image/fake-story?${params.toString()}`;
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
             
-            const contentType = response.headers['content-type'] || '';
-            if (!contentType.includes('image')) {
+            if (response.headers['content-type']?.includes('image')) {
+                await sock.sendMessage(remoteJid, {
+                    image: Buffer.from(response.data),
+                    caption: `Horeee~! Ini dia Fake Story buat Kakak ${pushName}! Keren kan? (๑>ᴗ<๑)`
+                }, { quoted: m });
+            } else {
                 throw new Error('API gagal mereturn gambar');
             }
 
-            await sock.sendMessage(msgData.remoteJid, {
-                image: Buffer.from(response.data),
-                caption: `Horeee~! Ini dia Fake Story buat Kakak ${msgData.pushName}! Keren kan? (๑>ᴗ<๑)`
-            }, { quoted: m });
-
-            await sock.sendMessage(msgData.remoteJid, { react: { text: '✅', key: m.key } });
+            await msgData.react('✅');
 
         } catch (error) {
             console.error('Fake Story Error:', error);
-            await sock.sendMessage(msgData.remoteJid, { react: { text: '❌', key: m.key } });
-            await sock.sendMessage(msgData.remoteJid, {
-                text: `Aduuh gawat! Ryzumi gagal bikin story-nya kak: ${error.message}.. (╥﹏╥)`
-            }, { quoted: m });
+            await msgData.react('❌');
+            await msgData.reply(`Aduuh gawat! Ryzumi gagal bikin story-nya kak: ${error.message}.. (╥﹏╥)`);
         }
     }
 };

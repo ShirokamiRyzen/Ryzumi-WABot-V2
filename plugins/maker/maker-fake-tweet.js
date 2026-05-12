@@ -1,10 +1,6 @@
 import axios from 'axios';
 import fetch from 'node-fetch';
-import config from '../../config.js';
-import User from '../../databases/orm/User.js';
-import { getMessageContent } from '../../libs/adapter/messageUnwrapper.js';
 import { ryzumiCDN } from '../../libs/uploader.js';
-import { getGroupMetadata } from '../../libs/groupCache.js';
 
 export default {
     command: ['faketweet', 'tweet'],
@@ -13,29 +9,20 @@ export default {
     limit: 1,
     description: 'Membuat tampilan Tweet palsu (Fake Tweet).',
     async execute(sock, m, msgData) {
-        const fullArgs = msgData.args.join(' ');
+        const { config, db, quotedContent, args, isQuoted, pushName, remoteJid, senderJid, messageType } = msgData;
+        
+        const fullArgs = args.join(' ');
         let [nameArg, usernameArg, tweetArg] = fullArgs.split('|');
-        
-        let targetJid = msgData.parseTargetJid() || msgData.senderJid;
 
-        // Optimasi resolusi JID (LID ke JID)
-        if (targetJid.endsWith('@lid') && msgData.isGroup) {
-            const metadata = getGroupMetadata(msgData.remoteJid);
-            if (metadata) {
-                const groupParticipant = metadata.participants.find(p => p.id === targetJid || p.lid === targetJid || p.id?.split('@')[0] === targetJid.split('@')[0]);
-                if (groupParticipant && groupParticipant.id && !groupParticipant.id.endsWith('@lid')) {
-                    targetJid = groupParticipant.id;
-                }
-            }
-        }
+        const targetJid = msgData.parseTargetJid() || senderJid;
 
-        const targetUser = await User.findOne({ where: { jid: targetJid } });
-        const displayName = nameArg?.trim() || (targetJid === msgData.senderJid ? msgData.pushName : (targetUser?.name || 'User'));
+        const targetUser = await db.User.findOne({ where: { jid: targetJid } });
+        const displayName = nameArg?.trim() || (targetJid === senderJid ? pushName : (targetUser?.name || 'User'));
         const username = usernameArg?.trim() || displayName.replace(/\s+/g, '_').toLowerCase();
-        
+
         let tweet = tweetArg?.trim();
-        if (!tweet && msgData.isQuoted) {
-            tweet = getMessageContent(msgData.quotedMsg, msgData.quotedType);
+        if (!tweet && isQuoted) {
+            tweet = quotedContent;
         }
 
         if (!tweet && nameArg && !fullArgs.includes('|')) {
@@ -43,20 +30,15 @@ export default {
         }
 
         if (!tweet) {
-            return sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_QUOTED }, { quoted: m });
+            return msgData.reply(config.RYZUMI_MSG_QUOTED);
         }
 
-        await sock.sendMessage(msgData.remoteJid, { react: { text: '⏳', key: m.key } });
+        await msgData.react('⏳');
 
         try {
-            // Ambil foto profil target dengan fallback berlapis
-            let ppUrl = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
-            try {
-                const cleanJid = targetJid.split(':')[0].split('@')[0] + (targetJid.includes('@lid') ? '@lid' : '@s.whatsapp.net');
-                const waPp = await sock.profilePictureUrl(cleanJid, 'image');
-                if (waPp) ppUrl = waPp;
-            } catch (e) {}
-            
+            // Ambil foto profil target dengan Raw Query via msgData (Global)
+            const ppUrl = await msgData.getPP(targetJid, 'image');
+
             // Upload avatar ke CDN
             let avatar = ppUrl;
             if (ppUrl && ppUrl.startsWith('http')) {
@@ -80,7 +62,7 @@ export default {
 
             let imageUrl = '';
             const bufferMedia = await msgData.downloadMedia();
-            if (bufferMedia && /imageMessage/.test(msgData.isQuoted ? msgData.quotedType : msgData.messageType)) {
+            if (bufferMedia && /imageMessage/.test(isQuoted ? msgData.quotedType : messageType)) {
                 try {
                     const uploadResult = await ryzumiCDN(bufferMedia);
                     imageUrl = uploadResult.url || uploadResult;
@@ -90,37 +72,37 @@ export default {
                 }
             }
 
-            // Pastikan avatar tidak undefined sebelum masuk params
-            if (!avatar) avatar = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
+            // Final check untuk avatar
+            if (!avatar || avatar === 'undefined') avatar = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
 
             const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
             const params = new URLSearchParams({
-                bg: 'dim', 
-                avatar: String(avatar), 
-                name: String(displayName), 
-                username: String(username), 
+                bg: 'dim',
+                avatar: String(avatar),
+                name: String(displayName),
+                username: String(username),
                 tweet: String(tweet),
-                retweets: String(rand(200, 1000)), 
-                comment: String(rand(200, 1000)), 
+                retweets: String(rand(200, 1000)),
+                comment: String(rand(200, 1000)),
                 likes: String(rand(500, 2000)),
                 verified: 'true'
             });
-            if (imageUrl) params.set('image', imageUrl);
+            if (imageUrl) params.set('image', String(imageUrl));
 
             const url = `${config.API_RYZUMI}/api/image/faketweet?${params.toString()}`;
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
 
             if (response.headers['content-type']?.includes('image')) {
-                await sock.sendMessage(msgData.remoteJid, { image: Buffer.from(response.data), caption: `Waaa! Tweet Kakak ${displayName} viral banget nih~! (˶˃ ᵕ ˂˶)` }, { quoted: m });
+                await sock.sendMessage(remoteJid, { image: Buffer.from(response.data), caption: `Waaa! Tweet Kakak ${displayName} viral banget nih~! (˶˃ ᵕ ˂˶)` }, { quoted: m });
             } else {
                 throw new Error('API gagal mereturn gambar');
             }
-            await sock.sendMessage(msgData.remoteJid, { react: { text: '✅', key: m.key } });
+            await msgData.react('✅');
 
         } catch (error) {
             console.error('Fake Tweet Error:', error);
-            await sock.sendMessage(msgData.remoteJid, { react: { text: '❌', key: m.key } }, { quoted: m });
-            await sock.sendMessage(msgData.remoteJid, { text: `Aduuh gawat! Ryzumi gagal bikin tweet-nya kak: ${error.message}.. (╥﹏╥)` }, { quoted: m });
+            await msgData.react('❌');
+            await msgData.reply(`Aduuh gawat! Ryzumi gagal bikin tweet-nya kak: ${error.message}.. (╥﹏╥)`);
         }
     }
 };

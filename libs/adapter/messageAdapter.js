@@ -1,5 +1,9 @@
 import { resolveLidToJid } from '../lid-resolver.js';
 import { unwrapMessage, getMessageType, getMessageContent } from './messageUnwrapper.js';
+import { getPP } from '../baileys-utils.js';
+import config from '../../config.js';
+import User from '../../databases/orm/User.js';
+import Group from '../../databases/orm/Group.js';
 
 export const extractMessageData = (m, sock) => {
     const isGroup = m.key.remoteJid.endsWith('@g.us');
@@ -33,6 +37,7 @@ export const extractMessageData = (m, sock) => {
 
     const quotedMsg = isQuoted ? unwrapMessage(contextInfo.quotedMessage) : null;
     const quotedType = isQuoted ? getMessageType(quotedMsg) : '';
+    const quotedContent = isQuoted ? getMessageContent(quotedMsg, quotedType) : '';
 
     const isMedia = /imageMessage|videoMessage|audioMessage|stickerMessage|documentMessage/.test(messageType);
     const mime = msg[messageType]?.mimetype || '';
@@ -43,6 +48,7 @@ export const extractMessageData = (m, sock) => {
     const remoteJid = resolveLidToJid(rawRemoteJid);
 
     return {
+        // Core Properties
         isGroup,
         remoteJid,
         senderJid,
@@ -53,19 +59,20 @@ export const extractMessageData = (m, sock) => {
         commandName,
         args,
         isQuoted,
-        contextInfo,
-        msg,
         quotedMsg,
         quotedType,
+        quotedContent,
         isMedia,
         mime,
         quotedMime,
         isQuotedMedia,
         mentions: contextInfo.mentionedJid || [],
-        isAdmin: false, // Will be set in handler
-        isBotAdmin: false, // Will be set in handler
         
-        // Helper to parse target JID from various sources
+        // Modular Access
+        config,
+        db: { User, Group },
+        
+        // Helper Methods
         parseTargetJid: () => {
             let targetJid = null;
             if (contextInfo.mentionedJid && contextInfo.mentionedJid.length > 0) {
@@ -85,12 +92,12 @@ export const extractMessageData = (m, sock) => {
                 }
             }
             if (!targetJid) return null;
-            if (targetJid.endsWith('@lid')) return targetJid;
-            if (targetJid.endsWith('@g.us')) return targetJid;
-            return targetJid.split(':')[0].split('@')[0] + '@s.whatsapp.net';
+            
+            const resolved = resolveLidToJid(targetJid);
+            if (resolved.endsWith('@g.us')) return resolved;
+            return resolved.split(':')[0].split('@')[0] + '@s.whatsapp.net';
         },
 
-        // Helper to download media from the current or quoted message
         downloadMedia: async () => {
             const q = isQuoted ? quotedMsg : msg;
             const type = isQuoted ? quotedType : messageType;
@@ -110,7 +117,8 @@ export const extractMessageData = (m, sock) => {
         },
 
         reply: async (text) => sock.sendMessage(remoteJid, { text }, { quoted: m }),
-        react: async (emoji) => sock.sendMessage(remoteJid, { react: { text: emoji, key: m.key } })
+        react: async (emoji) => sock.sendMessage(remoteJid, { react: { text: emoji, key: m.key } }),
+        getPP: async (jid, type = 'image') => getPP(sock, jid, type)
     };
 };
 

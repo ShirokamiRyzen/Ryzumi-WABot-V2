@@ -1,11 +1,7 @@
 import axios from 'axios';
 import fetch from 'node-fetch';
-import config from '../../config.js';
-import User from '../../databases/orm/User.js';
-import { getMessageContent } from '../../libs/adapter/messageUnwrapper.js';
 import { writeExif, imageToWebp } from '../../libs/sticker/sticker.js';
 import { ryzumiCDN } from '../../libs/uploader.js';
-import { getGroupMetadata } from '../../libs/groupCache.js';
 
 export default {
     command: ['qc', 'quotly'],
@@ -13,41 +9,27 @@ export default {
     isRegistered: true,
     description: 'Membuat stiker gelembung chat (Quotly).',
     async execute(sock, m, msgData, user) {
-        let text = msgData.args.join(' ');
-        if (!text && msgData.isQuoted) {
-            text = getMessageContent(msgData.quotedMsg, msgData.quotedType);
+        const { config, db, quotedContent, args, isQuoted, pushName, remoteJid, senderJid } = msgData;
+        
+        let text = args.join(' ');
+        if (!text && isQuoted) {
+            text = quotedContent;
         }
 
         if (!text) {
-            return sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_QUOTED }, { quoted: m });
+            return msgData.reply(config.RYZUMI_MSG_QUOTED);
         }
 
-        await sock.sendMessage(msgData.remoteJid, { react: { text: '⏳', key: m.key } });
+        await msgData.react('⏳');
 
         try {
-            let targetJid = msgData.parseTargetJid() || msgData.senderJid;
+            const targetJid = msgData.parseTargetJid() || senderJid;
 
-            // Optimasi resolusi JID (LID ke JID)
-            if (targetJid.endsWith('@lid') && msgData.isGroup) {
-                const metadata = getGroupMetadata(msgData.remoteJid);
-                if (metadata) {
-                    const groupParticipant = metadata.participants.find(p => p.id === targetJid || p.lid === targetJid || p.id?.split('@')[0] === targetJid.split('@')[0]);
-                    if (groupParticipant && groupParticipant.id && !groupParticipant.id.endsWith('@lid')) {
-                        targetJid = groupParticipant.id;
-                    }
-                }
-            }
+            const targetUser = await db.User.findOne({ where: { jid: targetJid } });
+            const targetName = targetJid === senderJid ? pushName : (targetUser?.name || 'User');
 
-            const targetUser = await User.findOne({ where: { jid: targetJid } });
-            const targetName = targetJid === msgData.senderJid ? msgData.pushName : (targetUser?.name || 'User');
-
-            // Ambil foto profil dengan fallback berlapis
-            let ppUrl = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
-            try {
-                const cleanJid = targetJid.split(':')[0].split('@')[0] + (targetJid.includes('@lid') ? '@lid' : '@s.whatsapp.net');
-                const waPp = await sock.profilePictureUrl(cleanJid, 'image');
-                if (waPp) ppUrl = waPp;
-            } catch (e) {}
+            // Ambil foto profil target dengan Raw Query via msgData (Global)
+            const ppUrl = await msgData.getPP(targetJid, 'image');
             
             let avatar = ppUrl;
             if (ppUrl && ppUrl.startsWith('http')) {
@@ -69,8 +51,8 @@ export default {
                 }
             }
 
-            // Pastikan avatar tidak undefined sebelum masuk params
-            if (!avatar) avatar = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
+            // Final check untuk avatar
+            if (!avatar || avatar === 'undefined') avatar = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
 
             const params = new URLSearchParams({
                 text: String(text),
@@ -85,19 +67,17 @@ export default {
                 const stickerBuffer = await imageToWebp(Buffer.from(response.data));
                 const exifData = { packName: config.BOT_NAME, packPublish: user.name };
                 const finalSticker = await writeExif(stickerBuffer, exifData);
-                await sock.sendMessage(msgData.remoteJid, { sticker: finalSticker }, { quoted: m });
+                await sock.sendMessage(remoteJid, { sticker: finalSticker }, { quoted: m });
             } else {
                 throw new Error('API gagal mereturn gambar');
             }
 
-            await sock.sendMessage(msgData.remoteJid, { react: { text: '✅', key: m.key } });
+            await msgData.react('✅');
 
         } catch (error) {
             console.error('QC Sticker Error:', error);
-            await sock.sendMessage(msgData.remoteJid, { react: { text: '❌', key: m.key } });
-            await sock.sendMessage(msgData.remoteJid, {
-                text: `Uwaaa gawat! Gagal bikin stiker quotly-nya kak: ${error.message}.. (╥﹏╥)`
-            }, { quoted: m });
+            await msgData.react('❌');
+            await msgData.reply(`Uwaaa gawat! Gagal bikin stiker quotly-nya kak: ${error.message}.. (╥﹏╥)`);
         }
     }
 };

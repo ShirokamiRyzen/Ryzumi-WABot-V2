@@ -2,6 +2,7 @@ import Group from '../../databases/orm/Group.js';
 import User from '../../databases/orm/User.js';
 import config from '../../config.js';
 import { resolveLidToJid } from '../../libs/lid-resolver.js';
+import { getPP } from '../../libs/baileys-utils.js';
 
 export default {
     category: 'group',
@@ -19,8 +20,7 @@ export default {
 
                 let resolvedJid = resolveLidToJid(participant);
 
-                // Jika masih LID, coba cari di metadata grup untuk mendapatkan JID asli (nomor HP)
-                // Ini membantu jika Baileys belum sempat sinkronisasi mapping LID ke disk
+                // Jika masih LID, coba cari di metadata grup
                 if (resolvedJid.endsWith('@lid')) {
                     const groupParticipant = metadata.participants.find(p => p.id === resolvedJid || p.lid === resolvedJid || p.id?.split('@')[0] === resolvedJid.split('@')[0]);
                     if (groupParticipant && groupParticipant.id && !groupParticipant.id.endsWith('@lid')) {
@@ -29,18 +29,12 @@ export default {
                 }
 
                 const user = await User.findOne({ where: { jid: resolvedJid } });
-                // Prioritas username: Nama Database > Pushname dari event (jika ada) > Nomor Telepon > LID
                 const pushname = typeof part === 'object' ? (part.pushname || part.notify) : null;
                 const username = user?.name || pushname || resolvedJid.split('@')[0];
                 const memberCount = metadata.participants.length;
 
-                // Ambil PP dengan fallback ke config
-                let ppUrl;
-                try {
-                    ppUrl = await sock.profilePictureUrl(resolvedJid, 'image');
-                } catch {
-                    ppUrl = config.RYZUMI_DEFAULT_PP;
-                }
+                // Ambil PP dengan Raw Query Bypass
+                const ppUrl = await getPP(sock, resolvedJid, 'image');
 
                 // Gunakan banner utama sebagai background
                 const bg_welcome = config.RYZUMI_WELCOME_BANNER;

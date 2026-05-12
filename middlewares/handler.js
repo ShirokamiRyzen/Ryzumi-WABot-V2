@@ -1,4 +1,3 @@
-import fs from 'fs';
 import path from 'path';
 import { plugins, loadPlugins, watchPlugins } from '../libs/hot-reload.js';
 import { processAuth } from './auth.js';
@@ -20,7 +19,7 @@ export default async function botHandler(sock, m, msgData) {
             if (plugin.command && plugin.command.includes(msgData.commandName)) {
                 const isValid = await validatePlugin(sock, m, msgData, user, group, plugin);
                 if (!isValid) return;
-                
+
                 await plugin.execute(sock, m, msgData, user, group, plugins);
                 break;
             }
@@ -28,8 +27,8 @@ export default async function botHandler(sock, m, msgData) {
     } catch (error) {
         console.error('Global Handler Error:', error);
         const ownerJid = config.OWNER_NUMBER.includes('@') ? config.OWNER_NUMBER : `${config.OWNER_NUMBER}@s.whatsapp.net`;
-        await sock.sendMessage(ownerJid, { 
-            text: `[SYSTEM ERROR]\n\nMsg: ${error.message}\n\nStack:\n${error.stack}` 
+        await sock.sendMessage(ownerJid, {
+            text: `[SYSTEM ERROR]\n\nMsg: ${error.message}\n\nStack:\n${error.stack}`
         });
     }
 }
