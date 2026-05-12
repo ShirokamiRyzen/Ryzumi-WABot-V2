@@ -67,6 +67,8 @@ export const extractMessageData = (m, sock) => {
         quotedMime,
         isQuotedMedia,
         mentions: contextInfo.mentionedJid || [],
+        msg,
+        contextInfo,
         
         // Modular Access
         config,
