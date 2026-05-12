@@ -26,16 +26,25 @@ export default {
         await sock.sendMessage(msgData.remoteJid, { react: { text: '⏳', key: m.key } });
 
         try {
-            const ppUrl = await sock.profilePictureUrl(targetJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
-            
-            // Upload avatar ke CDN
-            let avatar = ppUrl;
+            const ppUrl = config.RYZUMI_DEFAULT_PP;
+            let finalPpUrl = ppUrl;
             try {
-                const ppResponse = await axios.get(ppUrl, { responseType: 'arraybuffer' });
-                const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
-                avatar = uploadResult.url;
+                const waPp = await sock.profilePictureUrl(targetJid, 'image');
+                if (waPp) finalPpUrl = waPp;
             } catch (e) {
-                console.error('Fake Tweet Avatar CDN Error:', e);
+                // Use default
+            }
+
+            // Upload avatar ke CDN
+            let avatar = finalPpUrl;
+            if (finalPpUrl && typeof finalPpUrl === 'string' && finalPpUrl.startsWith('http')) {
+                try {
+                    const ppResponse = await axios.get(finalPpUrl, { responseType: 'arraybuffer' });
+                    const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
+                    avatar = uploadResult.url;
+                } catch (e) {
+                    console.error('Fake Tweet Avatar CDN Error:', e);
+                }
             }
 
             let imageUrl = '';

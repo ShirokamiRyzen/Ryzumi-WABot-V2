@@ -38,16 +38,25 @@ export default {
             }
 
             // Ambil foto profil
-            const ppUrl = await sock.profilePictureUrl(targetJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
-            
-            // Upload avatar ke CDN
-            let avatar = ppUrl;
+            const ppUrl = config.RYZUMI_DEFAULT_PP;
+            let finalPpUrl = ppUrl;
             try {
-                const ppResponse = await axios.get(ppUrl, { responseType: 'arraybuffer' });
-                const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
-                avatar = uploadResult.url;
+                const waPp = await sock.profilePictureUrl(targetJid, 'image');
+                if (waPp) finalPpUrl = waPp;
             } catch (e) {
-                console.error('QC Avatar CDN Error:', e);
+                // Use default
+            }
+
+            // Upload avatar ke CDN
+            let avatar = finalPpUrl;
+            if (finalPpUrl && typeof finalPpUrl === 'string' && finalPpUrl.startsWith('http')) {
+                try {
+                    const ppResponse = await axios.get(finalPpUrl, { responseType: 'arraybuffer' });
+                    const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
+                    avatar = uploadResult.url;
+                } catch (e) {
+                    console.error('QC Avatar CDN Error:', e);
+                }
             }
 
             const params = new URLSearchParams({
@@ -59,7 +68,7 @@ export default {
             const url = `${config.API_RYZUMI}/api/image/quotly?${params.toString()}`;
 
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
-            
+
             // Cek apakah responnya beneran gambar
             const contentType = response.headers['content-type'] || '';
             if (!contentType.includes('image')) {
@@ -83,8 +92,8 @@ export default {
         } catch (error) {
             console.error('QC Sticker Error:', error);
             await sock.sendMessage(msgData.remoteJid, { react: { text: '❌', key: m.key } });
-            await sock.sendMessage(msgData.remoteJid, { 
-                text: `Uwaaa gawat! Gagal bikin stiker quotly-nya kak: ${error.message}.. (╥﹏╥)` 
+            await sock.sendMessage(msgData.remoteJid, {
+                text: `Uwaaa gawat! Gagal bikin stiker quotly-nya kak: ${error.message}.. (╥﹏╥)`
             }, { quoted: m });
         }
     }

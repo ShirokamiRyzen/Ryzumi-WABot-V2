@@ -40,17 +40,25 @@ export default {
 
         try {
             // Ambil foto profil target
-            const ppUrl = await sock.profilePictureUrl(targetJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
-            
+            let ppUrl = config.RYZUMI_DEFAULT_PP;
+            try {
+                const waPp = await sock.profilePictureUrl(targetJid, 'image');
+                if (waPp) ppUrl = waPp;
+            } catch (e) {
+                // Gunakan default jika gagal
+            }
+
             // Download dan upload ke CDN biar API lancar (karena kadang API gagal ambil langsung dari WA)
             let avatar = ppUrl;
-            try {
-                const ppResponse = await axios.get(ppUrl, { responseType: 'arraybuffer' });
-                const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
-                avatar = uploadResult.url;
-            } catch (e) {
-                console.error('Fake IG CDN Upload Error:', e);
-                // Tetap lanjut pakai URL asli kalau upload gagal
+            if (ppUrl && typeof ppUrl === 'string' && ppUrl.startsWith('http')) {
+                try {
+                    const ppResponse = await axios.get(ppUrl, { responseType: 'arraybuffer' });
+                    const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
+                    avatar = uploadResult.url;
+                } catch (e) {
+                    console.error('Fake IG CDN Upload Error:', e);
+                    // Tetap lanjut pakai URL asli kalau upload gagal
+                }
             }
 
             const params = new URLSearchParams({
@@ -61,7 +69,7 @@ export default {
 
             const url = `${config.API_RYZUMI}/api/image/fake-story?${params.toString()}`;
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
-            
+
             // Cek apakah responnya beneran gambar
             const contentType = response.headers['content-type'] || '';
             if (!contentType.includes('image')) {
