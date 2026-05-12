@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fetch from 'node-fetch';
 import config from '../../config.js';
 import User from '../../databases/orm/User.js';
 import { getMessageContent } from '../../libs/adapter/messageUnwrapper.js';
@@ -12,13 +13,22 @@ export default {
     description: 'Membuat tampilan cerita Instagram palsu (Fake Story).',
     async execute(sock, m, msgData, user) {
         // Ambil data dari argumen atau quote
-        let [usernameArg, ...captionArgs] = msgData.args.join(' ').split('|');
-        let caption = captionArgs.join('|').trim();
+        const fullArgs = msgData.args.join(' ');
+        let [usernameArg, ...captionArgs] = fullArgs.split('|');
+        
         let username = usernameArg?.trim();
+        let caption = captionArgs.join('|').trim();
 
-        // Fallback untuk caption dari quoted message
+        // Fallback: Jika tidak ada pemisah |, maka argumen pertama dianggap caption jika panjang
+        // atau username jika pendek. Tapi lebih baik ikuti pola lama:
         if (!caption && msgData.isQuoted) {
             caption = getMessageContent(msgData.quotedMsg, msgData.quotedType);
+        }
+
+        // Jika masih tidak ada caption tapi ada usernameArg, mungkin user lupa |
+        if (!caption && usernameArg && !fullArgs.includes('|')) {
+            caption = usernameArg;
+            username = ''; // Akan diisi otomatis nanti
         }
 
         if (!caption) {
@@ -27,13 +37,13 @@ export default {
             }, { quoted: m });
         }
 
-        // Ambil target untuk avatar (default ke pengirim)
+        // Ambil target JID (default ke pengirim)
         const targetJid = msgData.parseTargetJid() || msgData.senderJid;
 
-        // Fallback untuk username jika tidak diisi
+        // Fallback untuk username (Nama di Story)
         if (!username) {
             const targetUser = await User.findOne({ where: { jid: targetJid } });
-            username = targetUser?.name || msgData.pushName || 'RyzumiUser';
+            username = targetUser?.name || (targetJid === msgData.senderJid ? msgData.pushName : 'User');
         }
 
         await sock.sendMessage(msgData.remoteJid, { react: { text: '⏳', key: m.key } });
@@ -42,28 +52,27 @@ export default {
             // Ambil foto profil target
             let ppUrl = config.RYZUMI_DEFAULT_PP;
             try {
-                // Bersihkan JID dari device index (:1, :2 dst) agar profilePictureUrl lancar
                 const cleanJid = targetJid.split(':')[0].split('@')[0] + (targetJid.includes('@lid') ? '@lid' : '@s.whatsapp.net');
-                const waPp = await sock.profilePictureUrl(cleanJid, 'image');
-                if (waPp) ppUrl = waPp;
-            } catch (e) {
-                console.error('Failed to get WA PP:', e.message);
-            }
+                ppUrl = await sock.profilePictureUrl(cleanJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
+            } catch (e) {}
             
-            // Download dan upload ke CDN biar API lancar (karena kadang API gagal ambil langsung dari WA)
+            // Download dan upload ke CDN biar API lancar
             let avatar = ppUrl;
-            if (ppUrl && typeof ppUrl === 'string' && ppUrl.startsWith('http')) {
+            if (ppUrl && ppUrl.startsWith('http')) {
                 try {
-                    const ppResponse = await axios.get(ppUrl, { 
-                        responseType: 'arraybuffer',
+                    const ppRes = await fetch(ppUrl, {
                         headers: {
-                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8'
                         }
                     });
-                    const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
-                    avatar = uploadResult.url;
+                    if (ppRes.ok) {
+                        const ppBuffer = await ppRes.buffer();
+                        const uploadResult = await ryzumiCDN(ppBuffer);
+                        avatar = uploadResult.url || uploadResult;
+                    }
                 } catch (e) {
-                    console.error('Fake IG CDN Upload Error:', e);
+                    console.error('Fake IG Avatar Upload Error:', e.message);
                 }
             }
 
@@ -75,23 +84,14 @@ export default {
 
             const url = `${config.API_RYZUMI}/api/image/fake-story?${params.toString()}`;
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
-
-            // Cek apakah responnya beneran gambar
+            
             const contentType = response.headers['content-type'] || '';
             if (!contentType.includes('image')) {
-                const errorText = Buffer.from(response.data).toString();
-                try {
-                    const errorJson = JSON.parse(errorText);
-                    throw new Error(errorJson.message || 'API gagal memproses gambar');
-                } catch (e) {
-                    throw new Error('API memberikan respon tidak valid (bukan gambar)');
-                }
+                throw new Error('API memberikan respon tidak valid (bukan gambar)');
             }
 
-            const buffer = Buffer.from(response.data);
-
             await sock.sendMessage(msgData.remoteJid, {
-                image: buffer,
+                image: Buffer.from(response.data),
                 caption: `Horeee~! Ini dia Fake Story buat Kakak ${msgData.pushName}! Keren kan? (๑>ᴗ<๑)`
             }, { quoted: m });
 

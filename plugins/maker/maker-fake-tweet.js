@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fetch from 'node-fetch';
 import config from '../../config.js';
 import User from '../../databases/orm/User.js';
 import { getMessageContent } from '../../libs/adapter/messageUnwrapper.js';
@@ -11,13 +12,24 @@ export default {
     limit: 1,
     description: 'Membuat tampilan Tweet palsu (Fake Tweet).',
     async execute(sock, m, msgData) {
-        let [nameArg, usernameArg, tweetArg] = msgData.args.join(' ').split('|');
+        const fullArgs = msgData.args.join(' ');
+        let [nameArg, usernameArg, tweetArg] = fullArgs.split('|');
+        
         const targetJid = msgData.parseTargetJid() || msgData.senderJid;
         const targetUser = await User.findOne({ where: { jid: targetJid } });
 
-        const displayName = nameArg?.trim() || targetUser?.name || msgData.pushName || 'User';
+        const displayName = nameArg?.trim() || (targetJid === msgData.senderJid ? msgData.pushName : (targetUser?.name || 'User'));
         const username = usernameArg?.trim() || displayName.replace(/\s+/g, '_').toLowerCase();
-        let tweet = tweetArg?.trim() || (msgData.isQuoted ? getMessageContent(msgData.quotedMsg, msgData.quotedType) : '');
+        
+        let tweet = tweetArg?.trim();
+        if (!tweet && msgData.isQuoted) {
+            tweet = getMessageContent(msgData.quotedMsg, msgData.quotedType);
+        }
+
+        // Jika tidak ada pemisah | dan tweet masih kosong, mungkin argumen pertama adalah tweet
+        if (!tweet && nameArg && !fullArgs.includes('|')) {
+            tweet = nameArg;
+        }
 
         if (!tweet) {
             return sock.sendMessage(msgData.remoteJid, { text: config.RYZUMI_MSG_QUOTED }, { quoted: m });
@@ -29,26 +41,26 @@ export default {
             let ppUrl = config.RYZUMI_DEFAULT_PP;
             try {
                 const cleanJid = targetJid.split(':')[0].split('@')[0] + (targetJid.includes('@lid') ? '@lid' : '@s.whatsapp.net');
-                const waPp = await sock.profilePictureUrl(cleanJid, 'image');
-                if (waPp) ppUrl = waPp;
-            } catch (e) {
-                console.error('Failed to get WA PP:', e.message);
-            }
+                ppUrl = await sock.profilePictureUrl(cleanJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
+            } catch (e) {}
             
             // Upload avatar ke CDN
             let avatar = ppUrl;
-            if (ppUrl && typeof ppUrl === 'string' && ppUrl.startsWith('http')) {
+            if (ppUrl && ppUrl.startsWith('http')) {
                 try {
-                    const ppResponse = await axios.get(ppUrl, { 
-                        responseType: 'arraybuffer',
+                    const ppRes = await fetch(ppUrl, {
                         headers: {
-                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8'
                         }
                     });
-                    const uploadResult = await ryzumiCDN(Buffer.from(ppResponse.data));
-                    avatar = uploadResult.url;
+                    if (ppRes.ok) {
+                        const ppBuffer = await ppRes.buffer();
+                        const uploadResult = await ryzumiCDN(ppBuffer);
+                        avatar = uploadResult.url || uploadResult;
+                    }
                 } catch (e) {
-                    console.error('Fake Tweet Avatar CDN Error:', e);
+                    console.error('Fake Tweet Avatar CDN Error:', e.message);
                 }
             }
 
@@ -57,7 +69,7 @@ export default {
             if (bufferMedia && /imageMessage/.test(msgData.isQuoted ? msgData.quotedType : msgData.messageType)) {
                 try {
                     const uploadResult = await ryzumiCDN(bufferMedia);
-                    imageUrl = uploadResult.url;
+                    imageUrl = uploadResult.url || uploadResult;
                 } catch (e) {
                     console.error('Upload Media Error:', e);
                 }
@@ -76,13 +88,7 @@ export default {
 
             const contentType = response.headers['content-type'] || '';
             if (!contentType.includes('image')) {
-                const errorText = Buffer.from(response.data).toString();
-                try {
-                    const errorJson = JSON.parse(errorText);
-                    throw new Error(errorJson.message || 'API gagal memproses gambar');
-                } catch (e) {
-                    throw new Error('API memberikan respon tidak valid (bukan gambar)');
-                }
+                throw new Error('API memberikan respon tidak valid (bukan gambar)');
             }
 
             await sock.sendMessage(msgData.remoteJid, { image: Buffer.from(response.data), caption: `Waaa! Tweet Kakak ${displayName} viral banget nih~! (˶˃ ᵕ ˂˶)` }, { quoted: m });
