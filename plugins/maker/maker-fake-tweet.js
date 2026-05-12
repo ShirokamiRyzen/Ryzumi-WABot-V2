@@ -4,6 +4,7 @@ import config from '../../config.js';
 import User from '../../databases/orm/User.js';
 import { getMessageContent } from '../../libs/adapter/messageUnwrapper.js';
 import { ryzumiCDN } from '../../libs/uploader.js';
+import { getGroupMetadata } from '../../libs/groupCache.js';
 
 export default {
     command: ['faketweet', 'tweet'],
@@ -15,9 +16,20 @@ export default {
         const fullArgs = msgData.args.join(' ');
         let [nameArg, usernameArg, tweetArg] = fullArgs.split('|');
         
-        const targetJid = msgData.parseTargetJid() || msgData.senderJid;
-        const targetUser = await User.findOne({ where: { jid: targetJid } });
+        let targetJid = msgData.parseTargetJid() || msgData.senderJid;
 
+        // Optimasi resolusi JID (LID ke JID)
+        if (targetJid.endsWith('@lid') && msgData.isGroup) {
+            const metadata = getGroupMetadata(msgData.remoteJid);
+            if (metadata) {
+                const groupParticipant = metadata.participants.find(p => p.id === targetJid || p.lid === targetJid || p.id?.split('@')[0] === targetJid.split('@')[0]);
+                if (groupParticipant && groupParticipant.id && !groupParticipant.id.endsWith('@lid')) {
+                    targetJid = groupParticipant.id;
+                }
+            }
+        }
+
+        const targetUser = await User.findOne({ where: { jid: targetJid } });
         const displayName = nameArg?.trim() || (targetJid === msgData.senderJid ? msgData.pushName : (targetUser?.name || 'User'));
         const username = usernameArg?.trim() || displayName.replace(/\s+/g, '_').toLowerCase();
         
@@ -26,7 +38,6 @@ export default {
             tweet = getMessageContent(msgData.quotedMsg, msgData.quotedType);
         }
 
-        // Jika tidak ada pemisah | dan tweet masih kosong, mungkin argumen pertama adalah tweet
         if (!tweet && nameArg && !fullArgs.includes('|')) {
             tweet = nameArg;
         }
@@ -57,7 +68,8 @@ export default {
                     if (ppRes.ok) {
                         const ppBuffer = await ppRes.buffer();
                         const uploadResult = await ryzumiCDN(ppBuffer);
-                        avatar = uploadResult.url || uploadResult;
+                        avatar = uploadResult.url || (typeof uploadResult === 'string' ? uploadResult : ppUrl);
+                        if (typeof avatar === 'object' && avatar.url) avatar = avatar.url;
                     }
                 } catch (e) {
                     console.error('Fake Tweet Avatar CDN Error:', e.message);
@@ -70,6 +82,7 @@ export default {
                 try {
                     const uploadResult = await ryzumiCDN(bufferMedia);
                     imageUrl = uploadResult.url || uploadResult;
+                    if (typeof imageUrl === 'object' && imageUrl.url) imageUrl = imageUrl.url;
                 } catch (e) {
                     console.error('Upload Media Error:', e);
                 }
@@ -86,12 +99,11 @@ export default {
             const url = `${config.API_RYZUMI}/api/image/faketweet?${params.toString()}`;
             const response = await axios.get(url, { responseType: 'arraybuffer', timeout: 30000 });
 
-            const contentType = response.headers['content-type'] || '';
-            if (!contentType.includes('image')) {
-                throw new Error('API memberikan respon tidak valid (bukan gambar)');
+            if (response.headers['content-type']?.includes('image')) {
+                await sock.sendMessage(msgData.remoteJid, { image: Buffer.from(response.data), caption: `Waaa! Tweet Kakak ${displayName} viral banget nih~! (˶˃ ᵕ ˂˶)` }, { quoted: m });
+            } else {
+                throw new Error('API gagal mereturn gambar');
             }
-
-            await sock.sendMessage(msgData.remoteJid, { image: Buffer.from(response.data), caption: `Waaa! Tweet Kakak ${displayName} viral banget nih~! (˶˃ ᵕ ˂˶)` }, { quoted: m });
             await sock.sendMessage(msgData.remoteJid, { react: { text: '✅', key: m.key } });
 
         } catch (error) {

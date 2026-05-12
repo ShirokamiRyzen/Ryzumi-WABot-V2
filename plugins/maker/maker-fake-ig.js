@@ -4,6 +4,7 @@ import config from '../../config.js';
 import User from '../../databases/orm/User.js';
 import { getMessageContent } from '../../libs/adapter/messageUnwrapper.js';
 import { ryzumiCDN } from '../../libs/uploader.js';
+import { getGroupMetadata } from '../../libs/groupCache.js';
 
 export default {
     command: ['fakestory', 'fakeig'],
@@ -19,16 +20,13 @@ export default {
         let username = usernameArg?.trim();
         let caption = captionArgs.join('|').trim();
 
-        // Fallback: Jika tidak ada pemisah |, maka argumen pertama dianggap caption jika panjang
-        // atau username jika pendek. Tapi lebih baik ikuti pola lama:
         if (!caption && msgData.isQuoted) {
             caption = getMessageContent(msgData.quotedMsg, msgData.quotedType);
         }
 
-        // Jika masih tidak ada caption tapi ada usernameArg, mungkin user lupa |
         if (!caption && usernameArg && !fullArgs.includes('|')) {
             caption = usernameArg;
-            username = ''; // Akan diisi otomatis nanti
+            username = ''; 
         }
 
         if (!caption) {
@@ -38,7 +36,18 @@ export default {
         }
 
         // Ambil target JID (default ke pengirim)
-        const targetJid = msgData.parseTargetJid() || msgData.senderJid;
+        let targetJid = msgData.parseTargetJid() || msgData.senderJid;
+
+        // Optimasi resolusi JID (LID ke JID) seperti di welcome/leave
+        if (targetJid.endsWith('@lid') && msgData.isGroup) {
+            const metadata = getGroupMetadata(msgData.remoteJid);
+            if (metadata) {
+                const groupParticipant = metadata.participants.find(p => p.id === targetJid || p.lid === targetJid || p.id?.split('@')[0] === targetJid.split('@')[0]);
+                if (groupParticipant && groupParticipant.id && !groupParticipant.id.endsWith('@lid')) {
+                    targetJid = groupParticipant.id;
+                }
+            }
+        }
 
         // Fallback untuk username (Nama di Story)
         if (!username) {
@@ -69,7 +78,7 @@ export default {
                     if (ppRes.ok) {
                         const ppBuffer = await ppRes.buffer();
                         const uploadResult = await ryzumiCDN(ppBuffer);
-                        avatar = uploadResult.url || uploadResult;
+                        avatar = uploadResult.url || (typeof uploadResult === 'string' ? uploadResult : ppUrl);
                     }
                 } catch (e) {
                     console.error('Fake IG Avatar Upload Error:', e.message);
@@ -87,7 +96,7 @@ export default {
             
             const contentType = response.headers['content-type'] || '';
             if (!contentType.includes('image')) {
-                throw new Error('API memberikan respon tidak valid (bukan gambar)');
+                throw new Error('API gagal mereturn gambar');
             }
 
             await sock.sendMessage(msgData.remoteJid, {
