@@ -58,11 +58,12 @@ export default {
         await sock.sendMessage(msgData.remoteJid, { react: { text: '⏳', key: m.key } });
 
         try {
-            // Ambil foto profil target
-            let ppUrl = config.RYZUMI_DEFAULT_PP;
+            // Ambil foto profil target dengan fallback berlapis
+            let ppUrl = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
             try {
                 const cleanJid = targetJid.split(':')[0].split('@')[0] + (targetJid.includes('@lid') ? '@lid' : '@s.whatsapp.net');
-                ppUrl = await sock.profilePictureUrl(cleanJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
+                const waPp = await sock.profilePictureUrl(cleanJid, 'image');
+                if (waPp) ppUrl = waPp;
             } catch (e) {}
             
             // Download dan upload ke CDN biar API lancar
@@ -85,10 +86,13 @@ export default {
                 }
             }
 
+            // Pastikan avatar tidak undefined sebelum masuk params
+            if (!avatar) avatar = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
+
             const params = new URLSearchParams({
-                username: username,
-                caption: caption,
-                avatar: avatar
+                username: String(username),
+                caption: String(caption),
+                avatar: String(avatar)
             });
 
             const url = `${config.API_RYZUMI}/api/image/fake-story?${params.toString()}`;

@@ -41,10 +41,12 @@ export default {
             const targetUser = await User.findOne({ where: { jid: targetJid } });
             const targetName = targetJid === msgData.senderJid ? msgData.pushName : (targetUser?.name || 'User');
 
-            let ppUrl = config.RYZUMI_DEFAULT_PP;
+            // Ambil foto profil dengan fallback berlapis
+            let ppUrl = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
             try {
                 const cleanJid = targetJid.split(':')[0].split('@')[0] + (targetJid.includes('@lid') ? '@lid' : '@s.whatsapp.net');
-                ppUrl = await sock.profilePictureUrl(cleanJid, 'image').catch(_ => config.RYZUMI_DEFAULT_PP);
+                const waPp = await sock.profilePictureUrl(cleanJid, 'image');
+                if (waPp) ppUrl = waPp;
             } catch (e) {}
             
             let avatar = ppUrl;
@@ -67,10 +69,13 @@ export default {
                 }
             }
 
+            // Pastikan avatar tidak undefined sebelum masuk params
+            if (!avatar) avatar = config.RYZUMI_DEFAULT_PP || 'https://telegra.ph/file/241d7180c0183058f3993.jpg';
+
             const params = new URLSearchParams({
-                text: text,
-                name: targetName,
-                avatar: avatar
+                text: String(text),
+                name: String(targetName),
+                avatar: String(avatar)
             });
 
             const url = `${config.API_RYZUMI}/api/image/quotly?${params.toString()}`;
