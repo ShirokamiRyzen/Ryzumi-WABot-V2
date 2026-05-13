@@ -26,7 +26,7 @@ async function syncGroups(sock) {
         console.log('⏳ Sedang menyinkronkan data grup ke database...');
         const groups = await sock.groupFetchAllParticipating();
         const groupJids = Object.keys(groups);
-        
+
         // Populasikan cache segera agar middleware bisa langsung menggunakan data yang ada
         for (const jid of groupJids) {
             setGroupMetadata(jid, groups[jid]);
@@ -39,7 +39,7 @@ async function syncGroups(sock) {
             const groupData = groups[jid];
             const [group, created] = await Group.findOrCreate({
                 where: { jid: jid },
-                defaults: { 
+                defaults: {
                     name: groupData.subject,
                     is_welcome: false,
                     is_ban: false
@@ -53,7 +53,7 @@ async function syncGroups(sock) {
                 updatedGroups++;
             }
         }
-        
+
         if (newGroups > 0 || updatedGroups > 0) {
             console.log(`✅ Sinkronisasi grup selesai! (${newGroups} baru, ${updatedGroups} diperbarui)`);
         } else {
@@ -70,10 +70,10 @@ async function connectToWhatsApp() {
         try {
             await sequelize.authenticate();
             console.log('✅ Database terhubung!');
-            
+
             await sequelize.sync({ alter: true });
             console.log('✅ Database berhasil di-synchronize (Migrations selesai).');
-            
+
             // Inisialisasi Setting default jika belum ada
             await Setting.findOrCreate({
                 where: { id: 1 },
@@ -82,7 +82,7 @@ async function connectToWhatsApp() {
 
             isDbConnected = true;
 
-            
+
             // Inisialisasi jadwal Cron (Reset limit harian dll)
             startCronJobs();
         } catch (error) {
@@ -110,14 +110,18 @@ async function connectToWhatsApp() {
         auth: state,
         logger: pino({ level: 'silent' }),
         version: waVersion,
-        browser: ["macOS", "Safari", "20.0.00"] // Mencegah koneksi langsung ditolak (loop) oleh WA
+        browser: ["macOS", "Safari", "20.0.00"],
+        printQRInTerminal: false,
+        markOnlineOnConnect: true,
+        keepAliveIntervalMs: 30000,
+        syncFullHistory: false,
     });
 
     sock.ev.on('creds.update', saveCreds);
 
     sock.ev.on('connection.update', async (update) => {
         const { connection, lastDisconnect, qr } = update;
-        
+
         // Menampilkan QR
         if (qr) {
             console.log('\nScan QR Code ini menggunakan WhatsApp Anda:');
@@ -127,7 +131,7 @@ async function connectToWhatsApp() {
         if (connection === 'close') {
             const reason = lastDisconnect.error?.output?.statusCode;
             console.log(`Koneksi terputus. Alasan: ${reason}`);
-            
+
             if (reason === DisconnectReason.loggedOut) {
                 console.log('Sesi telah kedaluwarsa atau dilogout. Menghapus session...');
                 if (fs.existsSync('sessions')) {
@@ -140,14 +144,14 @@ async function connectToWhatsApp() {
             }
         } else if (connection === 'open') {
             console.log('✅ Bot berhasil terhubung ke WhatsApp! Sedang menyinkronkan data...');
-            
+
             // Tunggu sinkronisasi awal maksimal 3 detik agar cache terisi sebelum melayani pesan
             const syncPromise = syncGroups(sock);
             await Promise.race([
-                syncPromise, 
+                syncPromise,
                 new Promise(resolve => setTimeout(resolve, 3000))
             ]);
-            
+
             console.log('✅ Bot siap digunakan!');
         }
     });
@@ -161,7 +165,7 @@ async function connectToWhatsApp() {
 
             // Abaikan pesan sistem/dummy messageContextInfo atau senderKeyDistributionMessage agar tidak membebani log
             const msgData = extractMessageData(m, sock);
-            
+
             // Abaikan pesan sistem/metadata/protokol agar tidak mengganggu log dan eksekusi
             const protocolTypes = ['messageContextInfo', 'senderKeyDistributionMessage', 'protocolMessage', 'peerDataOperationRequestMessage'];
             if (protocolTypes.includes(msgData.messageType)) continue;
@@ -169,7 +173,7 @@ async function connectToWhatsApp() {
             // Jika pesan berasal dari bot sendiri (balasan atau owner ngetik dari nomor bot)
             if (m.key.fromMe) {
                 logMessage(sock, msgData);
-                
+
                 // Jika bot ngetik command sendiri, biarkan lanjut ke handler
                 if (!msgData.commandName) continue;
             } else {
@@ -187,7 +191,7 @@ async function connectToWhatsApp() {
             try {
                 const [record, created] = await Group.findOrCreate({
                     where: { jid: group.id },
-                    defaults: { 
+                    defaults: {
                         name: group.subject,
                         is_welcome: false,
                         is_ban: false
@@ -196,7 +200,7 @@ async function connectToWhatsApp() {
                 if (created) {
                     console.log(`✨ Terdeteksi masuk ke grup baru: ${group.subject} (${group.id}) - Berhasil didaftarkan ke database.`);
                 }
-                
+
                 // Update Cache Metadata
                 const metadata = await sock.groupMetadata(group.id);
                 setGroupMetadata(group.id, metadata);
