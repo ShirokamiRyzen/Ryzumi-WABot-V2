@@ -1,6 +1,6 @@
 import os from 'os';
 import { sizeFormatter } from 'human-readable';
-import osu from 'node-os-utils';
+
 
 
 const format = sizeFormatter({
@@ -24,8 +24,24 @@ export default {
         const systemUsedRam = totalRam - freeRam;
         const botUsedRam = process.memoryUsage().rss;
         
-        // CPU Usage (menggunakan node-os-utils)
-        const cpuUsage = await osu.cpu.usage();
+        // CPU Usage (Manual calculation to avoid library interop issues)
+        const cpus = os.cpus();
+        const cpuUsage = await new Promise((resolve) => {
+            const startStats = os.cpus().map(cpu => cpu.times);
+            setTimeout(() => {
+                const endStats = os.cpus().map(cpu => cpu.times);
+                const totalUsage = endStats.reduce((acc, end, i) => {
+                    const start = startStats[i];
+                    const totalEnd = Object.values(end).reduce((a, b) => a + b, 0);
+                    const totalStart = Object.values(start).reduce((a, b) => a + b, 0);
+                    const idleEnd = end.idle;
+                    const idleStart = start.idle;
+                    return acc + (1 - (idleEnd - idleStart) / (totalEnd - totalStart));
+                }, 0);
+                resolve((totalUsage / cpus.length) * 100);
+            }, 100);
+        });
+
 
 
 

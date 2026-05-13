@@ -5,7 +5,7 @@ import { sizeFormatter } from 'human-readable';
 import User from '../../databases/orm/User.js';
 import Group from '../../databases/orm/Group.js';
 import Setting from '../../databases/orm/Setting.js';
-import osu from 'node-os-utils';
+
 
 
 const format = sizeFormatter({
@@ -38,9 +38,23 @@ export default {
         const botUsedRam = process.memoryUsage().rss;
         
         // CPU Info
-        const cpuUsage = await osu.cpu.usage();
-
+        // CPU Info (Manual calculation)
         const cpus = os.cpus();
+        const cpuUsage = await new Promise((resolve) => {
+            const startStats = os.cpus().map(cpu => cpu.times);
+            setTimeout(() => {
+                const endStats = os.cpus().map(cpu => cpu.times);
+                const totalUsage = endStats.reduce((acc, end, i) => {
+                    const start = startStats[i];
+                    const totalEnd = Object.values(end).reduce((a, b) => a + b, 0);
+                    const totalStart = Object.values(start).reduce((a, b) => a + b, 0);
+                    const idleEnd = end.idle;
+                    const idleStart = start.idle;
+                    return acc + (1 - (idleEnd - idleStart) / (totalEnd - totalStart));
+                }, 0);
+                resolve((totalUsage / cpus.length) * 100);
+            }, 100);
+        });
         const cpuModel = cpus.length > 0 ? cpus[0].model : 'Unknown';
         
         // Baileys Version (Dynamic from package.json)
