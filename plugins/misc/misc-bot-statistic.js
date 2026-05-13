@@ -36,7 +36,7 @@ export default {
         const freeRam = os.freemem();
         const systemUsedRam = totalRam - freeRam;
         const botUsedRam = process.memoryUsage().rss;
-        
+
         // CPU Info
         // CPU Info (Manual calculation)
         const cpus = os.cpus();
@@ -56,28 +56,28 @@ export default {
             }, 100);
         });
         const cpuModel = cpus.length > 0 ? cpus[0].model : 'Unknown';
-        
+
         // Baileys Version (Dynamic from package.json)
         const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
         const baileysVersion = pkg.dependencies.baileys.replace(/^[\^~]/, '');
 
         let statText = `╭─「 *STATISTIK BOT* 」\n`;
-        statText += `│ 🏷️ *Versi Baileys:* v${baileysVersion}\n`;
-        statText += `│ 👤 *Total User:* ${userCount}\n`;
-        statText += `│ 👥 *Total Group:* ${groupCount}\n`;
+        statText += `│ *Versi Baileys:* v${baileysVersion}\n`;
+        statText += `│ *Total User:* ${userCount}\n`;
+        statText += `│ *Total Group:* ${groupCount}\n`;
         statText += `╰─────────────┈\n\n`;
 
         statText += `╭─「 *PENGATURAN* 」\n`;
-        statText += `│ 🌐 *Public Mode:* ${setting.is_public ? '✅ Aktif' : '❌ Mati'}\n`;
-        statText += `│ 📝 *Register Mode:* ${setting.is_register ? '✅ Aktif' : '❌ Mati'}\n`;
+        statText += `│ *Public Mode:* ${setting.is_public ? 'Aktif' : 'Mati'}\n`;
+        statText += `│ *Register Mode:* ${setting.is_register ? 'Aktif' : 'Mati'}\n`;
         statText += `╰─────────────┈\n\n`;
 
         statText += `╭─「 *SYSTEM USAGE* 」\n`;
-        statText += `│ 🧠 *System RAM:* ${format(systemUsedRam)} / ${format(totalRam)}\n`;
-        statText += `│ 🤖 *Bot RAM:* ${format(botUsedRam)}\n`;
-        statText += `│ ⚡ *CPU Usage:* ${cpuUsage.toFixed(2)}%\n`;
-        statText += `│ 🖥️ *CPU Model:* ${cpuModel.trim()}\n`;
-        statText += `│ 📈 *OS:* ${os.platform()} ${os.release()}\n`;
+        statText += `│ *System RAM:* ${format(systemUsedRam)} / ${format(totalRam)}\n`;
+        statText += `│ *Bot RAM:* ${format(botUsedRam)}\n`;
+        statText += `│ *CPU Usage:* ${cpuUsage.toFixed(2)}%\n`;
+        statText += `│ *CPU Model:* ${cpuModel.trim()}\n`;
+        statText += `│ *OS:* ${os.platform()} ${os.release()}\n`;
         statText += `╰─────────────┈\n\n`;
 
         statText += `Statistik ini diambil secara real-time dari server Ryzumi. (๑>ᴗ<๑)`;
