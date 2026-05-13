@@ -29,18 +29,21 @@ export default {
             defaults: { is_public: true, is_register: true }
         });
 
-        // RAM Usage
-        const usedRam = process.memoryUsage().rss;
+        // System Info
         const totalRam = os.totalmem();
-
+        const freeRam = os.freemem();
+        const systemUsedRam = totalRam - freeRam;
+        const botUsedRam = process.memoryUsage().rss;
+        
         // CPU Info
+        const osu = await import('node-os-utils');
+        const cpuUsage = await osu.default.cpu.usage();
         const cpus = os.cpus();
         const cpuModel = cpus.length > 0 ? cpus[0].model : 'Unknown';
-
+        
         // Baileys Version (Dynamic from package.json)
         const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
         const baileysVersion = pkg.dependencies.baileys.replace(/^[\^~]/, '');
-
 
         let statText = `╭─「 *STATISTIK BOT* 」\n`;
         statText += `│ 🏷️ *Versi Baileys:* v${baileysVersion}\n`;
@@ -54,8 +57,10 @@ export default {
         statText += `╰─────────────┈\n\n`;
 
         statText += `╭─「 *SYSTEM USAGE* 」\n`;
-        statText += `│ 🧠 *RAM Usage:* ${format(usedRam)} / ${format(totalRam)}\n`;
-        statText += `│ 🖥️ *CPU:* ${cpuModel.trim()}\n`;
+        statText += `│ 🧠 *System RAM:* ${format(systemUsedRam)} / ${format(totalRam)}\n`;
+        statText += `│ 🤖 *Bot RAM:* ${format(botUsedRam)}\n`;
+        statText += `│ ⚡ *CPU Usage:* ${cpuUsage.toFixed(2)}%\n`;
+        statText += `│ 🖥️ *CPU Model:* ${cpuModel.trim()}\n`;
         statText += `│ 📈 *OS:* ${os.platform()} ${os.release()}\n`;
         statText += `╰─────────────┈\n\n`;
 

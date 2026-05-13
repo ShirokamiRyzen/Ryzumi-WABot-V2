@@ -16,12 +16,21 @@ export default {
         const start = Date.now();
         const initialPing = (start - (m.messageTimestamp * 1000)).toFixed(0);
 
-        const usedRam = process.memoryUsage().rss;
+        // System Info
         const totalRam = os.totalmem();
+        const freeRam = os.freemem();
+        const systemUsedRam = totalRam - freeRam;
+        const botUsedRam = process.memoryUsage().rss;
+        
+        // CPU Usage (menggunakan node-os-utils)
+        const osu = await import('node-os-utils');
+        const cpuUsage = await osu.default.cpu.usage();
 
         let pingText = `*Pong!!*\n\n`;
         pingText += `*Latensi:* ${initialPing} ms\n`;
-        pingText += `*RAM Usage:* ${format(usedRam)} / ${format(totalRam)}\n`;
+        pingText += `*CPU Usage:* ${cpuUsage.toFixed(2)}%\n`;
+        pingText += `*System RAM:* ${format(systemUsedRam)} / ${format(totalRam)}\n`;
+        pingText += `*Bot RAM:* ${format(botUsedRam)}\n`;
         pingText += `*Platform:* ${os.platform()}\n\n`;
         pingText += `Bot aktif dan siap melayani kakak~! (๑>ᴗ<๑)`;
 
