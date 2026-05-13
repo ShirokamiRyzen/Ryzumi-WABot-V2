@@ -6,6 +6,10 @@ import config from '../config.js';
 import { resolveLidToJid } from '../libs/lid-resolver.js';
 import { getGroupMetadata, setGroupMetadata } from '../libs/groupCache.js';
 
+let cachedSetting = null;
+let lastCacheUpdate = 0;
+const CACHE_TTL = 30000; // 30 detik
+
 export const processAuth = async (sock, msgData) => {
     // Jangan simpan grup atau status broadcast ke tabel User
     if (msgData.senderJid.endsWith('@g.us') || msgData.senderJid === 'status@broadcast') {
@@ -95,12 +99,17 @@ export const processAuth = async (sock, msgData) => {
         msgData.isBotAdmin = botParticipant?.admin !== null && botParticipant?.admin !== undefined;
     }
 
-    const [setting] = await Setting.findOrCreate({
-        where: { id: 1 },
-        defaults: { is_public: true, is_register: true }
-    });
+    const now = Date.now();
+    if (!cachedSetting || (now - lastCacheUpdate) > CACHE_TTL) {
+        const [setting] = await Setting.findOrCreate({
+            where: { id: 1 },
+            defaults: { is_public: true, is_register: true }
+        });
+        cachedSetting = setting;
+        lastCacheUpdate = now;
+    }
 
-    return { user, group, setting };
+    return { user, group, setting: cachedSetting };
 };
 
 

@@ -97,14 +97,15 @@ export default {
         };
 
         // Ambil banner sebagai buffer untuk preview (Landscape)
-        let thumbBuffer;
-        try {
-            const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
-            thumbBuffer = Buffer.from(res.data);
-        } catch {
-            thumbBuffer = null;
-        }
+        //let thumbBuffer;
+        //try {
+        //    const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
+        //    thumbBuffer = Buffer.from(res.data);
+        //} catch {
+        //    thumbBuffer = null;
+        //}
 
+        // Kirim Menu
         await sock.sendMessage(msgData.remoteJid, {
             text: menuText.trim(),
             contextInfo: {

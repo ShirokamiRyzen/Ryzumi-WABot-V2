@@ -176,8 +176,8 @@ async function connectToWhatsApp() {
                 logMessage(sock, msgData);
             }
 
-            // Limpahkan pesan masuk ke handler
-            await botHandler(sock, m, msgData);
+            // Limpahkan pesan masuk ke handler secara paralel agar tidak saling menunggu (non-blocking)
+            botHandler(sock, m, msgData).catch(err => console.error('Handler Error:', err));
         }
     });
 
