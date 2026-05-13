@@ -23,12 +23,15 @@ export const extractMessageData = (m, sock) => {
 
     const msg = unwrapMessage(m.message);
     const messageType = getMessageType(msg);
-    const messageContent = getMessageContent(msg, messageType);
+    const messageContent = getMessageContent(msg, messageType).trim();
 
+    const prefixes = ['.', '!', '/', '#'];
     let commandName = '';
     let args = [];
-    if (messageContent.startsWith('.')) {
-        args = messageContent.slice(1).trim().split(/ +/);
+    
+    const matchedPrefix = prefixes.find(p => messageContent.startsWith(p));
+    if (matchedPrefix) {
+        args = messageContent.slice(matchedPrefix.length).trim().split(/ +/);
         commandName = args.shift().toLowerCase();
     }
 

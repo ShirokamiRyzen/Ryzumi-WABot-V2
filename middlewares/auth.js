@@ -1,5 +1,7 @@
 import User from '../databases/orm/User.js';
 import Group from '../databases/orm/Group.js';
+import Setting from '../databases/orm/Setting.js';
+
 import config from '../config.js';
 import { resolveLidToJid } from '../libs/lid-resolver.js';
 import { getGroupMetadata, setGroupMetadata } from '../libs/groupCache.js';
@@ -93,6 +95,12 @@ export const processAuth = async (sock, msgData) => {
         msgData.isBotAdmin = botParticipant?.admin !== null && botParticipant?.admin !== undefined;
     }
 
-    return { user, group };
+    const [setting] = await Setting.findOrCreate({
+        where: { id: 1 },
+        defaults: { is_public: true, is_register: true }
+    });
+
+    return { user, group, setting };
 };
+
 

@@ -6,10 +6,9 @@ export const plugins = [];
 
 let isReloading = false;
 
-// Fungsi untuk me-load ulang seluruh plugin
+// Fungsi untuk me-load ulang seluruh plugin secara atomic
 export const loadPlugins = async (dir) => {
-    // Kosongkan array untuk diisi ulang
-    plugins.length = 0;
+    const tempPlugins = [];
 
     const readDirRecursively = async (currentDir) => {
         if (!fs.existsSync(currentDir)) return;
@@ -24,7 +23,7 @@ export const loadPlugins = async (dir) => {
                     // Tambahkan query parameter Date.now() untuk by-pass sistem cache ESM
                     const module = await import(`file://${fullPath}?update=${Date.now()}`);
                     if (module.default) {
-                        plugins.push(module.default);
+                        tempPlugins.push(module.default);
                     }
                 } catch (err) {
                     console.error(`[Hot-Reload] Gagal memuat plugin: ${file.name}`, err.message);
@@ -34,6 +33,11 @@ export const loadPlugins = async (dir) => {
     };
 
     await readDirRecursively(dir);
+    
+    // Swap array secara atomic agar tidak ada kondisi plugins kosong saat sedang loading
+    plugins.length = 0;
+    plugins.push(...tempPlugins);
+
     console.log(`[Hot-Reload] ✅ Berhasil memuat ulang ${plugins.length} plugins.`);
 };
 

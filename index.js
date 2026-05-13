@@ -11,6 +11,8 @@ import fs from 'fs';
 import { startCronJobs } from './libs/cronjob.js';
 import Group from './databases/orm/Group.js';
 import { setGroupMetadata } from './libs/groupCache.js';
+import Setting from './databases/orm/Setting.js';
+
 
 // Pastikan inisialisasi database hanya berjalan sekali di luar loop agar tidak memanggil berkali-kali saat reconnect
 let isDbConnected = false;
@@ -71,7 +73,15 @@ async function connectToWhatsApp() {
             
             await sequelize.sync({ alter: true });
             console.log('✅ Database berhasil di-synchronize (Migrations selesai).');
+            
+            // Inisialisasi Setting default jika belum ada
+            await Setting.findOrCreate({
+                where: { id: 1 },
+                defaults: { is_public: true, is_register: true }
+            });
+
             isDbConnected = true;
+
             
             // Inisialisasi jadwal Cron (Reset limit harian dll)
             startCronJobs();

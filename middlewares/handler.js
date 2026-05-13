@@ -11,13 +11,18 @@ watchPlugins(pluginDir);
 
 export default async function botHandler(sock, m, msgData) {
     try {
-        const { user, group } = await processAuth(sock, msgData);
-
+        // Cek apakah ini command atau bukan sebelum melakukan proses Auth yang berat (DB/Metadata)
+        // Ini mencegah bot 'bengong' karena antrean DB/Network saat grup sangat ramai
         if (!msgData.commandName) return;
+
+        const { user, group, setting } = await processAuth(sock, msgData);
+
+        // Logic is_public: Jika false, hanya bot & owner yang bisa akses command
+        if (!setting.is_public && !user.isOwner) return;
 
         for (const plugin of plugins) {
             if (plugin.command && plugin.command.includes(msgData.commandName)) {
-                const isValid = await validatePlugin(sock, m, msgData, user, group, plugin);
+                const isValid = await validatePlugin(sock, m, msgData, user, group, plugin, setting);
                 if (!isValid) return;
 
                 await plugin.execute(sock, m, msgData, user, group, plugins);

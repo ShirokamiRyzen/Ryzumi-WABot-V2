@@ -11,9 +11,13 @@ export const unwrapMessage = (msg) => {
 
 export const getMessageType = (msg) => {
     if (!msg) return '';
-    let type = Object.keys(msg)[0] || '';
-    if (type === 'senderKeyDistributionMessage' || type === 'messageContextInfo') {
-        type = Object.keys(msg)[1] || type;
+    const keys = Object.keys(msg);
+    if (keys.length === 0) return '';
+    
+    // Prioritaskan tipe pesan asli daripada metadata Baileys
+    let type = keys[0];
+    if ((type === 'senderKeyDistributionMessage' || type === 'messageContextInfo') && keys.length > 1) {
+        type = keys[1];
     }
     return type;
 };
@@ -25,5 +29,15 @@ export const getMessageContent = (msg, messageType) => {
     if (messageType === 'imageMessage') return msg.imageMessage?.caption || '';
     if (messageType === 'videoMessage') return msg.videoMessage?.caption || '';
     if (messageType === 'documentMessage') return msg.documentMessage?.caption || '';
+    
+    // Support for Buttons & Interactive Messages
+    if (messageType === 'buttonsResponseMessage') return msg.buttonsResponseMessage?.selectedButtonId || '';
+    if (messageType === 'listResponseMessage') return msg.listResponseMessage?.singleSelectReply?.selectedRowId || '';
+    if (messageType === 'templateButtonReplyMessage') return msg.templateButtonReplyMessage?.selectedId || '';
+    if (messageType === 'interactiveResponseMessage') {
+        const body = JSON.parse(msg.interactiveResponseMessage.nativeFlowResponseMessage?.paramsJson || '{}');
+        return body.id || '';
+    }
+
     return '';
 };
