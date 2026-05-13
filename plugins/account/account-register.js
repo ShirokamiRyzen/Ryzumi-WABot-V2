@@ -1,4 +1,3 @@
-
 export default {
     command: ['register', 'daftar'],
     category: 'account',

@@ -9,8 +9,8 @@ export default {
     async execute(sock, m, msgData, user, group, plugins) {
         const name = user.name || msgData.pushName || 'Kakak manis';
         const jid = msgData.senderJid.split('@')[0];
-        const premium = user.is_premium ? 'Premium VIP 💎' : 'Gratis 🌸';
-        const limit = (group && !group.is_limited) ? 'Unlimited ✨' : user.limit;
+        const premium = user.isOwner ? 'Dev 🛠️' : (user.is_premium ? 'Premium VIP 💎' : 'Gratis 🌸');
+        const limit = user.isOwner || (group && !group.is_limited) ? 'Unlimited ✨' : user.limit;
         const time = moment.tz('Asia/Jakarta').format('HH:mm:ss');
         const date = moment.tz('Asia/Jakarta').format('DD MMMM YYYY');
         const arg = msgData.args[0]?.toLowerCase();
