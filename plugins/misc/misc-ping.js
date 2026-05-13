@@ -24,7 +24,9 @@ export default {
         
         // CPU Usage (menggunakan node-os-utils)
         const osu = await import('node-os-utils');
-        const cpuUsage = await osu.default.cpu.usage();
+        const cpu = osu.cpu || osu.default?.cpu;
+        const cpuUsage = await cpu.usage();
+
 
         let pingText = `*Pong!!*\n\n`;
         pingText += `*Latensi:* ${initialPing} ms\n`;

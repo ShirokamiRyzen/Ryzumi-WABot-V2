@@ -37,7 +37,8 @@ export default {
         
         // CPU Info
         const osu = await import('node-os-utils');
-        const cpuUsage = await osu.default.cpu.usage();
+        const cpu = osu.cpu || osu.default?.cpu;
+        const cpuUsage = await cpu.usage();
         const cpus = os.cpus();
         const cpuModel = cpus.length > 0 ? cpus[0].model : 'Unknown';
         
