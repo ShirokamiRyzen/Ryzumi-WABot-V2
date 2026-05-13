@@ -5,6 +5,8 @@ import { sizeFormatter } from 'human-readable';
 import User from '../../databases/orm/User.js';
 import Group from '../../databases/orm/Group.js';
 import Setting from '../../databases/orm/Setting.js';
+import osu from 'node-os-utils';
+
 
 const format = sizeFormatter({
     std: 'JEDEC',
@@ -36,9 +38,8 @@ export default {
         const botUsedRam = process.memoryUsage().rss;
         
         // CPU Info
-        const osu = await import('node-os-utils');
-        const cpu = osu.cpu || osu.default?.cpu;
-        const cpuUsage = await cpu.usage();
+        const cpuUsage = await osu.cpu.usage();
+
         const cpus = os.cpus();
         const cpuModel = cpus.length > 0 ? cpus[0].model : 'Unknown';
         

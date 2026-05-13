@@ -1,5 +1,7 @@
 import os from 'os';
 import { sizeFormatter } from 'human-readable';
+import osu from 'node-os-utils';
+
 
 const format = sizeFormatter({
     std: 'JEDEC',
@@ -23,9 +25,8 @@ export default {
         const botUsedRam = process.memoryUsage().rss;
         
         // CPU Usage (menggunakan node-os-utils)
-        const osu = await import('node-os-utils');
-        const cpu = osu.cpu || osu.default?.cpu;
-        const cpuUsage = await cpu.usage();
+        const cpuUsage = await osu.cpu.usage();
+
 
 
         let pingText = `*Pong!!*\n\n`;
