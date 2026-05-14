@@ -14,12 +14,12 @@ export const getMessageType = (msg) => {
     const keys = Object.keys(msg);
     if (keys.length === 0) return '';
     
-    // Prioritaskan tipe pesan asli daripada metadata Baileys
-    let type = keys[0];
-    if ((type === 'senderKeyDistributionMessage' || type === 'messageContextInfo') && keys.length > 1) {
-        type = keys[1];
-    }
-    return type;
+    // Abaikan semua key metadata Baileys/WhatsApp dan cari tipe pesan utamanya
+    const ignoreKeys = ['senderKeyDistributionMessage', 'messageContextInfo'];
+    const validKeys = keys.filter(k => !ignoreKeys.includes(k));
+    
+    // Jika ada key valid, kembalikan yang pertama. Jika tidak, kembalikan key aslinya.
+    return validKeys.length > 0 ? validKeys[0] : keys[0];
 };
 
 export const getMessageContent = (msg, messageType) => {
