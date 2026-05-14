@@ -115,6 +115,9 @@ async function connectToWhatsApp() {
         markOnlineOnConnect: true,
         keepAliveIntervalMs: 30000,
         syncFullHistory: false,
+        connectTimeoutMs: 60000, // Timeout koneksi lebih lama (1 menit)
+        defaultQueryTimeoutMs: 0, // Batalkan timeout default untuk query agar tidak sering disconnect saat lambat
+        retryRequestDelayMs: 5000, // Delay antar percobaan request jika gagal
     });
 
     sock.ev.on('creds.update', saveCreds);
@@ -153,6 +156,17 @@ async function connectToWhatsApp() {
             ]);
 
             console.log('✅ Bot siap digunakan!');
+
+            if (global.heartbeatInterval) clearInterval(global.heartbeatInterval);
+            global.heartbeatInterval = setInterval(async () => {
+                if (sock.authState.creds.me) {
+                    try {
+                        await sock.sendPresenceUpdate('available');
+                    } catch (e) {
+                        console.error('❌ Heartbeat Error:', e.message);
+                    }
+                }
+            }, 60000); // 60 detik
         }
     });
 
