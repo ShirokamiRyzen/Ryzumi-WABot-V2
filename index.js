@@ -159,7 +159,8 @@ async function connectToWhatsApp() {
 
     // Event Handler Pesan Masuk via Middleware
     sock.ev.on('messages.upsert', async ({ messages, type }) => {
-        if (type !== 'notify') return;
+        // 'notify' = pesan baru saat online, 'append' = pesan offline yang baru masuk setelah bot reconnect
+        if (type !== 'notify' && type !== 'append') return;
 
         for (const m of messages) {
             if (!m.message) continue;
