@@ -129,4 +129,4 @@ Fungsi `execute` akan menerima 5 parameter utama:
 Distribusi ulang dan penggunaan *source code* ini diizinkan mengikuti ketentuan [MIT License](LICENSE). 
 
 **PENGECUALIAN HAK CIPTA (COPYRIGHT EXCEPTION):**
-Ketentuan lisensi terbuka di atas **TIDAK BERLAKU** untuk semua *asset artwork*, karakter (Ryzumi/Shirokami), dan konten visual/suara yang digunakan pada bot ini maupun yang di-*hosting* di server `s3.ryzumi.net`. Seluruh *asset* tersebut memiliki Hak Cipta penuh milik **Ryzumi Network**. Dilarang keras menjiplak, melakukan *tracing*, mereproduksi, atau mencuri *artwork* asli tersebut untuk keperluan bot lain atau komersial tanpa izin tertulis.
+Ketentuan lisensi terbuka di atas **TIDAK BERLAKU** untuk semua *asset artwork*, karakter, dan konten visual/suara yang digunakan pada bot ini maupun yang di-*hosting* di server `s3.ryzumi.net`. Seluruh *asset* tersebut memiliki Hak Cipta penuh milik **Ryzumi Network**. Dilarang keras menjiplak, melakukan *tracing*, mereproduksi, atau mencuri *artwork* asli tersebut untuk keperluan bot lain atau komersial tanpa izin tertulis.
