@@ -28,7 +28,7 @@ export const extractMessageData = (m, sock) => {
     const prefixes = ['.', '!', '/', '#'];
     let commandName = '';
     let args = [];
-    
+
     const matchedPrefix = prefixes.find(p => messageContent.startsWith(p));
     if (matchedPrefix) {
         args = messageContent.slice(matchedPrefix.length).trim().split(/ +/);
@@ -72,11 +72,11 @@ export const extractMessageData = (m, sock) => {
         mentions: contextInfo.mentionedJid || [],
         msg,
         contextInfo,
-        
+
         // Modular Access
         config,
         db: { User, Group },
-        
+
         // Helper Methods
         parseTargetJid: () => {
             let targetJid = null;
@@ -97,7 +97,7 @@ export const extractMessageData = (m, sock) => {
                 }
             }
             if (!targetJid) return null;
-            
+
             const resolved = resolveLidToJid(targetJid);
             if (resolved.endsWith('@g.us')) return resolved;
             return resolved.split(':')[0].split('@')[0] + '@s.whatsapp.net';
@@ -110,10 +110,10 @@ export const extractMessageData = (m, sock) => {
 
             const mediaType = type.replace('Message', '');
             const stream = await import('baileys').then(mod => mod.downloadContentFromMessage(
-                q[type] || q, 
+                q[type] || q,
                 mediaType === 'sticker' ? 'image' : mediaType
             ));
-            
+
             let buffer = Buffer.from([]);
             for await (const chunk of stream) {
                 buffer = Buffer.concat([buffer, chunk]);
@@ -121,7 +121,15 @@ export const extractMessageData = (m, sock) => {
             return buffer;
         },
 
-        reply: async (text) => sock.sendMessage(remoteJid, { text }, { quoted: m }),
+        // reply: async (text) => sock.sendMessage(remoteJid, { text }, { quoted: m }),
+        reply: async (text) => {
+            await sock.sendPresenceUpdate('composing', remoteJid);
+            const delay = Math.floor(Math.random() * 1500) + 1000;
+            await new Promise(resolve => setTimeout(resolve, delay));
+            await sock.sendPresenceUpdate('paused', remoteJid);
+
+            return sock.sendMessage(remoteJid, { text }, { quoted: m });
+        },
         react: async (emoji) => sock.sendMessage(remoteJid, { react: { text: emoji, key: m.key } }),
         getPP: async (jid, type = 'image') => getPP(sock, jid, type)
     };
