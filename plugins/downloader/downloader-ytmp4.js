@@ -16,9 +16,7 @@ export default {
         }
 
         const videoUrl = msgData.args[0];
-        // Jika argumen kedua tidak ada, default ke 480p. Jika ada angka saja (misal 720), tambahkan 'p'.
-        let resolution = msgData.args[1] || '480p';
-        if (/^\d+$/.test(resolution)) resolution += 'p';
+        let resolution = msgData.args[1] || '480';
 
         await msgData.react('🕓');
 
@@ -26,8 +24,8 @@ export default {
             const apiUrl = `${config.API_RYZUMI}/api/downloader/ytmp4?url=${encodeURIComponent(videoUrl)}&quality=${resolution}`;
             const { data } = await axios.get(apiUrl);
 
-            if (!data || !data.url) {
-                throw new Error('Yahhh... Link videonya nggak ketemu di server Ryzumi (╥﹏╥)');
+            if (!data || !data.url || data.url === 'Unknown Download URL' || !data.url.startsWith('http')) {
+                throw new Error('Yahhh... Link videonya nggak ketemu atau resolusi ini nggak tersedia di server Ryzumi (╥﹏╥)');
             }
 
             const tmpDir = path.join(process.cwd(), 'tmp');
@@ -91,7 +89,7 @@ export default {
                 `🎥 *Title:* ${data.title}\n` +
                 `👤 *Author:* ${data.author}\n` +
                 `⏳ *Duration:* ${data.lengthSeconds}\n` +
-                `📺 *Quality:* ${resolution}\n` +
+                `📺 *Quality:* ${data.quality || resolution}\n` +
                 `👀 *Views:* ${data.views}\n` +
                 `📅 *Uploaded:* ${data.uploadDate}\n\n` +
                 `Ryzumi sudah perbaiki videonya agar lancar diputar di WA Kakak~ ✨`;
