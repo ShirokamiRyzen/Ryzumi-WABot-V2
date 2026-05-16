@@ -48,7 +48,7 @@ export default {
             await streamPipeline(audioResponse.data, fs.createWriteStream(filePath));
 
             // Fetch thumbnail for adReply
-            let thumbBuffer = null;
+            /* let thumbBuffer = null;
             if (thumbnail) {
                 try {
                     const res = await axios.get(thumbnail, { responseType: 'arraybuffer' });
@@ -56,7 +56,7 @@ export default {
                 } catch (e) {
                     console.error('Failed to fetch thumbnail:', e.message);
                 }
-            }
+            } */
 
             const caption = `Ini kak audionya buat Kakak~! @${msgData.senderJid.split('@')[0]} (๑>ᴗ<๑)\n\n` +
                 `🎵 *Title:* ${title}\n` +
@@ -72,7 +72,7 @@ export default {
                 fileName: `${safeTitle}.mp3`,
                 caption: caption,
                 mentions: [msgData.senderJid],
-                contextInfo: {
+                /* contextInfo: {
                     externalAdReply: {
                         title: title,
                         body: 'Ryzumi YouTube Downloader',
@@ -80,7 +80,7 @@ export default {
                         sourceUrl: videoUrl,
                         thumbnail: thumbBuffer
                     }
-                }
+                } */
             }, { quoted: m });
 
             // Hapus file sementara

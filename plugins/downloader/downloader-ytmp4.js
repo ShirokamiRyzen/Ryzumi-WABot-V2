@@ -22,7 +22,13 @@ export default {
 
         try {
             const apiUrl = `${config.API_RYZUMI}/api/downloader/ytmp4?url=${encodeURIComponent(videoUrl)}&quality=${resolution}`;
-            const { data } = await axios.get(apiUrl);
+            // console.log('Ryzumi API Request:', apiUrl);
+
+            const { data } = await axios.get(apiUrl, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
+                }
+            });
 
             if (!data || !data.url || data.url === 'Unknown Download URL' || !data.url.startsWith('http')) {
                 throw new Error('Yahhh... Link videonya nggak ketemu atau resolusi ini nggak tersedia di server Ryzumi (╥﹏╥)');
@@ -56,11 +62,9 @@ export default {
                 writer.on('error', reject);
             });
 
-            // Fix video compatibility using ffmpeg
+            // Fix video compatibility using ffmpeg (using copy for speed on limited CPU)
             await new Promise((resolve, reject) => {
-                const ffmpegCmd = process.platform === 'win32'
-                    ? `ffmpeg -y -threads 2 -i "${filePath}" -c:v libx264 -preset ultrafast -crf 32 -pix_fmt yuv420p -c:a copy "${fixedFilePath}"`
-                    : `ffmpeg -y -threads 2 -i "${filePath}" -c:v libx264 -preset ultrafast -crf 32 -pix_fmt yuv420p -c:a copy "${fixedFilePath}"`;
+                const ffmpegCmd = `ffmpeg -y -i "${filePath}" -c copy -movflags +faststart "${fixedFilePath}"`;
 
                 exec(ffmpegCmd, (err) => {
                     if (err) {
@@ -75,7 +79,7 @@ export default {
             });
 
             // Fetch thumbnail for adReply
-            let thumbBuffer = null;
+            /* let thumbBuffer = null;
             if (data.thumbnail) {
                 try {
                     const res = await axios.get(data.thumbnail, { responseType: 'arraybuffer' });
@@ -83,7 +87,7 @@ export default {
                 } catch (e) {
                     console.error('Failed to fetch thumbnail:', e.message);
                 }
-            }
+            } */
 
             const caption = `Ini videonya buat Kakak~! @${msgData.senderJid.split('@')[0]} (๑>ᴗ<๑)\n\n` +
                 `🎥 *Title:* ${data.title}\n` +
@@ -100,7 +104,7 @@ export default {
                 fileName: `${safeTitle}.mp4`,
                 caption: caption,
                 mentions: [msgData.senderJid],
-                contextInfo: {
+                /* contextInfo: {
                     externalAdReply: {
                         title: data.title,
                         body: 'Ryzumi YouTube Downloader',
@@ -108,7 +112,7 @@ export default {
                         sourceUrl: data.videoUrl,
                         thumbnail: thumbBuffer
                     }
-                }
+                } */
             }, { quoted: m });
 
             // Cleanup files
