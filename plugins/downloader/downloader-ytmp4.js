@@ -62,9 +62,9 @@ export default {
                 writer.on('error', reject);
             });
 
-            // Fix video compatibility using ffmpeg (using copy for speed on limited CPU)
-            await new Promise((resolve, reject) => {
-                const ffmpegCmd = `ffmpeg -y -i "${filePath}" -c copy -movflags +faststart "${fixedFilePath}"`;
+            await new Promise((resolve) => {
+                const scaleHeight = resolution.toString().replace(/p/gi, '');
+                const ffmpegCmd = `ffmpeg -y -i "${filePath}" -c:v libx264 -preset ultrafast -crf 38 -vf "scale=-2:${scaleHeight}" -pix_fmt yuv420p -profile:v baseline -level 3.0 -c:a copy -movflags +faststart "${fixedFilePath}"`;
 
                 exec(ffmpegCmd, (err) => {
                     if (err) {
