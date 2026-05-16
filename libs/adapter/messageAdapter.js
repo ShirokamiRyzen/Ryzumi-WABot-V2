@@ -121,15 +121,15 @@ export const extractMessageData = (m, sock) => {
             return buffer;
         },
 
-        // reply: async (text) => sock.sendMessage(remoteJid, { text }, { quoted: m }),
-        reply: async (text) => {
-            await sock.sendPresenceUpdate('composing', remoteJid);
-            const delay = Math.floor(Math.random() * 1500) + 1000;
-            await new Promise(resolve => setTimeout(resolve, delay));
-            await sock.sendPresenceUpdate('paused', remoteJid);
-
-            return sock.sendMessage(remoteJid, { text }, { quoted: m });
-        },
+        reply: async (text) => sock.sendMessage(remoteJid, { text }, { quoted: m }),
+        //reply: async (text) => {
+        //    await sock.sendPresenceUpdate('composing', remoteJid);
+        //    const delay = Math.floor(Math.random() * 1500) + 1000;
+        //    await new Promise(resolve => setTimeout(resolve, delay));
+        //    await sock.sendPresenceUpdate('paused', remoteJid);
+        //
+        //    return sock.sendMessage(remoteJid, { text }, { quoted: m });
+        //},
         react: async (emoji) => sock.sendMessage(remoteJid, { react: { text: emoji, key: m.key } }),
         getPP: async (jid, type = 'image') => getPP(sock, jid, type)
     };
