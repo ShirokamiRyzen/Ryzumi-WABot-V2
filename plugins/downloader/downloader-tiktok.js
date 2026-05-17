@@ -19,8 +19,8 @@ export default {
             const url = args[0];
             const isDouyin = url.includes("douyin");
             const apiEndpoint = isDouyin
-                ? `${config.API_RYZUMI}/api/downloader/v2/ttdl?url=${url}`
-                : `${config.API_RYZUMI}/api/downloader/ttdl?url=${url}`;
+                ? `${config.API_RYZUMI}/api/downloader/douyin?url=${url}`
+                : `${config.API_RYZUMI}/api/downloader/tiktok?url=${url}`;
 
             const { data: response } = await axios.get(apiEndpoint);
             let videoData, videoURL, info;
