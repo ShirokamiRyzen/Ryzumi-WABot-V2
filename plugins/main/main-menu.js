@@ -1,5 +1,8 @@
 import moment from 'moment-timezone';
 import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
+import { prepareWAMessageMedia } from 'baileys';
 import config from '../../config.js';
 
 export default {
@@ -96,30 +99,64 @@ export default {
             }
         };
 
-        // Ambil banner sebagai buffer untuk preview (Landscape)
-        //let thumbBuffer;
-        //try {
-        //    const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
-        //    thumbBuffer = Buffer.from(res.data);
-        //} catch {
-        //    thumbBuffer = null;
-        //}
-
-        // Kirim Menu
-        await sock.sendMessage(msgData.remoteJid, {
-            text: menuText.trim(),
-            contextInfo: {
-                mentionedJid: [msgData.senderJid],
-                //externalAdReply: {
-                //    title: 'Ryzumi Starlette',
-                //    body: 'Hallom, Apa Kabar Kak?',
-                //    mediaType: 1,
-                //    renderLargerThumbnail: true,
-                //    sourceUrl: config.SOC_WEBSITE,
-                //    thumbnail: thumbBuffer,
-                //    thumbnailUrl: config.SOC_WEBSITE
-                //}
+        let imageBuffer = null;
+        if (config.RYZUMI_BANNER) {
+            if (config.RYZUMI_BANNER.startsWith('http://') || config.RYZUMI_BANNER.startsWith('https://')) {
+                try {
+                    const res = await axios.get(config.RYZUMI_BANNER, { responseType: 'arraybuffer' });
+                    imageBuffer = Buffer.from(res.data);
+                } catch (e) {
+                    console.error('Failed to fetch banner URL:', e);
+                }
+            } else {
+                try {
+                    const filePath = path.resolve(process.cwd(), config.RYZUMI_BANNER);
+                    imageBuffer = await fs.promises.readFile(filePath);
+                } catch (e) {
+                    console.error('Failed to read local banner file:', e);
+                }
             }
-        }, { quoted: fkon });
+        }
+
+        let thumb = null;
+        if (imageBuffer) {
+            try {
+                const media = await prepareWAMessageMedia(
+                    { image: imageBuffer },
+                    {
+                        upload: sock.waUploadToServer,
+                        mediaTypeOverride: 'thumbnail-link',
+                    }
+                );
+                thumb = media.imageMessage;
+            } catch (error) {
+                console.error('Failed to prepare WAMessageMedia for menu banner:', error);
+            }
+        }
+
+        // Custom extendedTextMessage link preview
+        const content = {
+            extendedTextMessage: {
+                text: menuText.trim() + `\n\n${config.SOC_WEBSITE}`,
+                matchedText: config.SOC_WEBSITE,
+                title: config.BOT_NAME || 'Ryzumi Starlette',
+                description: 'Haloo, Apa Kabar Kak? 🌸✨',
+                previewType: 0,
+                jpegThumbnail: thumb?.jpegThumbnail?.toString('base64') ?? '',
+                thumbnailDirectPath: thumb?.directPath ?? '',
+                thumbnailSha256: thumb?.fileSha256?.toString('base64') ?? '',
+                thumbnailEncSha256: thumb?.fileEncSha256?.toString('base64') ?? '',
+                mediaKey: thumb?.mediaKey?.toString('base64') ?? '',
+                mediaKeyTimestamp: thumb?.mediaKeyTimestamp ?? undefined,
+                thumbnailHeight: thumb?.height ?? undefined,
+                thumbnailWidth: thumb?.width ?? undefined,
+                inviteLinkGroupTypeV2: 0,
+                contextInfo: {
+                    mentionedJid: [msgData.senderJid],
+                },
+            },
+        };
+
+        await sock.relayMessage(msgData.remoteJid, content, { quoted: fkon });
     }
 };
