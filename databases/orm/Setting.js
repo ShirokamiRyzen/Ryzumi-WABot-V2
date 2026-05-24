@@ -14,6 +14,10 @@ const Setting = sequelize.define('Setting', {
     is_register: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
+    },
+    is_gconly: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 }, {
     tableName: 'settings',

@@ -28,7 +28,7 @@ export default {
         // Fetch Settings
         const [setting] = await Setting.findOrCreate({
             where: { id: 1 },
-            defaults: { is_public: true, is_register: true }
+            defaults: { is_public: true, is_register: true, is_gconly: false }
         });
 
         // System Info
@@ -70,6 +70,7 @@ export default {
         statText += `╭─「 *PENGATURAN* 」\n`;
         statText += `│ *Public Mode:* ${setting.is_public ? 'Aktif' : 'Mati'}\n`;
         statText += `│ *Register Mode:* ${setting.is_register ? 'Aktif' : 'Mati'}\n`;
+        statText += `│ *GC Only Mode:* ${setting.is_gconly ? 'Aktif' : 'Mati'}\n`;
         statText += `╰─────────────┈\n\n`;
 
         statText += `╭─「 *SYSTEM USAGE* 」\n`;

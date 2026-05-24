@@ -5,7 +5,7 @@ export default {
     category: 'misc',
     description: 'Mengaktifkan atau menonaktifkan fitur bot',
     async execute(sock, m, msgData, user, group) {
-        const availableFeatures = ['welcome', 'limit', 'public', 'register'];
+        const availableFeatures = ['welcome', 'limit', 'public', 'register', 'gconly'];
         const feature = msgData.args[0]?.toLowerCase();
         const action = msgData.commandName;
         const status = (action === 'enable' || action === 'on');
@@ -17,14 +17,17 @@ export default {
         }
 
         // Fitur khusus Global (Owner Only)
-        if (['public', 'register'].includes(feature)) {
+        if (['public', 'register', 'gconly'].includes(feature)) {
             if (!user.isOwner) {
                 return sock.sendMessage(msgData.remoteJid, {
                     text: `Maaf ya kak, cuma Owner Ryzumi yang boleh atur fitur *${feature}*~ (｡T ω T｡)`
                 }, { quoted: m });
             }
 
-            const [setting] = await Setting.findOrCreate({ where: { id: 1 } });
+            const [setting] = await Setting.findOrCreate({ 
+                where: { id: 1 },
+                defaults: { is_public: true, is_register: true, is_gconly: false }
+            });
             
             if (feature === 'public') {
                 await setting.update({ is_public: status });
@@ -35,6 +38,11 @@ export default {
                 await setting.update({ is_register: status });
                 return sock.sendMessage(msgData.remoteJid, {
                     text: `Selesai! Fitur *registrasi* sekarang sudah Ryzumi ${status ? 'aktifkan (wajib daftar)' : 'matikan (semua bebas akses)'} yaa~ (๑>ᴗ<๑)`
+                }, { quoted: m });
+            } else if (feature === 'gconly') {
+                await setting.update({ is_gconly: status });
+                return sock.sendMessage(msgData.remoteJid, {
+                    text: `Selesai! Mode *Group Only* sekarang sudah Ryzumi ${status ? 'aktifkan (hanya merespon di grup)' : 'matikan (merespon di grup & private)'} yaa~ (๑>ᴗ<๑)`
                 }, { quoted: m });
             }
         }

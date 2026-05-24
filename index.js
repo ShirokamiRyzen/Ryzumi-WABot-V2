@@ -77,7 +77,7 @@ async function connectToWhatsApp() {
             // Inisialisasi Setting default jika belum ada
             await Setting.findOrCreate({
                 where: { id: 1 },
-                defaults: { is_public: true, is_register: true }
+                defaults: { is_public: true, is_register: true, is_gconly: false }
             });
 
             isDbConnected = true;

@@ -103,7 +103,7 @@ export const processAuth = async (sock, msgData) => {
     if (!cachedSetting || (now - lastCacheUpdate) > CACHE_TTL) {
         const [setting] = await Setting.findOrCreate({
             where: { id: 1 },
-            defaults: { is_public: true, is_register: true }
+            defaults: { is_public: true, is_register: true, is_gconly: false }
         });
         cachedSetting = setting;
         lastCacheUpdate = now;
