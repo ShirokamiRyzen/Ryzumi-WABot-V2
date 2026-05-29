@@ -28,7 +28,7 @@ export default {
             const { data } = await axios.get(`${config.API_RYZUMI}/api/downloader/instagram?url=${encodeURIComponent(url)}`);
 
             if (!data.success || !data.result) {
-                throw new Error('Yahhh, media Instagram-nya nggak ketemu atau link-nya bermasalah kak~ (╥﹏╥)');
+                return sock.sendMessage(msgData.remoteJid, { text: `Waaa, nggak ada media yang bisa aku ambil dari sini~ (｡T ω T｡)\n\n${JSON.stringify(data, null, 2)}` }, { quoted: m });
             }
 
             const result = data.result;
