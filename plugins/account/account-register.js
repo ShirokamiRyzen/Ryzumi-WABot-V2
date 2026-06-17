@@ -2,7 +2,7 @@ export default {
     command: ['register', 'daftar'],
     category: 'account',
     description: 'Mendaftarkan diri ke database bot',
-    isPrivate: true, // Hanya bisa di chat pribadi
+    isPrivate: false,
     async execute(sock, m, msgData, user) {
         if (user.is_registered) {
             return msgData.reply('Kamu sudah terdaftar sebelumnya!');

@@ -16,6 +16,22 @@ export const processAuth = async (sock, msgData) => {
         return { is_registered: false, is_premium: false, is_banned: false, limit: 0 };
     }
 
+    // Resolusi LID ke JID secara asinkron menggunakan lidMapping Baileys sebelum load User
+    if (msgData.senderJid && msgData.senderJid.endsWith('@lid') && sock?.signalRepository?.lidMapping) {
+        try {
+            const pn = await sock.signalRepository.lidMapping.getPNForLID(msgData.senderJid);
+            if (pn) {
+                const resolvedJid = pn.split(':')[0].split('@')[0] + '@s.whatsapp.net';
+                const lidNumber = msgData.senderJid.split('@')[0];
+                const { lidCache } = await import('../libs/lid-resolver.js');
+                lidCache.set(lidNumber, resolvedJid);
+                msgData.senderJid = resolvedJid;
+            }
+        } catch (err) {
+            console.error('[Auth LID Resolver] Gagal resolve LID secara async:', err.message);
+        }
+    }
+
     const [user] = await User.findOrCreate({
         where: { jid: msgData.senderJid },
         defaults: {
@@ -87,14 +103,14 @@ export const processAuth = async (sock, msgData) => {
 
         const participant = metadata.participants.find(p => 
             p.id === msgData.senderJid || 
-            jidToNum(resolveLidToJid(p.id)) === normalizedSender
+            jidToNum(resolveLidToJid(p.id, sock)) === normalizedSender
         );
         msgData.isAdmin = participant?.admin !== null && participant?.admin !== undefined;
 
         const botParticipant = metadata.participants.find(p => 
             p.id === botId || 
             p.id === botLid || 
-            jidToNum(resolveLidToJid(p.id)) === normalizedBot
+            jidToNum(resolveLidToJid(p.id, sock)) === normalizedBot
         );
         msgData.isBotAdmin = botParticipant?.admin !== null && botParticipant?.admin !== undefined;
     }

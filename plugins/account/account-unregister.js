@@ -2,7 +2,7 @@ export default {
     command: ['unregister', 'unreg'],
     category: 'account',
     description: 'Menghapus pendaftaran diri dari database bot',
-    isPrivate: true,
+    isPrivate: false,
     async execute(sock, m, msgData, user) {
         if (!user.is_registered) {
             return msgData.reply('Kamu belum terdaftar sebelumnya!');

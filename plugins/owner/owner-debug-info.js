@@ -16,7 +16,7 @@ export default {
             // Ambil data dari pesan yang di-quote dan resolve LID-nya
             debugData = {
                 type: 'Quoted Message',
-                jid: resolveLidToJid(contextInfo.participant),
+                jid: resolveLidToJid(contextInfo.participant, sock),
                 messageId: contextInfo.stanzaId,
                 messageType: Object.keys(contextInfo.quotedMessage || {})[0] || 'unknown',
                 raw: contextInfo.quotedMessage

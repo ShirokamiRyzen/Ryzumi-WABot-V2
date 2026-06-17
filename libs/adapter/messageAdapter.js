@@ -10,16 +10,23 @@ export const extractMessageData = (m, sock) => {
     const rawRemoteJid = m.key.remoteJid;
     const fromMe = m.key.fromMe;
     const rawBotId = sock?.user?.id || '';
-    const botJid = resolveLidToJid(rawBotId.split(':')[0].split('@')[0] + (rawBotId.includes('@lid') ? '@lid' : '@s.whatsapp.net'));
+    const botJid = resolveLidToJid(rawBotId.split(':')[0].split('@')[0] + (rawBotId.includes('@lid') ? '@lid' : '@s.whatsapp.net'), sock);
 
     let rawSenderJid;
     if (fromMe) {
         rawSenderJid = botJid;
     } else {
         rawSenderJid = isGroup ? (m.key.participant || rawRemoteJid) : rawRemoteJid;
+        if (rawSenderJid && rawSenderJid.endsWith('@lid')) {
+            if (isGroup && m.key.participantAlt && m.key.participantAlt.endsWith('@s.whatsapp.net')) {
+                rawSenderJid = m.key.participantAlt;
+            } else if (!isGroup && m.key.remoteJidAlt && m.key.remoteJidAlt.endsWith('@s.whatsapp.net')) {
+                rawSenderJid = m.key.remoteJidAlt;
+            }
+        }
     }
 
-    const senderJid = resolveLidToJid(rawSenderJid);
+    const senderJid = resolveLidToJid(rawSenderJid, sock);
 
     const msg = unwrapMessage(m.message);
     const messageType = getMessageType(msg);
@@ -48,7 +55,7 @@ export const extractMessageData = (m, sock) => {
     const isQuotedMedia = isQuoted && /imageMessage|videoMessage|audioMessage|stickerMessage|documentMessage/.test(quotedType);
     const quotedMime = isQuoted ? (quotedMsg[quotedType]?.mimetype || '') : '';
 
-    const remoteJid = resolveLidToJid(rawRemoteJid);
+    const remoteJid = resolveLidToJid(rawRemoteJid, sock);
 
     return {
         // Core Properties
@@ -98,7 +105,7 @@ export const extractMessageData = (m, sock) => {
             }
             if (!targetJid) return null;
 
-            const resolved = resolveLidToJid(targetJid);
+            const resolved = resolveLidToJid(targetJid, sock);
             if (resolved.endsWith('@g.us')) return resolved;
             return resolved.split(':')[0].split('@')[0] + '@s.whatsapp.net';
         },
