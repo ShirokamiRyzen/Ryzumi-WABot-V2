@@ -50,6 +50,19 @@ export default {
                     if (filename.endsWith('.txt')) mimetype = 'text/plain';
                     else if (filename.endsWith('.json')) mimetype = 'application/json';
                     else if (filename.endsWith('.html')) mimetype = 'text/html';
+                    else if (/\.(jpg|jpeg|png|webp|gif)$/i.test(filename)) mimetype = 'image/jpeg';
+                    else if (/\.(mp4|m4v|mov|avi|flv|webm|gifv)$/i.test(filename)) mimetype = 'video/mp4';
+                    else if (/\.(mp3|wav|ogg|m4a|opus|flac)$/i.test(filename)) mimetype = 'audio/mpeg';
+
+                    if (/^image\//.test(mimetype)) {
+                        return sock.sendMessage(jid, { image: pathOrBuffer, caption: caption || undefined }, { quoted });
+                    }
+                    if (/^video\//.test(mimetype)) {
+                        return sock.sendMessage(jid, { video: pathOrBuffer, caption: caption || undefined }, { quoted });
+                    }
+                    if (/^audio\//.test(mimetype)) {
+                        return sock.sendMessage(jid, { audio: pathOrBuffer, mimetype, caption: caption || undefined }, { quoted });
+                    }
 
                     return sock.sendMessage(jid, {
                         document: pathOrBuffer,
@@ -64,6 +77,23 @@ export default {
                     if (isImage) {
                         return sock.sendMessage(jid, {
                             image: { url: pathOrBuffer },
+                            caption: caption || undefined
+                        }, { quoted });
+                    }
+
+                    const isVideo = /^video\//.test(contentType) || /\.(mp4|m4v|mov|avi|flv|webm|gifv)$/i.test(filename);
+                    if (isVideo) {
+                        return sock.sendMessage(jid, {
+                            video: { url: pathOrBuffer },
+                            caption: caption || undefined
+                        }, { quoted });
+                    }
+
+                    const isAudio = /^audio\//.test(contentType) || /\.(mp3|wav|ogg|m4a|opus|flac)$/i.test(filename);
+                    if (isAudio) {
+                        return sock.sendMessage(jid, {
+                            audio: { url: pathOrBuffer },
+                            mimetype: contentType || 'audio/mp4',
                             caption: caption || undefined
                         }, { quoted });
                     }
