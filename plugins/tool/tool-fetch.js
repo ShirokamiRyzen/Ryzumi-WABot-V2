@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { format } from 'util';
 import path from 'path';
 
 export default {
@@ -15,80 +16,126 @@ export default {
             }, { quoted: m });
         }
 
-        // Normalisasi URL biar nggak error~
-        if (!/^https?:\/\//.test(text)) text = 'https://' + text;
+        // ngecek dulu nih si user make https:// atau http:// atau gada keduanya
+        if (!/^https?:\/\//.test(text)) {
+            // tambah http:// sebagai default jika user lupa
+            text = 'http://' + text;
+        } else if (/^https:\/\//.test(text)) {
+            // jika gada https:// langsung tambahin
+            text = text;
+        }
+
+        m.chat = msgData.remoteJid;
+        m.reply = async (txt) => sock.sendMessage(msgData.remoteJid, { text: txt }, { quoted: m });
+
+        let _url;
+        try {
+            _url = new URL(text);
+        } catch (e) {
+            return m.reply('URL tidak valid kak!');
+        }
+
+        let url = global.API ? global.API(_url.origin, _url.pathname, Object.fromEntries(_url.searchParams.entries()), 'APIKEY') : text;
+
+        // mengkonfigurasi seberapa banyak melakukan redirect, misal url di short sebanyak 1000 maka melakukan redirect 1000 kali (optional: 999999)
+        let maxRedirects = 999999;
+        let redirectCount = 0;
+        let redirectUrl = url;
+        let contentType = '';
+
+        const conn = {
+            sendFile: async (jid, pathOrBuffer, filename, caption, quoted) => {
+                if (Buffer.isBuffer(pathOrBuffer)) {
+                    let mimetype = 'application/octet-stream';
+                    if (filename.endsWith('.txt')) mimetype = 'text/plain';
+                    else if (filename.endsWith('.json')) mimetype = 'application/json';
+                    else if (filename.endsWith('.html')) mimetype = 'text/html';
+
+                    return sock.sendMessage(jid, {
+                        document: pathOrBuffer,
+                        mimetype: mimetype,
+                        fileName: filename,
+                        caption: caption || undefined
+                    }, { quoted });
+                }
+
+                if (typeof pathOrBuffer === 'string') {
+                    const isImage = /^image\//.test(contentType) || /\.(jpg|jpeg|png|webp|gif)$/i.test(filename);
+                    if (isImage) {
+                        return sock.sendMessage(jid, {
+                            image: { url: pathOrBuffer },
+                            caption: caption || undefined
+                        }, { quoted });
+                    }
+
+                    return sock.sendMessage(jid, {
+                        document: { url: pathOrBuffer },
+                        mimetype: contentType || 'application/octet-stream',
+                        fileName: filename,
+                        caption: caption || undefined
+                    }, { quoted });
+                }
+            }
+        };
 
         try {
-            // Ryzumi pakai fetch dengan opsi redirect otomatis yaa~
-            const res = await fetch(text, {
-                redirect: 'follow',
-                timeout: 30000,
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-                }
-            });
+            while (redirectCount < maxRedirects) {
+                let res = await fetch(redirectUrl);
 
-            // Cek ukuran file biar botnya nggak meledak kak! (maks 100MB)
-            const contentLength = res.headers.get('content-length');
-            if (contentLength && parseInt(contentLength) > 100 * 1024 * 1024) {
-                throw new Error(`Aduuh file-nya kegedean kak! Ukurannya ${contentLength} bytes.. (｡T ω T｡)`);
-            }
-
-            const contentType = res.headers.get('content-type') || '';
-            const filename = path.basename(new URL(res.url).pathname) || 'file-ryzumi';
-
-            // 1. Jika kontennya adalah gambar
-            if (/^image\//.test(contentType)) {
-                await sock.sendMessage(msgData.remoteJid, {
-                    image: { url: res.url },
-                    caption: `Horeee~! Ini gambar yang kakak minta~! (๑>ᴗ<๑)\n\n*URL:* ${text}`
-                }, { quoted: m });
-            }
-            // 2. Jika kontennya teks atau JSON
-            else if (/^text\//.test(contentType) || /^application\/json/.test(contentType)) {
-                let txt = await res.text();
-
-                // Rapikan kalau JSON biar enak dibaca kakak~
-                if (/json/.test(contentType)) {
-                    try { txt = JSON.stringify(JSON.parse(txt), null, 2); } catch { }
+                if (res.headers.get('content-length') > 100 * 1024 * 1024 * 1024) {
+                    // menghapus respons server
+                    res.body.destroy();
+                    throw `Content-Length: ${res.headers.get('content-length')}`;
                 }
 
-                // Kirim teks langsung kalau pendek, kalau panjang jadi file yaa!
-                if (txt.length > 4000) {
-                    const ext = /json/.test(contentType) ? 'json' : 'txt';
-                    await sock.sendMessage(msgData.remoteJid, {
-                        document: Buffer.from(txt),
-                        mimetype: contentType,
-                        fileName: `fetch-result.${ext}`
-                    }, { quoted: m });
-                    await sock.sendMessage(msgData.remoteJid, { text: `Kontennya kepanjangan kak, jadi Ryzumi kirim sebagai file yaa~ (˶˃ ᵕ ˂˶)` }, { quoted: m });
+                contentType = res.headers.get('content-type') || '';
+
+                // ekstrak nama dari url yang gunanya buat ekstensi
+                let filename = path.basename(new URL(redirectUrl).pathname) || 'file';
+
+                // ngendaliin konten tipe yang bisa aja berbeda
+                if (/^image\//.test(contentType)) {
+                    await conn.sendFile(m.chat, redirectUrl, filename, text, m);
+                } else if (/^text\//.test(contentType)) {
+                    let txt = await res.text();
+                    await m.reply(txt.slice(0, 65536) + '');
+                    await conn.sendFile(m.chat, Buffer.from(txt), 'file.txt', null, m);
+                } else if (/^application\/json/.test(contentType)) {
+                    let txt = await res.json();
+                    txt = format(JSON.stringify(txt, null, 2));
+                    await m.reply(txt.slice(0, 65536) + '');
+                    await conn.sendFile(m.chat, Buffer.from(txt), 'file.json', null, m);
+                } else if (/^text\/html/.test(contentType)) {
+                    let html = await res.text();
+                    await conn.sendFile(m.chat, Buffer.from(html), 'file.html', null, m);
                 } else {
-                    await sock.sendMessage(msgData.remoteJid, { text: txt }, { quoted: m });
+                    // mengirim file sesuai ekstensi
+                    await conn.sendFile(m.chat, redirectUrl, filename, text, m);
+                }
+
+                // melakukan pengeceka dulu cuy kalo ada redirect
+                if (res.status === 301 || res.status === 302 || res.status === 307 || res.status === 308) {
+                    let location = res.headers.get('location');
+                    if (location) {
+                        redirectUrl = location;
+                        redirectCount++;
+                    } else {
+                        // ga nemu location header ? berhenti redirect
+                        break;
+                    }
+                } else {
+                    // No redirect ? berhenti redirect
+                    break;
                 }
             }
-            // 3. Jika kontennya HTML
-            else if (/text\/html/.test(contentType)) {
-                const html = await res.text();
-                await sock.sendMessage(msgData.remoteJid, {
-                    document: Buffer.from(html),
-                    mimetype: 'text/html',
-                    fileName: 'page.html'
-                }, { quoted: m });
-                await sock.sendMessage(msgData.remoteJid, { text: 'Itu file HTML-nya sudah Ryzumi ambilkan kak! (๑>ᴗ<๑)' }, { quoted: m });
-            }
-            // 4. Lain-lain (File umum)
-            else {
-                await sock.sendMessage(msgData.remoteJid, {
-                    document: { url: res.url },
-                    mimetype: contentType || 'application/octet-stream',
-                    fileName: filename
-                }, { quoted: m });
-            }
 
+            if (redirectCount >= maxRedirects) {
+                throw `Too many redirects (max: ${maxRedirects})`;
+            }
         } catch (error) {
             console.error('Fetch Tool Error:', error);
             await sock.sendMessage(msgData.remoteJid, {
-                text: `Uwaaa gawat! Ryzumi gagal ambil datanya kak: ${error.message}.. (╥﹏╥)`
+                text: `Uwaaa gawat! Ryzumi gagal ambil datanya kak: ${error.message || error}.. (╥﹏╥)`
             }, { quoted: m });
         }
     }
