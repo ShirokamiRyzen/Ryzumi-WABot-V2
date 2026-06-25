@@ -35,7 +35,7 @@ export default {
             }
 
             const history = data.history || data.riwayat || [];
-            const historyText = history.slice(0, 5).map((item) => `• *${item.tanggal || item.date}*\n  ${item.keterangan || item.desc || item.note}`).join('\n\n') || 'Belum ada histori nih kak..';
+            const historyText = history.map((item) => `• *${item.tanggal || item.date}*\n  ${item.keterangan || item.desc || item.note}`).join('\n\n') || 'Belum ada histori nih kak..';
 
             const infoText = `
 📦 *HASIL PELACAKAN RESI* 📦
@@ -46,8 +46,9 @@ Status         : ${data.status || '-'}
 Tgl Kirim      : ${data.tanggalKirim || '-'}
 Posisi Akhir   : ${data.lastPosition || data.posisiTerakhir || '-'}
 CS             : ${data.customerService || '-'}
+Share Link     : ${data.shareLink || data.sharelink || '-'}
 
-🕓 *5 Riwayat Terbaru:*
+🕓 *Riwayat Perjalanan Paket:*
 ${historyText}
 
 Horeee! Itu tadi status paket kakak~ Semoga cepet sampe yaa! (๑>ᴗ<๑)
