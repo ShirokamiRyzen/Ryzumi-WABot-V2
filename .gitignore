@@ -6,3 +6,4 @@
 /.vscode
 /bun.lock
 /plugins/owner/owner-ryzumiapi-ip.js
+/databases/backups/*

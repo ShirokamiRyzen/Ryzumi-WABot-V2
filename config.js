@@ -15,6 +15,12 @@ const config = {
   DB_USER: process.env.DB_USER,
   DB_PASS: process.env.DB_PASS,
 
+  // Nextcloud Config
+  NEXTCLOUD_URL: process.env.NEXTCLOUD_URL,
+  NEXTCLOUD_USER: process.env.NEXTCLOUD_USER,
+  NEXTCLOUD_PASSWORD: process.env.NEXTCLOUD_PASSWORD,
+  NEXTCLOUD_PATH: process.env.NEXTCLOUD_PATH,
+
   // Bot Watermark
   BOT_NAME: process.env.BOT_NAME,
 
