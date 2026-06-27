@@ -64,6 +64,28 @@ Ryzumi-WABot V2 adalah asisten bot WhatsApp cerdas yang dibangun menggunakan Nod
 
 ---
 
+## 💾 Backup Database Otomatis & Sinkronisasi Nextcloud
+
+Bot ini memiliki fitur pencadangan (backup) database otomatis yang dirancang khusus untuk lingkungan **Docker** (berjalan murni dengan NodeJS, tanpa bergantung pada `mysqldump` eksternal).
+
+### Fitur Utama Backup:
+*   **Pemicu Otomatis (Cron)**: Berjalan setiap hari pada pukul **00:00 (12 malam) WIB** (`Asia/Jakarta`).
+*   **Aman di Docker**: Tidak membutuhkan CLI `mysqldump` eksternal, melainkan menggunakan kueri internal NodeJS.
+*   **Sinkronisasi Cloud**: Otomatis mengunggah file cadangan (`.sql` atau `.sqlite`) ke server **Nextcloud** melalui protokol WebDAV.
+*   **Pembersihan Mandiri (Auto-Clean)**: Menghapus file lokal di dalam container Docker setelah berhasil diunggah ke Nextcloud, guna menghindari penggunaan ruang disk secara berlebih.
+*   **Perintah Manual**: Khusus Owner bot dapat mengetik perintah `.backup` atau `.backupdb` langsung di WhatsApp. Bot akan mencadangkan database secara instan dan mengirimkan berkas `.sql` / `.sqlite` langsung sebagai dokumen WhatsApp.
+
+### Cara Konfigurasi (di `.env`):
+Isi variabel berikut pada file `.env` Anda:
+```env
+NEXTCLOUD_URL="https://nextcloud.kamu.com"  # URL Nextcloud
+NEXTCLOUD_USER="username"                   # Username akun Nextcloud
+NEXTCLOUD_PASSWORD="app-password"           # App Password Nextcloud
+NEXTCLOUD_PATH="RyzumiMD-DB-Backup/"        # Path folder di Nextcloud
+```
+
+---
+
 ## 🛠️ Cara Menambah Fitur / Plugin Baru
 
 Ryzumi V2 menggunakan sistem plugin yang sangat mudah dikembangkan. Semua fitur diletakkan di dalam folder `plugins/`. Setiap kali Anda membuat atau mengedit plugin, bot akan secara otomatis memuatnya secara *Hot-Reload* (tanpa perlu direstart).
