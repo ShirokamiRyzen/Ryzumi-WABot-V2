@@ -15,6 +15,7 @@ import Setting from './databases/orm/Setting.js';
 
 
 // Pastikan inisialisasi database hanya berjalan sekali di luar loop agar tidak memanggil berkali-kali saat reconnect
+const startTime = Math.floor(Date.now() / 1000);
 let isDbConnected = false;
 
 /**
@@ -167,6 +168,10 @@ async function connectToWhatsApp() {
 
         for (const m of messages) {
             if (!m.message) continue;
+
+            // Abaikan pesan yang dikirim sebelum bot dinyalakan (menghindari spam command offline)
+            const msgTime = m.messageTimestamp ? (typeof m.messageTimestamp === 'number' ? m.messageTimestamp : Number(m.messageTimestamp)) : 0;
+            if (msgTime < startTime - 15) continue;
 
             // Abaikan pesan sistem/dummy messageContextInfo atau senderKeyDistributionMessage agar tidak membebani log
             const msgData = extractMessageData(m, sock);
