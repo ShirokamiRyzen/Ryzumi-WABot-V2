@@ -6,14 +6,28 @@ import config from '../config.js';
 import { resolveLidToJid } from '../libs/lid-resolver.js';
 import { getGroupMetadata, setGroupMetadata } from '../libs/groupCache.js';
 
-let cachedSetting = null;
-let lastCacheUpdate = 0;
-const CACHE_TTL = 30000; // 30 detik
-
 export const processAuth = async (sock, msgData) => {
     // Jangan simpan grup atau status broadcast ke tabel User
     if (msgData.senderJid.endsWith('@g.us') || msgData.senderJid === 'status@broadcast') {
-        return { is_registered: false, is_premium: false, is_banned: false, limit: 0 };
+        const [setting] = await Setting.findOrCreate({
+            where: { id: 1 },
+            defaults: { is_public: true, is_register: true, is_gconly: false }
+        });
+        return {
+            user: {
+                jid: msgData.senderJid,
+                name: msgData.pushName || 'System',
+                is_registered: false,
+                is_premium: false,
+                is_banned: false,
+                limit: 0,
+                isOwner: false,
+                save: async () => {},
+                update: async () => {}
+            },
+            group: null,
+            setting
+        };
     }
 
     // Resolusi LID ke JID secara asinkron menggunakan lidMapping Baileys sebelum load User
@@ -46,18 +60,18 @@ export const processAuth = async (sock, msgData) => {
 
     const ownerJid = config.OWNER_NUMBER.includes('@') ? config.OWNER_NUMBER : `${config.OWNER_NUMBER}@s.whatsapp.net`;
     const botJid = sock.user?.id?.split(':')[0].split('@')[0] + '@s.whatsapp.net';
-    
+
     // Bandingkan JID yang sudah di-resolve (senderJid)
-    const isOwner = (msgData.senderJid.split(':')[0].split('@')[0] === ownerJid.split(':')[0].split('@')[0]) || 
-                    (msgData.senderJid.split(':')[0].split('@')[0] === botJid.split(':')[0].split('@')[0]) || 
-                    msgData.fromMe;
+    const isOwner = (msgData.senderJid.split(':')[0].split('@')[0] === ownerJid.split(':')[0].split('@')[0]) ||
+        (msgData.senderJid.split(':')[0].split('@')[0] === botJid.split(':')[0].split('@')[0]) ||
+        msgData.fromMe;
 
     user.isOwner = isOwner;
-    
+
     let group = null;
     if (msgData.isGroup) {
         let metadata = getGroupMetadata(msgData.remoteJid);
-        
+
         // Jika tidak ada di cache, coba ambil dari database dulu sebagai cadangan (biar cepet)
         let dbGroup = await Group.findOne({ where: { jid: msgData.remoteJid } });
 
@@ -69,7 +83,7 @@ export const processAuth = async (sock, msgData) => {
                     sock.groupMetadata(msgData.remoteJid),
                     timeout(2000) // 2 detik saja, lebih dari itu kelamaan
                 ]);
-                
+
                 setGroupMetadata(msgData.remoteJid, metadata);
             } catch (err) {
                 // Jika gagal fetch metadata (timeout/error), gunakan data dari DB atau dummy
@@ -101,31 +115,26 @@ export const processAuth = async (sock, msgData) => {
         const botId = sock.user?.id;
         const botLid = sock.user?.lid;
 
-        const participant = metadata.participants.find(p => 
-            p.id === msgData.senderJid || 
+        const participant = metadata.participants.find(p =>
+            p.id === msgData.senderJid ||
             jidToNum(resolveLidToJid(p.id, sock)) === normalizedSender
         );
         msgData.isAdmin = participant?.admin !== null && participant?.admin !== undefined;
 
-        const botParticipant = metadata.participants.find(p => 
-            p.id === botId || 
-            p.id === botLid || 
+        const botParticipant = metadata.participants.find(p =>
+            p.id === botId ||
+            p.id === botLid ||
             jidToNum(resolveLidToJid(p.id, sock)) === normalizedBot
         );
         msgData.isBotAdmin = botParticipant?.admin !== null && botParticipant?.admin !== undefined;
     }
 
-    const now = Date.now();
-    if (!cachedSetting || (now - lastCacheUpdate) > CACHE_TTL) {
-        const [setting] = await Setting.findOrCreate({
-            where: { id: 1 },
-            defaults: { is_public: true, is_register: true, is_gconly: false }
-        });
-        cachedSetting = setting;
-        lastCacheUpdate = now;
-    }
+    const [setting] = await Setting.findOrCreate({
+        where: { id: 1 },
+        defaults: { is_public: true, is_register: true, is_gconly: false }
+    });
 
-    return { user, group, setting: cachedSetting };
+    return { user, group, setting };
 };
 
 

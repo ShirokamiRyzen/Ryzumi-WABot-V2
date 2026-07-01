@@ -24,11 +24,11 @@ export default {
                 }, { quoted: m });
             }
 
-            const [setting] = await Setting.findOrCreate({ 
+            const [setting] = await Setting.findOrCreate({
                 where: { id: 1 },
                 defaults: { is_public: true, is_register: true, is_gconly: false }
             });
-            
+
             if (feature === 'public') {
                 await setting.update({ is_public: status });
                 return sock.sendMessage(msgData.remoteJid, {
@@ -54,9 +54,9 @@ export default {
                     text: `Aduuh! Fitur *${feature}* cuma bisa dipake di dalam grup aja kak~ (｡T ω T｡)`
                 }, { quoted: m });
             }
-            
+
             if (!msgData.isAdmin && !user.isOwner) {
-                 return sock.sendMessage(msgData.remoteJid, {
+                return sock.sendMessage(msgData.remoteJid, {
                     text: `Hanya admin grup yang bisa mengatur fitur *${feature}* ya kak~ (｡T ω T｡)`
                 }, { quoted: m });
             }
