@@ -15,7 +15,16 @@ if (config.DB_DRIVER === 'sqlite3') {
         host: config.DB_HOST,
         port: config.DB_PORT,
         dialect: config.DB_DRIVER === 'mariadb' ? 'mariadb' : 'mysql',
-        logging: false
+        logging: false,
+        dialectOptions: {
+            connectTimeout: 10000
+        },
+        pool: {
+            max: 5,
+            min: 0,
+            acquire: 30000,
+            idle: 5000
+        }
     });
 }
 
