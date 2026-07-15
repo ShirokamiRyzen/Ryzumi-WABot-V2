@@ -17,13 +17,16 @@ if (config.DB_DRIVER === 'sqlite3') {
         dialect: config.DB_DRIVER === 'mariadb' ? 'mariadb' : 'mysql',
         logging: false,
         dialectOptions: {
-            connectTimeout: 10000
+            connectTimeout: 10000,
+            socketOptions: {
+                keepAlive: true
+            }
         },
         pool: {
             max: 5,
-            min: 0,
+            min: 1,
             acquire: 30000,
-            idle: 5000
+            idle: 30000
         }
     });
 }
