@@ -32,6 +32,7 @@ const ryzumiCDN = async (inp) => {
             method: 'POST',
             headers: {
                 'accept': 'application/json',
+                'content-length': form.getLengthSync(),
                 ...form.getHeaders(),
             },
             body: form,
