@@ -46,7 +46,7 @@ const ryzumiCDN = async (inp) => {
             throw new Error(`Failed to parse JSON. HTTP Status: ${res.status}. Response: ${text.slice(0, 150).replace(/\r?\n|\r/g, ' ')}`);
         }
 
-        if (!json.success) throw new Error(json.message || 'Gagal mengunggah file ke CDN.. (╥﹏╥)');
+        if (!json.success) throw new Error(json.error || json.message || 'Gagal mengunggah file ke CDN.. (╥﹏╥)');
 
         // Mengembalikan hasil sesuai format input (array atau single object)
         if (Array.isArray(inp)) {
