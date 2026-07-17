@@ -15,10 +15,12 @@ export default {
             }, { quoted: m });
         }
 
+        console.log(`[Upload Tool] Downloaded media buffer length: ${buffer.length} bytes`);
+
         await sock.sendMessage(msgData.remoteJid, { react: { text: '⏳', key: m.key } });
 
         try {
-            const result = await ryzumiCDN(buffer);
+            const result = await ryzumiCDN(msgData.fileName ? { buffer, originalname: msgData.fileName } : buffer);
             await sock.sendMessage(msgData.remoteJid, { react: { text: '✅', key: m.key } });
 
             const responseText = `Horeee~! Berkas kakak sudah berhasil diunggah~! (˶˃ ᵕ ˂˶)\n\n` +

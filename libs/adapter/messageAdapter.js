@@ -56,6 +56,7 @@ export const extractMessageData = (m, sock) => {
     const quotedMime = isQuoted ? (quotedMsg[quotedType]?.mimetype || '') : '';
 
     const remoteJid = resolveLidToJid(rawRemoteJid, sock);
+    const fileName = msg.documentMessage?.fileName || quotedMsg?.documentMessage?.fileName || '';
 
     return {
         // Core Properties
@@ -63,6 +64,7 @@ export const extractMessageData = (m, sock) => {
         remoteJid,
         senderJid,
         fromMe,
+        fileName,
         pushName: m.pushName || 'User',
         messageType,
         messageContent,
