@@ -37,7 +37,15 @@ const ryzumiCDN = async (inp) => {
             body: form,
         });
 
-        const json = await res.json();
+        const text = await res.text();
+        let json;
+        try {
+            json = JSON.parse(text);
+        } catch (err) {
+            console.error(`RyzenCDN JSON Parse Error (Status ${res.status}):`, text);
+            throw new Error(`Failed to parse JSON. HTTP Status: ${res.status}. Response: ${text.slice(0, 150).replace(/\r?\n|\r/g, ' ')}`);
+        }
+
         if (!json.success) throw new Error(json.message || 'Gagal mengunggah file ke CDN.. (╥﹏╥)');
 
         // Mengembalikan hasil sesuai format input (array atau single object)
