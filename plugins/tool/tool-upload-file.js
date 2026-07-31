@@ -25,7 +25,7 @@ export default {
 
             const responseText = `Horeee~! Berkas kakak sudah berhasil diunggah~! (˶˃ ᵕ ˂˶)\n\n` +
                 `*Link:* ${result.url}\n` +
-                `*Nama:* ${result.filename || 'berkas-ryzumi'}\n` +
+                `*Nama:* ${result.filename || 'ryzumi-temp'}\n` +
                 `*Ukuran:* ${result.size || 'Misterius'} bytes (๑>ᴗ<๑)`;
 
             await sock.sendMessage(msgData.remoteJid, { text: responseText }, { quoted: m });

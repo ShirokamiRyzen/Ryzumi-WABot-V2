@@ -18,16 +18,29 @@ export default {
         await msgData.react('🕓');
 
         try {
-            const apiUrl = `${config.API_RYZUMI}/api/downloader/ytmp4?url=${encodeURIComponent(videoUrl)}&quality=${resolution}`;
-            // console.log('Ryzumi API Request:', apiUrl);
-
-            const { data } = await axios.get(apiUrl, {
+            const axiosConfig = {
                 headers: {
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
                 }
-            });
+            };
 
-            if (!data || !data.url || data.url === 'Unknown Download URL' || !data.url.startsWith('http')) {
+            const isInvalidData = (d) => !d || !d.url || d.url === 'Unknown Download URL' || !d.url.startsWith('http');
+
+            let data;
+            try {
+                const apiUrl = `${config.API_RYZUMI}/api/downloader/ytmp4?url=${encodeURIComponent(videoUrl)}&quality=${resolution}`;
+                const res = await axios.get(apiUrl, axiosConfig);
+                data = res.data;
+                if (isInvalidData(data)) {
+                    throw new Error('v1 invalid response');
+                }
+            } catch (v1Error) {
+                const apiUrlV2 = `${config.API_RYZUMI}/api/downloader/v2/ytmp4?url=${encodeURIComponent(videoUrl)}&quality=${resolution}`;
+                const res = await axios.get(apiUrlV2, axiosConfig);
+                data = res.data;
+            }
+
+            if (isInvalidData(data)) {
                 throw new Error('Yahhh... Link videonya nggak ketemu atau resolusi ini nggak tersedia di server Ryzumi (╥﹏╥)');
             }
 

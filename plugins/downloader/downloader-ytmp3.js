@@ -16,7 +16,17 @@ export default {
         await msgData.react('🕓');
 
         try {
-            const { data } = await axios.get(`${config.API_RYZUMI}/api/downloader/ytmp3?url=${encodeURIComponent(videoUrl)}`);
+            let data;
+            try {
+                const res = await axios.get(`${config.API_RYZUMI}/api/downloader/ytmp3?url=${encodeURIComponent(videoUrl)}`);
+                data = res.data;
+                if (!data || !data.url) {
+                    throw new Error('v1 invalid response');
+                }
+            } catch (v1Error) {
+                const res = await axios.get(`${config.API_RYZUMI}/api/downloader/v2/ytmp3?url=${encodeURIComponent(videoUrl)}`);
+                data = res.data;
+            }
 
             if (!data || !data.url) {
                 throw new Error('Yahhh... Link audionya nggak ketemu di server Ryzumi (╥﹏╥)');
