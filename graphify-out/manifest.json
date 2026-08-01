@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "plugins/tool/tool-upload-file.js": {
-    "mtime": 1784301786.7802448,
-    "ast_hash": "b42d64c93f62be473499cea400710be7",
+    "mtime": 1785489679.1800878,
+    "ast_hash": "1dbfe94be5c44c2ca20081c704ad91c6",
     "semantic_hash": ""
   },
   ".agents/rules/graphify.md": {
@@ -432,6 +432,11 @@
   "assets/images/banner_menu.jpg": {
     "mtime": 1778844226.4986055,
     "ast_hash": "f6b0b9274fed66a86c3226be832ec173",
+    "semantic_hash": ""
+  },
+  "plugins/tool/tool-alight-activator.js": {
+    "mtime": 1785557609.2212014,
+    "ast_hash": "eb9c774581f2b60e48ece4894d2ca4c3",
     "semantic_hash": ""
   }
 }

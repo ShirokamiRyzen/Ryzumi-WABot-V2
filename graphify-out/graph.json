@@ -33,7 +33,7 @@
       "_origin": "ast",
       "id": "databases_connector",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "connector.js"
     },
     {
@@ -44,7 +44,7 @@
       "_origin": "ast",
       "id": "databases_orm_group",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "group.js"
     },
     {
@@ -55,7 +55,7 @@
       "_origin": "ast",
       "id": "databases_orm_group_group",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "group"
     },
     {
@@ -66,7 +66,7 @@
       "_origin": "ast",
       "id": "databases_orm_setting",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "setting.js"
     },
     {
@@ -77,7 +77,7 @@
       "_origin": "ast",
       "id": "databases_orm_setting_setting",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "setting"
     },
     {
@@ -88,7 +88,7 @@
       "_origin": "ast",
       "id": "databases_orm_user",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "user.js"
     },
     {
@@ -99,7 +99,7 @@
       "_origin": "ast",
       "id": "databases_orm_user_user",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "user"
     },
     {
@@ -109,7 +109,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "index",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "index.js"
     },
@@ -120,7 +120,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "index_starttime",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "starttime"
     },
@@ -131,7 +131,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "index_syncgroups",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "syncgroups()"
     },
@@ -142,7 +142,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "index_connecttowhatsapp",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "connecttowhatsapp()"
     },
@@ -154,7 +154,7 @@
       "_origin": "ast",
       "id": "libs_adapter_messageadapter",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "messageadapter.js"
     },
     {
@@ -165,7 +165,7 @@
       "_origin": "ast",
       "id": "libs_adapter_messageadapter_extractmessagedata",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "extractmessagedata()"
     },
     {
@@ -176,7 +176,7 @@
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "messageunwrapper.js"
     },
     {
@@ -187,7 +187,7 @@
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_unwrapmessage",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "unwrapmessage()"
     },
     {
@@ -198,7 +198,7 @@
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_getmessagetype",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "getmessagetype()"
     },
     {
@@ -209,7 +209,7 @@
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_getmessagecontent",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "getmessagecontent()"
     },
     {
@@ -219,7 +219,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_backup",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "backup.js"
     },
@@ -230,7 +230,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "libs_backup_uploadtonextcloud",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "uploadtonextcloud()"
     },
@@ -241,7 +241,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "libs_backup_backupdatabase",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "backupdatabase()"
     },
@@ -252,7 +252,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "libs_backup_pruneoldbackups",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "pruneoldbackups()"
     },
@@ -264,7 +264,7 @@
       "_origin": "ast",
       "id": "libs_baileys_utils",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "baileys-utils.js"
     },
     {
@@ -275,7 +275,7 @@
       "_origin": "ast",
       "id": "libs_baileys_utils_getpp",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "getpp()"
     },
     {
@@ -285,7 +285,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_console",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "console.js"
     },
@@ -296,7 +296,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "libs_console_logmessage",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "logmessage()"
     },
@@ -307,7 +307,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_cronjob",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "cronjob.js"
     },
@@ -318,7 +318,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "libs_cronjob_startcronjobs",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "startcronjobs()"
     },
@@ -329,7 +329,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_groupcache",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "groupcache.js"
     },
@@ -340,7 +340,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_groupcache_groupcache",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "groupcache"
     },
@@ -351,7 +351,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "libs_groupcache_setgroupmetadata",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "setgroupmetadata()"
     },
@@ -363,7 +363,7 @@
       "_origin": "ast",
       "id": "libs_groupcache_getgroupmetadata",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "getgroupmetadata()"
     },
     {
@@ -373,7 +373,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "libs_groupcache_cleargroupcache",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "cleargroupcache()"
     },
@@ -385,7 +385,7 @@
       "_origin": "ast",
       "id": "libs_hot_reload",
       "community": 6,
-      "community_name": "handler.js",
+      "community_name": "index.js",
       "norm_label": "hot-reload.js"
     },
     {
@@ -396,7 +396,7 @@
       "_origin": "ast",
       "id": "libs_hot_reload_plugins",
       "community": 6,
-      "community_name": "handler.js",
+      "community_name": "index.js",
       "norm_label": "plugins"
     },
     {
@@ -407,7 +407,7 @@
       "_origin": "ast",
       "id": "libs_hot_reload_loadplugins",
       "community": 6,
-      "community_name": "handler.js",
+      "community_name": "index.js",
       "norm_label": "loadplugins()"
     },
     {
@@ -418,7 +418,7 @@
       "_origin": "ast",
       "id": "libs_hot_reload_watchplugins",
       "community": 6,
-      "community_name": "handler.js",
+      "community_name": "index.js",
       "norm_label": "watchplugins()"
     },
     {
@@ -429,7 +429,7 @@
       "_origin": "ast",
       "id": "libs_lid_resolver",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "lid-resolver.js"
     },
     {
@@ -440,7 +440,7 @@
       "_origin": "ast",
       "id": "libs_lid_resolver_lidcache",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "lidcache"
     },
     {
@@ -451,7 +451,7 @@
       "_origin": "ast",
       "id": "libs_lid_resolver_resolvelidtojid",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "resolvelidtojid()"
     },
     {
@@ -572,7 +572,7 @@
       "_origin": "ast",
       "id": "middlewares_auth",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "auth.js"
     },
     {
@@ -583,7 +583,7 @@
       "_origin": "ast",
       "id": "middlewares_auth_processauth",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "processauth()"
     },
     {
@@ -594,7 +594,7 @@
       "_origin": "ast",
       "id": "middlewares_handler",
       "community": 6,
-      "community_name": "handler.js",
+      "community_name": "index.js",
       "norm_label": "handler.js"
     },
     {
@@ -605,7 +605,7 @@
       "_origin": "ast",
       "id": "middlewares_handler_plugindir",
       "community": 6,
-      "community_name": "handler.js",
+      "community_name": "index.js",
       "norm_label": "plugindir"
     },
     {
@@ -615,7 +615,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "middlewares_handler_bothandler",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "bothandler()"
     },
@@ -627,7 +627,7 @@
       "_origin": "ast",
       "id": "middlewares_validator",
       "community": 6,
-      "community_name": "handler.js",
+      "community_name": "index.js",
       "norm_label": "validator.js"
     },
     {
@@ -638,7 +638,7 @@
       "_origin": "ast",
       "id": "middlewares_validator_validateplugin",
       "community": 6,
-      "community_name": "handler.js",
+      "community_name": "index.js",
       "norm_label": "validateplugin()"
     },
     {
@@ -1980,7 +1980,7 @@
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "group-welcome-leave.js"
     },
     {
@@ -1991,7 +1991,7 @@
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave_onparticipantsupdate",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "onparticipantsupdate()"
     },
     {
@@ -2002,7 +2002,7 @@
       "_origin": "ast",
       "id": "plugins_group_kick_member",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "kick-member.js"
     },
     {
@@ -2013,7 +2013,7 @@
       "_origin": "ast",
       "id": "plugins_group_kick_member_execute",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "execute()"
     },
     {
@@ -2112,7 +2112,7 @@
       "_origin": "ast",
       "id": "plugins_misc_misc_bot_statistic",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "misc-bot-statistic.js"
     },
     {
@@ -2123,7 +2123,7 @@
       "_origin": "ast",
       "id": "plugins_misc_misc_bot_statistic_format",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "format"
     },
     {
@@ -2134,7 +2134,7 @@
       "_origin": "ast",
       "id": "plugins_misc_misc_bot_statistic_execute",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "execute()"
     },
     {
@@ -2145,7 +2145,7 @@
       "_origin": "ast",
       "id": "plugins_misc_misc_enable_disable",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "misc-enable-disable.js"
     },
     {
@@ -2156,7 +2156,7 @@
       "_origin": "ast",
       "id": "plugins_misc_misc_enable_disable_execute",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "execute()"
     },
     {
@@ -2221,7 +2221,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "owner-backup-db.js"
     },
@@ -2232,7 +2232,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db_execute",
-      "community": 1,
+      "community": 6,
       "community_name": "index.js",
       "norm_label": "execute()"
     },
@@ -2244,7 +2244,7 @@
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "owner-debug-info.js"
     },
     {
@@ -2255,7 +2255,7 @@
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info_execute",
       "community": 1,
-      "community_name": "index.js",
+      "community_name": "messageAdapter.js",
       "norm_label": "execute()"
     },
     {
@@ -2531,6 +2531,28 @@
       "id": "plugins_sticker_sticker_to_media_execute",
       "community": 8,
       "community_name": "sticker-to-media.js",
+      "norm_label": "execute()"
+    },
+    {
+      "label": "tool-alight-activator.js",
+      "file_type": "code",
+      "source_file": "plugins/tool/tool-alight-activator.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_tool_tool_alight_activator",
+      "community": 0,
+      "community_name": "config.js",
+      "norm_label": "tool-alight-activator.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/tool/tool-alight-activator.js",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "plugins_tool_tool_alight_activator_execute",
+      "community": 0,
+      "community_name": "config.js",
       "norm_label": "execute()"
     },
     {
@@ -3396,6 +3418,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/tool/tool-alight-activator.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_tool_tool_alight_activator",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/tool/tool-cek-bapenda-jabar.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -3833,6 +3867,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_sticker_sticker_brat",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/tool/tool-alight-activator.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_tool_tool_alight_activator",
       "target": "config_config",
       "confidence_score": 1.0
     },
@@ -7492,6 +7538,17 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/tool/tool-alight-activator.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_tool_tool_alight_activator",
+      "target": "plugins_tool_tool_alight_activator_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/tool/tool-cek-bapenda-jabar.js",
       "source_location": "L10",
       "weight": 1.0,
@@ -7832,5 +7889,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "7f5ae8711424b177fd33b9c85cbdb71d89684255"
+  "built_at_commit": "d1222895ed0a3d328c3bdb6ded74fa228785ae9b"
 }
