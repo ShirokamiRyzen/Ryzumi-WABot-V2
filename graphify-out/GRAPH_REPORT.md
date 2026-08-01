@@ -1,27 +1,27 @@
 # Graph Report - Ryzumi-WABot V2  (2026-08-01)
 
 ## Corpus Check
-- 87 files · ~28,656 words
+- 88 files · ~29,418 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 274 nodes · 419 edges · 55 communities (22 shown, 33 thin omitted)
+- 288 nodes · 432 edges · 58 communities (25 shown, 33 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d1222895`
+- Built from commit: `c32e8404`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - config.js
-- messageAdapter.js
+- index.js
 - ryzumiCDN
 - Ryzumi-WABot V2
 - Ryzumi-WABot V2 - Agent Context & Guidelines
 - package.json
-- index.js
+- handler.js
 - dependencies
 - sticker-to-media.js
 - misc-ping.js
@@ -57,6 +57,9 @@
 - group-rename.js
 - group-reset-invite.js
 - group-unlock.js
+- 3. Tata Penulisan & Maintenance Sistem
+- messageAdapter.js
+- backup.js
 
 ## God Nodes (most connected - your core abstractions)
 1. `config` - 39 edges
@@ -71,29 +74,29 @@
 10. `extractMessageData()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `connectToWhatsApp()` --references--> `Group`  [EXTRACTED]
-  index.js → databases/orm/Group.js
-- `syncGroups()` --references--> `Group`  [EXTRACTED]
-  index.js → databases/orm/Group.js
-- `connectToWhatsApp()` --references--> `Setting`  [EXTRACTED]
-  index.js → databases/orm/Setting.js
+- `onParticipantsUpdate()` --references--> `Group`  [EXTRACTED]
+  plugins/group/group-welcome-leave.js → databases/orm/Group.js
 - `execute()` --references--> `Setting`  [EXTRACTED]
   plugins/misc/misc-enable-disable.js → databases/orm/Setting.js
-- `startCronJobs()` --references--> `User`  [EXTRACTED]
-  libs/cronjob.js → databases/orm/User.js
+- `onParticipantsUpdate()` --references--> `User`  [EXTRACTED]
+  plugins/group/group-welcome-leave.js → databases/orm/User.js
+- `connectToWhatsApp()` --calls--> `extractMessageData()`  [EXTRACTED]
+  index.js → libs/adapter/messageAdapter.js
+- `execute()` --calls--> `backupDatabase()`  [EXTRACTED]
+  plugins/owner/owner-backup-db.js → libs/backup.js
 
 ## Import Cycles
 - None detected.
 
-## Communities (55 total, 33 thin omitted)
+## Communities (58 total, 33 thin omitted)
 
 ### Community 0 - "config.js"
 Cohesion: 0.05
-Nodes (4): config, execute(), formatSize, execPromise
+Nodes (6): config, getPP(), execute(), formatSize, onParticipantsUpdate(), execPromise
 
-### Community 1 - "messageAdapter.js"
-Cohesion: 0.17
-Nodes (18): Group, Setting, User, extractMessageData(), getMessageContent(), getMessageType(), unwrapMessage(), getPP() (+10 more)
+### Community 1 - "index.js"
+Cohesion: 0.19
+Nodes (16): Group, Setting, User, connectToWhatsApp(), startTime, syncGroups(), logMessage(), startCronJobs() (+8 more)
 
 ### Community 2 - "ryzumiCDN"
 Cohesion: 0.25
@@ -111,9 +114,9 @@ Nodes (10): Database, Handler & Adapter, Ketentuan Teknis & Refactoring, Konfigu
 Cohesion: 0.18
 Nodes (10): author, description, license, main, name, scripts, dev, start (+2 more)
 
-### Community 6 - "index.js"
-Cohesion: 0.14
-Nodes (17): connectToWhatsApp(), startTime, syncGroups(), backupDatabase(), pruneOldBackups(), uploadToNextcloud(), logMessage(), startCronJobs() (+9 more)
+### Community 6 - "handler.js"
+Cohesion: 0.43
+Nodes (5): loadPlugins(), plugins, watchPlugins(), pluginDir, validatePlugin()
 
 ### Community 7 - "dependencies"
 Cohesion: 0.29
@@ -123,21 +126,35 @@ Nodes (7): axios, baileys, dependencies, axios, baileys, qrcode-terminal, qrcode
 Cohesion: 0.80
 Nodes (3): webp2mp4(), webp2png(), execute()
 
+### Community 55 - "3. Tata Penulisan & Maintenance Sistem"
+Cohesion: 0.14
+Nodes (13): 1. Tata Penulisan & Struktur Plugin, 2. Standar Operasi Plugin (Add, Edit, Delete), 3. Tata Penulisan & Maintenance Sistem, A. Add Plugin (Menambah Plugin Baru), A. Middlewares (`/middlewares`), B. Adapters & Libs (`/libs/adapter` & `/libs`), B. Update / Edit Plugin (Memperbarui Plugin), C. Database & Migrations (`/databases`) (+5 more)
+
+### Community 56 - "messageAdapter.js"
+Cohesion: 0.31
+Nodes (8): extractMessageData(), getMessageContent(), getMessageType(), unwrapMessage(), lidCache, resolveLidToJid(), execute(), execute()
+
+### Community 57 - "backup.js"
+Cohesion: 0.60
+Nodes (4): backupDatabase(), pruneOldBackups(), uploadToNextcloud(), execute()
+
 ## Knowledge Gaps
-- **66 isolated node(s):** `startTime`, `groupCache`, `lidCache`, `tmpDir`, `pluginDir` (+61 more)
+- **75 isolated node(s):** `startTime`, `groupCache`, `lidCache`, `tmpDir`, `pluginDir` (+70 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **33 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `config` connect `config.js` to `messageAdapter.js`, `ryzumiCDN`, `index.js`?**
-  _High betweenness centrality (0.095) - this node is a cross-community bridge._
+- **Why does `config` connect `config.js` to `index.js`, `ryzumiCDN`, `handler.js`, `messageAdapter.js`, `backup.js`?**
+  _High betweenness centrality (0.086) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `dependencies` to `package.json`, `chalk`, `cheerio`, `dotenv`, `file-type`, `fluent-ffmpeg`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `mime-types`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`?**
-  _High betweenness centrality (0.047) - this node is a cross-community bridge._
+  _High betweenness centrality (0.043) - this node is a cross-community bridge._
+- **Why does `resolveLidToJid()` connect `messageAdapter.js` to `config.js`, `index.js`?**
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **What connects `startTime`, `groupCache`, `lidCache` to the rest of the system?**
-  _66 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _75 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `config.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.053246753246753244 - nodes in this community are weakly interconnected._
-- **Should `index.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.1396011396011396 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05141242937853107 - nodes in this community are weakly interconnected._
+- **Should `3. Tata Penulisan & Maintenance Sistem` be split into smaller, more focused modules?**
+  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._

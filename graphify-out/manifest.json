@@ -435,8 +435,13 @@
     "semantic_hash": ""
   },
   "plugins/tool/tool-alight-activator.js": {
-    "mtime": 1785557609.2212014,
-    "ast_hash": "eb9c774581f2b60e48ece4894d2ca4c3",
+    "mtime": 1785558431.9046986,
+    "ast_hash": "de76ce3435bb28f365567ffb04dcfc47",
+    "semantic_hash": ""
+  },
+  ".agents/skills/plugin-system-maintenance/SKILL.md": {
+    "mtime": 1785591878.0785513,
+    "ast_hash": "eb97d649ab983acc800622a726d4c110",
     "semantic_hash": ""
   }
 }

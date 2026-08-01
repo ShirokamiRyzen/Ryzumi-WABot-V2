@@ -1,11 +1,11 @@
 {
   "0": "config.js",
-  "1": "messageAdapter.js",
+  "1": "index.js",
   "2": "ryzumiCDN",
   "3": "Ryzumi-WABot V2",
   "4": "Ryzumi-WABot V2 - Agent Context & Guidelines",
   "5": "package.json",
-  "6": "index.js",
+  "6": "handler.js",
   "7": "dependencies",
   "8": "sticker-to-media.js",
   "9": "misc-ping.js",
@@ -53,5 +53,8 @@
   "51": "owner-del-premium.js",
   "52": "search-youtube.js",
   "53": "sticker-get-exif.js",
-  "54": "tool-fetch.js"
+  "54": "tool-fetch.js",
+  "55": "3. Tata Penulisan & Maintenance Sistem",
+  "56": "messageAdapter.js",
+  "57": "backup.js"
 }
