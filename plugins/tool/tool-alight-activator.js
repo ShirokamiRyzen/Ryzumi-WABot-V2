@@ -5,7 +5,7 @@ export default {
     command: ['am', 'alight', 'alightactivator', 'amactivator'],
     category: 'tool',
     isRegistered: true,
-    limit: 10,
+    limit: 5,
     description: 'Aktivasi akun Alight Motion Premium',
     async execute(sock, m, msgData) {
         const args = msgData.args;
