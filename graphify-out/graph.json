@@ -263,8 +263,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_baileys_utils",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 56,
+      "community_name": "messageAdapter.js",
       "norm_label": "baileys-utils.js"
     },
     {
@@ -274,9 +274,20 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "libs_baileys_utils_getpp",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 56,
+      "community_name": "messageAdapter.js",
       "norm_label": "getpp()"
+    },
+    {
+      "label": "sendAlbumMessage()",
+      "file_type": "code",
+      "source_file": "libs/baileys-utils.js",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "libs_baileys_utils_sendalbummessage",
+      "community": 56,
+      "community_name": "messageAdapter.js",
+      "norm_label": "sendalbummessage()"
     },
     {
       "label": "console.js",
@@ -802,8 +813,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_baileys",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 16,
+      "community_name": "baileys",
       "norm_label": "baileys"
     },
     {
@@ -813,8 +824,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "baileys",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 16,
+      "community_name": "baileys",
       "norm_label": "baileys"
     },
     {
@@ -912,8 +923,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "package_dependencies_fluent_ffmpeg",
-      "community": 16,
-      "community_name": "fluent-ffmpeg",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "fluent-ffmpeg"
     },
     {
@@ -923,8 +934,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "fluent_ffmpeg",
-      "community": 16,
-      "community_name": "fluent-ffmpeg",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "fluent-ffmpeg"
     },
     {
@@ -1569,7 +1580,7 @@
       "label": "execute()",
       "file_type": "code",
       "source_file": "plugins/downloader/downloader-pixiv.js",
-      "source_location": "L12",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pixiv_execute",
       "community": 0,
@@ -1979,8 +1990,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 56,
+      "community_name": "messageAdapter.js",
       "norm_label": "group-welcome-leave.js"
     },
     {
@@ -1990,8 +2001,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave_onparticipantsupdate",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 56,
+      "community_name": "messageAdapter.js",
       "norm_label": "onparticipantsupdate()"
     },
     {
@@ -2372,7 +2383,7 @@
       "label": "execute()",
       "file_type": "code",
       "source_file": "plugins/search/search-pinterest.js",
-      "source_location": "L11",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_search_search_pinterest_execute",
       "community": 0,
@@ -2394,7 +2405,7 @@
       "label": "execute()",
       "file_type": "code",
       "source_file": "plugins/search/search-pixiv.js",
-      "source_location": "L12",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_search_search_pixiv_execute",
       "community": 0,
@@ -3393,7 +3404,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "plugins/downloader/downloader-pixiv.js",
-      "source_location": "L4",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_downloader_downloader_pixiv",
@@ -3537,7 +3548,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "plugins/search/search-pinterest.js",
-      "source_location": "L3",
+      "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_search_search_pinterest",
@@ -3549,7 +3560,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "plugins/search/search-pixiv.js",
-      "source_location": "L4",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_search_search_pixiv",
@@ -3849,7 +3860,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "plugins/downloader/downloader-pixiv.js",
-      "source_location": "L4",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_downloader_downloader_pixiv",
@@ -3993,7 +4004,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "plugins/search/search-pinterest.js",
-      "source_location": "L3",
+      "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_search_search_pinterest",
@@ -4005,7 +4016,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "plugins/search/search-pixiv.js",
-      "source_location": "L4",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_search_search_pixiv",
@@ -5015,6 +5026,18 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/adapter/messageAdapter.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_adapter_messageadapter",
+      "target": "libs_baileys_utils_sendalbummessage",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5085,6 +5108,18 @@
       "_origin": "ast",
       "source": "libs_adapter_messageadapter_extractmessagedata",
       "target": "libs_baileys_utils_getpp"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/adapter/messageAdapter.js",
+      "source_location": "L144",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_adapter_messageadapter_extractmessagedata",
+      "target": "libs_baileys_utils_sendalbummessage"
     },
     {
       "relation": "calls",
@@ -5269,6 +5304,17 @@
       "_origin": "ast",
       "source": "libs_baileys_utils",
       "target": "libs_baileys_utils_getpp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/baileys-utils.js",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_baileys_utils",
+      "target": "libs_baileys_utils_sendalbummessage",
       "confidence_score": 1.0
     },
     {
@@ -7163,7 +7209,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "plugins/downloader/downloader-pixiv.js",
-      "source_location": "L12",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_downloader_downloader_pixiv",
@@ -7605,7 +7651,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "plugins/search/search-pinterest.js",
-      "source_location": "L11",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_search_search_pinterest",
@@ -7616,7 +7662,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "plugins/search/search-pixiv.js",
-      "source_location": "L12",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_search_search_pixiv",
@@ -8186,5 +8232,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c32e840493eae3e2a4b09cef36f81132b15319ea"
+  "built_at_commit": "e41ef91de3e9a85ce48e9c46643cc8f09f7f4284"
 }

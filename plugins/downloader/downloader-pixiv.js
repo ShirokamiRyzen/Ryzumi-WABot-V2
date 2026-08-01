@@ -1,6 +1,5 @@
 import axios from 'axios';
 import sharp from 'sharp';
-import { generateWAMessageContent, generateWAMessageFromContent, proto } from 'baileys';
 import config from '../../config.js';
 
 export default {
@@ -38,27 +37,6 @@ export default {
             const artist = data.artist || 'Unknown';
             const tags = data.tags ? data.tags.join(', ') : '-';
 
-            const push = [];
-
-            const createImage = async (imgUrl) => {
-                const response = await axios.get(imgUrl, { responseType: 'arraybuffer' });
-                let buffer = Buffer.from(response.data);
-
-                const threshold = 12 * 1024 * 1024;
-                if (buffer.length > threshold) {
-                    buffer = await sharp(buffer)
-                        .jpeg({ quality: 80 })
-                        .toBuffer();
-                }
-
-                const { imageMessage } = await generateWAMessageContent({
-                    image: buffer
-                }, {
-                    upload: sock.waUploadToServer
-                });
-                return imageMessage;
-            };
-
             // Jika cuma ada satu gambar, kirim biasa aja biar cepet~ (˶˃ ᵕ ˂˶)
             if (images.length === 1) {
                 const response = await axios.get(images[0], { responseType: 'arraybuffer' });
@@ -67,64 +45,26 @@ export default {
                     caption: `*Pixiv Downloader*\n\n*Artist:* ${artist}\n*Tags:* ${tags}\n\n${caption}`
                 }, { quoted: m });
             } else {
-                // Kalau banyak, pakai carousel biar rapi kak! (๑>ᴗ<๑)
+                // Kalau banyak, pakai album message biar rapi kak! (๑>ᴗ<๑)
+                const medias = [];
                 for (const imageUrl of images) {
-                    const imageMsg = await createImage(imageUrl);
-                    push.push({
-                        body: proto.Message.InteractiveMessage.Body.create({
-                            text: caption
-                        }),
-                        footer: proto.Message.InteractiveMessage.Footer.create({
-                            text: `Artist: ${artist}\nTags: ${tags}`
-                        }),
-                        header: proto.Message.InteractiveMessage.Header.create({
-                            title: '',
-                            hasMediaAttachment: true,
-                            imageMessage: imageMsg
-                        }),
-                        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
-                            buttons: [
-                                {
-                                    name: "cta_url",
-                                    buttonParamsJson: JSON.stringify({
-                                        display_text: "View on Pixiv",
-                                        cta_type: "1",
-                                        url: link
-                                    })
-                                }
-                            ]
-                        })
+                    const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+                    let buffer = Buffer.from(response.data);
+
+                    const threshold = 12 * 1024 * 1024;
+                    if (buffer.length > threshold) {
+                        buffer = await sharp(buffer)
+                            .jpeg({ quality: 80 })
+                            .toBuffer();
+                    }
+
+                    medias.push({
+                        image: buffer,
+                        caption: `🎨 *Pixiv Downloader*\n*Artist:* ${artist}\n*Tags:* ${tags}\n🔗 *Link:* ${link}\n\n${caption}`
                     });
                 }
 
-                const msg = generateWAMessageFromContent(msgData.remoteJid, {
-                    viewOnceMessage: {
-                        message: {
-                            messageContextInfo: {
-                                deviceListMetadata: {},
-                                deviceListMetadataVersion: 2
-                            },
-                            interactiveMessage: proto.Message.InteractiveMessage.create({
-                                body: proto.Message.InteractiveMessage.Body.create({
-                                    text: `Horeee! Ini gambar dari link Pixiv kakak~ (˶˃ ᵕ ˂˶)\nTotal: ${images.length} halaman.`
-                                }),
-                                footer: proto.Message.InteractiveMessage.Footer.create({
-                                    text: `Ryzumi-WABot V2 • Pixiv Downloader`
-                                }),
-                                header: proto.Message.InteractiveMessage.Header.create({
-                                    hasMediaAttachment: false
-                                }),
-                                carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.create({
-                                    cards: push
-                                })
-                            })
-                        }
-                    }
-                }, { quoted: m });
-
-                await sock.relayMessage(msgData.remoteJid, msg.message, {
-                    messageId: msg.key.id
-                });
+                await msgData.sendAlbum(medias);
             }
 
             await sock.sendMessage(msgData.remoteJid, {
@@ -142,4 +82,5 @@ export default {
         }
     }
 };
+
 

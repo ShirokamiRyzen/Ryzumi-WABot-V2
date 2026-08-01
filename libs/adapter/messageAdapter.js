@@ -1,6 +1,6 @@
 import { resolveLidToJid } from '../lid-resolver.js';
 import { unwrapMessage, getMessageType, getMessageContent } from './messageUnwrapper.js';
-import { getPP } from '../baileys-utils.js';
+import { getPP, sendAlbumMessage } from '../baileys-utils.js';
 import config from '../../config.js';
 import User from '../../databases/orm/User.js';
 import Group from '../../databases/orm/Group.js';
@@ -140,7 +140,8 @@ export const extractMessageData = (m, sock) => {
         //    return sock.sendMessage(remoteJid, { text }, { quoted: m });
         //},
         react: async (emoji) => sock.sendMessage(remoteJid, { react: { text: emoji, key: m.key } }),
-        getPP: async (jid, type = 'image') => getPP(sock, jid, type)
+        getPP: async (jid, type = 'image') => getPP(sock, jid, type),
+        sendAlbum: async (medias, options = {}) => sendAlbumMessage(sock, remoteJid, medias, { quoted: m, ...options })
     };
 };
 

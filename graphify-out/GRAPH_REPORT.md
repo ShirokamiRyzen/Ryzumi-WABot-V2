@@ -1,16 +1,16 @@
 # Graph Report - Ryzumi-WABot V2  (2026-08-01)
 
 ## Corpus Check
-- 88 files · ~29,418 words
+- 88 files · ~29,280 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 288 nodes · 432 edges · 58 communities (25 shown, 33 thin omitted)
+- 289 nodes · 435 edges · 58 communities (25 shown, 33 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c32e8404`
+- Built from commit: `e41ef91d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -31,7 +31,7 @@
 - cheerio
 - dotenv
 - file-type
-- fluent-ffmpeg
+- baileys
 - human-readable
 - jimp
 - jsdom
@@ -69,9 +69,9 @@
 5. `connectToWhatsApp()` - 10 edges
 6. `processAuth()` - 10 edges
 7. `Setting` - 9 edges
-8. `ryzumiCDN()` - 9 edges
-9. `Ryzumi-WABot V2 - Agent Context & Guidelines` - 9 edges
-10. `extractMessageData()` - 8 edges
+8. `extractMessageData()` - 9 edges
+9. `ryzumiCDN()` - 9 edges
+10. `Ryzumi-WABot V2 - Agent Context & Guidelines` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `onParticipantsUpdate()` --references--> `Group`  [EXTRACTED]
@@ -92,7 +92,7 @@
 
 ### Community 0 - "config.js"
 Cohesion: 0.05
-Nodes (6): config, getPP(), execute(), formatSize, onParticipantsUpdate(), execPromise
+Nodes (4): config, execute(), formatSize, execPromise
 
 ### Community 1 - "index.js"
 Cohesion: 0.19
@@ -120,7 +120,7 @@ Nodes (5): loadPlugins(), plugins, watchPlugins(), pluginDir, validatePlugin()
 
 ### Community 7 - "dependencies"
 Cohesion: 0.29
-Nodes (7): axios, baileys, dependencies, axios, baileys, qrcode-terminal, qrcode-terminal
+Nodes (7): axios, fluent-ffmpeg, dependencies, axios, fluent-ffmpeg, qrcode-terminal, qrcode-terminal
 
 ### Community 8 - "sticker-to-media.js"
 Cohesion: 0.80
@@ -131,8 +131,8 @@ Cohesion: 0.14
 Nodes (13): 1. Tata Penulisan & Struktur Plugin, 2. Standar Operasi Plugin (Add, Edit, Delete), 3. Tata Penulisan & Maintenance Sistem, A. Add Plugin (Menambah Plugin Baru), A. Middlewares (`/middlewares`), B. Adapters & Libs (`/libs/adapter` & `/libs`), B. Update / Edit Plugin (Memperbarui Plugin), C. Database & Migrations (`/databases`) (+5 more)
 
 ### Community 56 - "messageAdapter.js"
-Cohesion: 0.31
-Nodes (8): extractMessageData(), getMessageContent(), getMessageType(), unwrapMessage(), lidCache, resolveLidToJid(), execute(), execute()
+Cohesion: 0.25
+Nodes (11): extractMessageData(), getMessageContent(), getMessageType(), unwrapMessage(), getPP(), sendAlbumMessage(), lidCache, resolveLidToJid() (+3 more)
 
 ### Community 57 - "backup.js"
 Cohesion: 0.60
@@ -148,13 +148,13 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `config` connect `config.js` to `index.js`, `ryzumiCDN`, `handler.js`, `messageAdapter.js`, `backup.js`?**
   _High betweenness centrality (0.086) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `dependencies` to `package.json`, `chalk`, `cheerio`, `dotenv`, `file-type`, `fluent-ffmpeg`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `mime-types`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`?**
-  _High betweenness centrality (0.043) - this node is a cross-community bridge._
-- **Why does `resolveLidToJid()` connect `messageAdapter.js` to `config.js`, `index.js`?**
+- **Why does `dependencies` connect `dependencies` to `package.json`, `chalk`, `cheerio`, `dotenv`, `file-type`, `baileys`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `mime-types`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`?**
+  _High betweenness centrality (0.042) - this node is a cross-community bridge._
+- **Why does `resolveLidToJid()` connect `messageAdapter.js` to `index.js`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **What connects `startTime`, `groupCache`, `lidCache` to the rest of the system?**
   _75 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `config.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.05141242937853107 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.053246753246753244 - nodes in this community are weakly interconnected._
 - **Should `3. Tata Penulisan & Maintenance Sistem` be split into smaller, more focused modules?**
   _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._

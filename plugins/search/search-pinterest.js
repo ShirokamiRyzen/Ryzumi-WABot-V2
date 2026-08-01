@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { generateWAMessageContent, generateWAMessageFromContent, proto } from 'baileys';
 import config from '../../config.js';
 
 export default {
@@ -41,90 +40,31 @@ export default {
 
             // Acak dan ambil maksimal 5 hasil aja biar nggak berat~ (˶˃ ᵕ ˂˶)
             const results = data.sort(() => Math.random() - 0.5).slice(0, Math.min(5, data.length));
-            const push = [];
-
-            const createImage = async (imgUrl) => {
-                const response = await axios.get(imgUrl, {
-                    responseType: 'arraybuffer',
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
-                        'Referer': imgUrl
-                    }
-                });
-
-                const { imageMessage } = await generateWAMessageContent({
-                    image: Buffer.from(response.data)
-                }, {
-                    upload: sock.waUploadToServer
-                });
-                return imageMessage;
-            };
+            const medias = [];
 
             for (const result of results) {
                 try {
-                    const imageMsg = await createImage(result.directLink);
-                    push.push({
-                        body: proto.Message.InteractiveMessage.Body.create({
-                            text: `Pencarian: ${query}`
-                        }),
-                        footer: proto.Message.InteractiveMessage.Footer.create({
-                            text: `Ryzumi-WABot V2 • Pinterest`
-                        }),
-                        header: proto.Message.InteractiveMessage.Header.create({
-                            title: '',
-                            hasMediaAttachment: true,
-                            imageMessage: imageMsg
-                        }),
-                        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
-                            buttons: [
-                                {
-                                    name: "cta_url",
-                                    buttonParamsJson: JSON.stringify({
-                                        display_text: "View on Pinterest",
-                                        cta_type: "1",
-                                        url: result.link
-                                    })
-                                }
-                            ]
-                        })
+                    const response = await axios.get(result.directLink, {
+                        responseType: 'arraybuffer',
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+                            'Referer': result.directLink
+                        }
+                    });
+                    medias.push({
+                        image: Buffer.from(response.data),
+                        caption: `📌 *Pinterest Search*\n*Pencarian:* ${query}\n🔗 *Link:* ${result.link || '-'}`
                     });
                 } catch (err) {
                     console.error('Failed to process one Pinterest image:', err.message);
                 }
             }
 
-            if (push.length === 0) {
+            if (medias.length === 0) {
                 throw new Error('Gagal memproses semua gambar Pinterest.. (╥﹏╥)');
             }
 
-            const msg = generateWAMessageFromContent(msgData.remoteJid, {
-                viewOnceMessage: {
-                    message: {
-                        messageContextInfo: {
-                            deviceListMetadata: {},
-                            deviceListMetadataVersion: 2
-                        },
-                        interactiveMessage: proto.Message.InteractiveMessage.create({
-                            body: proto.Message.InteractiveMessage.Body.create({
-                                text: `Horeee! Ini hasil pencarian Pinterest buat kakak~ (˶˃ ᵕ ˂˶)\nKetemu ${push.length} gambar.`
-                            }),
-                            footer: proto.Message.InteractiveMessage.Footer.create({
-                                text: `Ryzumi-WABot V2 • Pinterest Search`
-                            }),
-                            header: proto.Message.InteractiveMessage.Header.create({
-                                hasMediaAttachment: false
-                            }),
-                            carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.create({
-                                cards: push
-                            })
-                        })
-                    }
-                }
-            }, { quoted: m });
-
-            await sock.relayMessage(msgData.remoteJid, msg.message, {
-                messageId: msg.key.id
-            });
+            await msgData.sendAlbum(medias);
 
             await sock.sendMessage(msgData.remoteJid, {
                 react: { text: '✅', key: m.key }
@@ -141,3 +81,4 @@ export default {
         }
     }
 };
+
