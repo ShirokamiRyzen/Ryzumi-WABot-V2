@@ -51,13 +51,24 @@ export default {
             const message = data.message || result.message || 'Berhasil diproses!';
             const orderCode = data.orderCode || result.orderCode;
             const duration = data.duration || result.duration;
-            const isPremium = data.premium || result.premium;
+            const isPremium = data.premium !== undefined ? data.premium : result.premium;
             const instructions = data.instructions || result.instructions;
+            const accountLinkStatus = result.accountLinkStatus || data.accountLinkStatus;
+            const expiryTimeMillis = result.expiryTimeMillis || data.expiryTimeMillis;
+            const autoRenewing = result.autoRenewing !== undefined ? result.autoRenewing : data.autoRenewing;
 
             let extraInfo = '';
             if (orderCode) extraInfo += `\n• *Order Code:* \`${orderCode}\``;
             if (duration) extraInfo += `\n• *Durasi Premium:* ${duration}`;
             if (isPremium !== undefined) extraInfo += `\n• *Status Premium:* ${isPremium ? 'Aktif! (˶˃ ᵕ ˂˶)' : 'Tidak'}`;
+            if (accountLinkStatus) extraInfo += `\n• *Link Status:* ${accountLinkStatus}`;
+            if (expiryTimeMillis) {
+                const expiryDate = new Date(parseInt(expiryTimeMillis, 10));
+                if (!isNaN(expiryDate.getTime())) {
+                    extraInfo += `\n• *Expired:* ${expiryDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+                }
+            }
+            if (autoRenewing !== undefined) extraInfo += `\n• *Auto Renew:* ${autoRenewing ? 'Ya' : 'Tidak'}`;
 
             let instructionsText = '';
             if (Array.isArray(instructions) && instructions.length > 0) {
