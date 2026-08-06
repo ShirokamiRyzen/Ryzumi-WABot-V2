@@ -22,6 +22,10 @@ const Group = sequelize.define('Group', {
     is_limited: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
+    },
+    is_autogpt: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }, {
     tableName: 'groups',

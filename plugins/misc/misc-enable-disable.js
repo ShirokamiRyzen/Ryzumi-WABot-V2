@@ -5,7 +5,7 @@ export default {
     category: 'misc',
     description: 'Mengaktifkan atau menonaktifkan fitur bot',
     async execute(sock, m, msgData, user, group) {
-        const availableFeatures = ['welcome', 'limit', 'public', 'register', 'gconly'];
+        const availableFeatures = ['welcome', 'limit', 'public', 'register', 'gconly', 'autogpt', 'autoai'];
         const feature = msgData.args[0]?.toLowerCase();
         const action = msgData.commandName;
         const status = (action === 'enable' || action === 'on');
@@ -14,6 +14,26 @@ export default {
             let text = `Uwaaa! Kakak mau setting apa? (๑>ᴗ<๑)\n\nPenggunaan: \`.${action} <fitur>\`\n\n*Daftar fitur:* \n`;
             availableFeatures.forEach(f => text += `• ${f}\n`);
             return sock.sendMessage(msgData.remoteJid, { text: text.trim() }, { quoted: m });
+        }
+
+        // Fitur autogpt / autoai
+        if (feature === 'autogpt' || feature === 'autoai') {
+            if (msgData.isGroup) {
+                if (!msgData.isAdmin && !user.isOwner && !msgData.fromMe) {
+                    return sock.sendMessage(msgData.remoteJid, {
+                        text: `Hanya Admin Grup, Owner Bot, atau Bot yang bisa mengatur fitur *Auto AI (AutoGPT)* di grup ya kak~ (｡T ω T｡)`
+                    }, { quoted: m });
+                }
+                await group.update({ is_autogpt: status });
+                return sock.sendMessage(msgData.remoteJid, {
+                    text: `Horeee! Fitur *Auto AI (AutoGPT)* di grup ini sekarang sudah Ryzumi ${status ? 'aktifkan (merespon pesan biasa)' : 'matikan'} yaa~ (˶˃ ᵕ ˂˶)`
+                }, { quoted: m });
+            } else {
+                await user.update({ is_autogpt: status });
+                return sock.sendMessage(msgData.remoteJid, {
+                    text: `Selesai! Fitur *Auto AI (AutoGPT)* untuk chat pribadi kakak sekarang sudah Ryzumi ${status ? 'aktifkan (merespon pesan biasa)' : 'matikan'} yaa~ (๑>ᴗ<๑)`
+                }, { quoted: m });
+            }
         }
 
         // Fitur khusus Global (Owner Only)
@@ -26,7 +46,7 @@ export default {
 
             const [setting] = await Setting.findOrCreate({
                 where: { id: 1 },
-                defaults: { is_public: true, is_register: true, is_gconly: false }
+                defaults: { is_public: true, is_register: true, is_gconly: false, is_autogpt: false }
             });
 
             if (feature === 'public') {

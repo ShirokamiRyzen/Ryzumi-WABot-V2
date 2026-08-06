@@ -2,6 +2,7 @@ import path from 'path';
 import { plugins, loadPlugins, watchPlugins } from '../libs/hot-reload.js';
 import { processAuth } from './auth.js';
 import { validatePlugin } from './validator.js';
+import { handleAutoAi } from '../libs/autoAiHandler.js';
 import config from '../config.js';
 
 // Inisialisasi Hot-Reload untuk Plugins
@@ -11,9 +12,20 @@ watchPlugins(pluginDir);
 
 export default async function botHandler(sock, m, msgData) {
     try {
-        // Cek apakah ini command atau bukan sebelum melakukan proses Auth yang berat (DB/Metadata)
-        // Ini mencegah bot 'bengong' karena antrean DB/Network saat grup sangat ramai
-        if (!msgData.commandName) return;
+        if (!msgData.commandName) {
+            if (m.key.fromMe || !msgData.messageContent || msgData.senderJid === 'status@broadcast') return;
+
+            const { user, group, setting } = await processAuth(sock, msgData);
+
+            if (!setting.is_public && !user.isOwner) return;
+            if (setting.is_gconly && !msgData.isGroup && !user.isOwner) return;
+
+            const isAutoAiEnabled = msgData.isGroup ? (group?.is_autogpt ?? false) : (user?.is_autogpt || setting?.is_autogpt || false);
+            if (!isAutoAiEnabled) return;
+
+            await handleAutoAi(sock, m, msgData, user, group, setting, plugins);
+            return;
+        }
 
         const { user, group, setting } = await processAuth(sock, msgData);
 

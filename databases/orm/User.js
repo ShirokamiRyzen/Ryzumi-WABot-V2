@@ -25,6 +25,10 @@ const User = sequelize.define('User', {
     is_registered: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+    },
+    is_autogpt: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 }, {
     tableName: 'users',

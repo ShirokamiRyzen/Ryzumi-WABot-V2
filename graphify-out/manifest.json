@@ -10,18 +10,18 @@
     "semantic_hash": ""
   },
   "databases/orm/Group.js": {
-    "mtime": 1778226196.3733172,
-    "ast_hash": "1053bf62e5d2c4185c3b54c04544fced",
+    "mtime": 1786033276.6089044,
+    "ast_hash": "c50d6755879850821c7afceb77b12b19",
     "semantic_hash": ""
   },
   "databases/orm/Setting.js": {
-    "mtime": 1779587839.5491426,
-    "ast_hash": "d4fbe4adce2840409363670484c999f8",
+    "mtime": 1786033272.8166828,
+    "ast_hash": "7f89bd26cde95794ce93ce43056da735",
     "semantic_hash": ""
   },
   "databases/orm/User.js": {
-    "mtime": 1778083023.644202,
-    "ast_hash": "bbc13ede1ba0024b46a874aa50518f6d",
+    "mtime": 1786033452.4868138,
+    "ast_hash": "59c8b9792342cf7fbe32819f63247dcc",
     "semantic_hash": ""
   },
   "index.js": {
@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "middlewares/handler.js": {
-    "mtime": 1779587850.5918553,
-    "ast_hash": "bc99c2c924902df7e250c0120b2139f2",
+    "mtime": 1786033464.776249,
+    "ast_hash": "9f41ee186648a3b543067312da0a3bcd",
     "semantic_hash": ""
   },
   "middlewares/validator.js": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "plugins/misc/misc-enable-disable.js": {
-    "mtime": 1782948633.6531732,
-    "ast_hash": "1a2171299e850d49fe9427d123b6743f",
+    "mtime": 1786033458.6549685,
+    "ast_hash": "cdd7a5646f638839c3a24a3c72f86325",
     "semantic_hash": ""
   },
   "plugins/misc/misc-ping.js": {
@@ -435,13 +435,43 @@
     "semantic_hash": ""
   },
   "plugins/tool/tool-alight-activator.js": {
-    "mtime": 1785558431.9046986,
-    "ast_hash": "de76ce3435bb28f365567ffb04dcfc47",
+    "mtime": 1785659383.485111,
+    "ast_hash": "ac12799216f252776bc78e022fdc609f",
     "semantic_hash": ""
   },
   ".agents/skills/plugin-system-maintenance/SKILL.md": {
     "mtime": 1785591878.0785513,
     "ast_hash": "eb97d649ab983acc800622a726d4c110",
+    "semantic_hash": ""
+  },
+  "plugins/ai/ai-chatgpt.js": {
+    "mtime": 1786033653.3231802,
+    "ast_hash": "8ebe1aea65939a33cd7cc257b58265df",
+    "semantic_hash": ""
+  },
+  "plugins/ai/ai-tencent.js": {
+    "mtime": 1786033657.5066712,
+    "ast_hash": "341cf2afe666b7b4efa13f1778465e32",
+    "semantic_hash": ""
+  },
+  "plugins/ai/ai-kimi.js": {
+    "mtime": 1786033661.3597703,
+    "ast_hash": "02c95e6ae4001b73b4114aec6b44b9e4",
+    "semantic_hash": ""
+  },
+  "plugins/ai/ai-glm.js": {
+    "mtime": 1786033664.9619312,
+    "ast_hash": "47aa467416ee9da7ff0a3e3a05558463",
+    "semantic_hash": ""
+  },
+  "libs/autoAiHandler.js": {
+    "mtime": 1786033699.8021362,
+    "ast_hash": "0818dbfd437786cedb8594dc9876640a",
+    "semantic_hash": ""
+  },
+  "plugins/ai/ai-auto.js": {
+    "mtime": 1786033568.9561024,
+    "ast_hash": "b9928dbe2925d9c51e0d4251868a0362",
     "semantic_hash": ""
   }
 }

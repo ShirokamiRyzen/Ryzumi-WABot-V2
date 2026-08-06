@@ -21,8 +21,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "config_config",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "config"
     },
     {
@@ -213,13 +213,46 @@
       "norm_label": "getmessagecontent()"
     },
     {
+      "label": "autoAiHandler.js",
+      "file_type": "code",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "libs_autoaihandler",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
+      "norm_label": "autoaihandler.js"
+    },
+    {
+      "label": "FORBIDDEN_COMMANDS",
+      "file_type": "code",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "libs_autoaihandler_forbidden_commands",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
+      "norm_label": "forbidden_commands"
+    },
+    {
+      "label": "handleAutoAi()",
+      "file_type": "code",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "libs_autoaihandler_handleautoai",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
+      "norm_label": "handleautoai()"
+    },
+    {
       "label": "backup.js",
       "file_type": "code",
       "source_file": "libs/backup.js",
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_backup",
-      "community": 57,
+      "community": 63,
       "community_name": "backup.js",
       "norm_label": "backup.js"
     },
@@ -230,7 +263,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "libs_backup_uploadtonextcloud",
-      "community": 57,
+      "community": 63,
       "community_name": "backup.js",
       "norm_label": "uploadtonextcloud()"
     },
@@ -241,7 +274,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "libs_backup_backupdatabase",
-      "community": 57,
+      "community": 63,
       "community_name": "backup.js",
       "norm_label": "backupdatabase()"
     },
@@ -252,7 +285,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "libs_backup_pruneoldbackups",
-      "community": 57,
+      "community": 63,
       "community_name": "backup.js",
       "norm_label": "pruneoldbackups()"
     },
@@ -395,8 +428,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_hot_reload",
-      "community": 6,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "hot-reload.js"
     },
     {
@@ -406,8 +439,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "libs_hot_reload_plugins",
-      "community": 6,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "plugins"
     },
     {
@@ -417,8 +450,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "libs_hot_reload_loadplugins",
-      "community": 6,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "loadplugins()"
     },
     {
@@ -428,8 +461,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "libs_hot_reload_watchplugins",
-      "community": 6,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "watchplugins()"
     },
     {
@@ -604,26 +637,26 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_handler",
-      "community": 6,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "handler.js"
     },
     {
       "label": "pluginDir",
       "file_type": "code",
       "source_file": "middlewares/handler.js",
-      "source_location": "L8",
+      "source_location": "L9",
       "_origin": "ast",
       "id": "middlewares_handler_plugindir",
-      "community": 6,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "plugindir"
     },
     {
       "label": "botHandler()",
       "file_type": "code",
       "source_file": "middlewares/handler.js",
-      "source_location": "L12",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "middlewares_handler_bothandler",
       "community": 1,
@@ -637,8 +670,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_validator",
-      "community": 6,
-      "community_name": "handler.js",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
       "norm_label": "validator.js"
     },
     {
@@ -648,8 +681,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "middlewares_validator_validateplugin",
-      "community": 6,
-      "community_name": "handler.js",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
       "norm_label": "validateplugin()"
     },
     {
@@ -813,7 +846,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_baileys",
-      "community": 16,
+      "community": 21,
       "community_name": "baileys",
       "norm_label": "baileys"
     },
@@ -824,7 +857,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "baileys",
-      "community": 16,
+      "community": 21,
       "community_name": "baileys",
       "norm_label": "baileys"
     },
@@ -835,8 +868,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "package_dependencies_chalk",
-      "community": 12,
-      "community_name": "chalk",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "chalk"
     },
     {
@@ -846,8 +879,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "chalk",
-      "community": 12,
-      "community_name": "chalk",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "chalk"
     },
     {
@@ -879,7 +912,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "package_dependencies_dotenv",
-      "community": 14,
+      "community": 65,
       "community_name": "dotenv",
       "norm_label": "dotenv"
     },
@@ -890,7 +923,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "dotenv",
-      "community": 14,
+      "community": 65,
       "community_name": "dotenv",
       "norm_label": "dotenv"
     },
@@ -901,7 +934,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "package_dependencies_file_type",
-      "community": 15,
+      "community": 16,
       "community_name": "file-type",
       "norm_label": "file-type"
     },
@@ -912,7 +945,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "file_type",
-      "community": 15,
+      "community": 16,
       "community_name": "file-type",
       "norm_label": "file-type"
     },
@@ -923,8 +956,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "package_dependencies_fluent_ffmpeg",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 15,
+      "community_name": "fluent-ffmpeg",
       "norm_label": "fluent-ffmpeg"
     },
     {
@@ -934,8 +967,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "fluent_ffmpeg",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 15,
+      "community_name": "fluent-ffmpeg",
       "norm_label": "fluent-ffmpeg"
     },
     {
@@ -1033,7 +1066,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "package_dependencies_mime_types",
-      "community": 21,
+      "community": 12,
       "community_name": "mime-types",
       "norm_label": "mime-types"
     },
@@ -1044,7 +1077,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "mime_types",
-      "community": 21,
+      "community": 12,
       "community_name": "mime-types",
       "norm_label": "mime-types"
     },
@@ -1379,6 +1412,116 @@
       "norm_label": "execute()"
     },
     {
+      "label": "ai-auto.js",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-auto.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_auto",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
+      "norm_label": "ai-auto.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-auto.js",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_auto_execute",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
+      "norm_label": "execute()"
+    },
+    {
+      "label": "ai-chatgpt.js",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-chatgpt.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_chatgpt",
+      "community": 2,
+      "community_name": "ryzumiCDN",
+      "norm_label": "ai-chatgpt.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-chatgpt.js",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_chatgpt_execute",
+      "community": 2,
+      "community_name": "ryzumiCDN",
+      "norm_label": "execute()"
+    },
+    {
+      "label": "ai-glm.js",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-glm.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_glm",
+      "community": 0,
+      "community_name": "config.js",
+      "norm_label": "ai-glm.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-glm.js",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_glm_execute",
+      "community": 0,
+      "community_name": "config.js",
+      "norm_label": "execute()"
+    },
+    {
+      "label": "ai-kimi.js",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-kimi.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_kimi",
+      "community": 67,
+      "community_name": "ai-kimi.js",
+      "norm_label": "ai-kimi.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-kimi.js",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_kimi_execute",
+      "community": 67,
+      "community_name": "ai-kimi.js",
+      "norm_label": "execute()"
+    },
+    {
+      "label": "ai-tencent.js",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-tencent.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_tencent",
+      "community": 66,
+      "community_name": "ai-tencent.js",
+      "norm_label": "ai-tencent.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-tencent.js",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_tencent_execute",
+      "community": 66,
+      "community_name": "ai-tencent.js",
+      "norm_label": "execute()"
+    },
+    {
       "label": "downloader-all-in-one.js",
       "file_type": "code",
       "source_file": "plugins/downloader/downloader-all-in-one.js",
@@ -1407,8 +1550,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_danbooru",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 59,
+      "community_name": "downloader-danbooru.js",
       "norm_label": "downloader-danbooru.js"
     },
     {
@@ -1418,8 +1561,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_danbooru_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 59,
+      "community_name": "downloader-danbooru.js",
       "norm_label": "execute()"
     },
     {
@@ -1429,8 +1572,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_facebook",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 60,
+      "community_name": "downloader-facebook.js",
       "norm_label": "downloader-facebook.js"
     },
     {
@@ -1440,8 +1583,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_facebook_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 60,
+      "community_name": "downloader-facebook.js",
       "norm_label": "execute()"
     },
     {
@@ -1451,8 +1594,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_instagram",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 61,
+      "community_name": "downloader-instagram.js",
       "norm_label": "downloader-instagram.js"
     },
     {
@@ -1462,8 +1605,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_instagram_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 61,
+      "community_name": "downloader-instagram.js",
       "norm_label": "execute()"
     },
     {
@@ -1473,8 +1616,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_krakenfiles",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 62,
+      "community_name": "downloader-krakenfiles.js",
       "norm_label": "downloader-krakenfiles.js"
     },
     {
@@ -1484,8 +1627,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_krakenfiles_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 62,
+      "community_name": "downloader-krakenfiles.js",
       "norm_label": "execute()"
     },
     {
@@ -1517,8 +1660,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_mega",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 57,
+      "community_name": "downloader-mega.js",
       "norm_label": "downloader-mega.js"
     },
     {
@@ -1528,8 +1671,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_mega_formatsize",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 57,
+      "community_name": "downloader-mega.js",
       "norm_label": "formatsize"
     },
     {
@@ -1539,8 +1682,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_mega_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 57,
+      "community_name": "downloader-mega.js",
       "norm_label": "execute()"
     },
     {
@@ -1550,8 +1693,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pinterest",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 64,
+      "community_name": "downloader-pinterest.js",
       "norm_label": "downloader-pinterest.js"
     },
     {
@@ -1561,8 +1704,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pinterest_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 64,
+      "community_name": "downloader-pinterest.js",
       "norm_label": "execute()"
     },
     {
@@ -1572,8 +1715,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pixiv",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "downloader-pixiv.js"
     },
     {
@@ -1583,8 +1726,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pixiv_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -1594,8 +1737,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_spotify",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "downloader-spotify.js"
     },
     {
@@ -1605,8 +1748,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_spotify_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -1616,8 +1759,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_threads",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 75,
+      "community_name": "downloader-threads.js",
       "norm_label": "downloader-threads.js"
     },
     {
@@ -1627,8 +1770,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_threads_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 75,
+      "community_name": "downloader-threads.js",
       "norm_label": "execute()"
     },
     {
@@ -1660,8 +1803,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_twitter",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "downloader-twitter.js"
     },
     {
@@ -1671,8 +1814,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_twitter_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -1682,8 +1825,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_ytmp3",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "downloader-ytmp3.js"
     },
     {
@@ -1693,8 +1836,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_ytmp3_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -1704,8 +1847,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_ytmp4",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 68,
+      "community_name": "downloader-ytmp4.js",
       "norm_label": "downloader-ytmp4.js"
     },
     {
@@ -1715,8 +1858,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_ytmp4_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 68,
+      "community_name": "downloader-ytmp4.js",
       "norm_label": "execute()"
     },
     {
@@ -2034,8 +2177,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_main_main_menu",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "main-menu.js"
     },
     {
@@ -2045,8 +2188,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_main_main_menu_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -2232,7 +2375,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db",
-      "community": 57,
+      "community": 63,
       "community_name": "backup.js",
       "norm_label": "owner-backup-db.js"
     },
@@ -2243,7 +2386,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db_execute",
-      "community": 57,
+      "community": 63,
       "community_name": "backup.js",
       "norm_label": "execute()"
     },
@@ -2298,8 +2441,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_eval",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 58,
+      "community_name": "owner-eval.js",
       "norm_label": "owner-eval.js"
     },
     {
@@ -2309,8 +2452,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "plugins_owner_owner_eval_execpromise",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 58,
+      "community_name": "owner-eval.js",
       "norm_label": "execpromise"
     },
     {
@@ -2320,8 +2463,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_owner_owner_eval_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 58,
+      "community_name": "owner-eval.js",
       "norm_label": "execute()"
     },
     {
@@ -2331,8 +2474,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_search_search_lyrics",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 72,
+      "community_name": "search-lyrics.js",
       "norm_label": "search-lyrics.js"
     },
     {
@@ -2342,8 +2485,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_search_search_lyrics_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 72,
+      "community_name": "search-lyrics.js",
       "norm_label": "execute()"
     },
     {
@@ -2353,8 +2496,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_search_search_pddikti",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 69,
+      "community_name": "search-pddikti.js",
       "norm_label": "search-pddikti.js"
     },
     {
@@ -2364,8 +2507,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_search_search_pddikti_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 69,
+      "community_name": "search-pddikti.js",
       "norm_label": "execute()"
     },
     {
@@ -2375,8 +2518,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_search_search_pinterest",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 70,
+      "community_name": "search-pinterest.js",
       "norm_label": "search-pinterest.js"
     },
     {
@@ -2386,8 +2529,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_search_search_pinterest_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 70,
+      "community_name": "search-pinterest.js",
       "norm_label": "execute()"
     },
     {
@@ -2397,8 +2540,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_search_search_pixiv",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 71,
+      "community_name": "search-pixiv.js",
       "norm_label": "search-pixiv.js"
     },
     {
@@ -2408,8 +2551,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_search_search_pixiv_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 71,
+      "community_name": "search-pixiv.js",
       "norm_label": "execute()"
     },
     {
@@ -2573,8 +2716,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_bapenda_jabar",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "tool-cek-bapenda-jabar.js"
     },
     {
@@ -2584,8 +2727,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_bapenda_jabar_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -2595,8 +2738,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_pln",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 73,
+      "community_name": "tool-cek-pln.js",
       "norm_label": "tool-cek-pln.js"
     },
     {
@@ -2606,8 +2749,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_pln_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 73,
+      "community_name": "tool-cek-pln.js",
       "norm_label": "execute()"
     },
     {
@@ -2617,8 +2760,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_resi",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 74,
+      "community_name": "tool-cek-resi.js",
       "norm_label": "tool-cek-resi.js"
     },
     {
@@ -2628,8 +2771,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_resi_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 74,
+      "community_name": "tool-cek-resi.js",
       "norm_label": "execute()"
     },
     {
@@ -3235,6 +3378,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "libs/backup.js",
       "source_location": "L5",
       "weight": 1.0,
@@ -3284,7 +3439,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "middlewares/handler.js",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler",
@@ -3300,6 +3455,66 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_validator",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-auto.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_auto",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-chatgpt.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_chatgpt",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-glm.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_glm",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-kimi.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_kimi",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-tencent.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_tencent",
       "target": "config",
       "confidence_score": 1.0
     },
@@ -3691,6 +3906,18 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "libs/backup.js",
       "source_location": "L5",
       "weight": 1.0,
@@ -3740,7 +3967,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "middlewares/handler.js",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler",
@@ -3756,6 +3983,66 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_validator",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-auto.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_auto",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-chatgpt.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_chatgpt",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-glm.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_glm",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-kimi.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_kimi",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-tencent.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_tencent",
       "target": "config_config",
       "confidence_score": 1.0
     },
@@ -4507,7 +4794,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/misc/misc-enable-disable.js",
-      "source_location": "L27",
+      "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_misc_misc_enable_disable_execute",
@@ -5165,6 +5452,148 @@
       "source": "libs_adapter_messageunwrapper",
       "target": "libs_adapter_messageunwrapper_unwrapmessage",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "libs_autoaihandler_forbidden_commands",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "libs_autoaihandler_handleautoai",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "middlewares_validator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "middlewares_validator_validateplugin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "middlewares/handler.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "middlewares_handler",
+      "target": "libs_autoaihandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-auto.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_auto",
+      "target": "libs_autoaihandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler_handleautoai",
+      "target": "libs_autoaihandler_forbidden_commands"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L86",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler_handleautoai",
+      "target": "middlewares_validator_validateplugin"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "middlewares/handler.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "middlewares_handler",
+      "target": "libs_autoaihandler_handleautoai",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "middlewares/handler.js",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "middlewares_handler_bothandler",
+      "target": "libs_autoaihandler_handleautoai"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-auto.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_auto",
+      "target": "libs_autoaihandler_handleautoai",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-auto.js",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_auto_execute",
+      "target": "libs_autoaihandler_handleautoai"
     },
     {
       "relation": "contains",
@@ -6038,6 +6467,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-chatgpt.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_chatgpt",
+      "target": "libs_uploader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/maker/maker-fake-ig.js",
       "source_location": "L3",
       "weight": 1.0,
@@ -6081,6 +6522,30 @@
       "source": "plugins_tool_tool_upload_file",
       "target": "libs_uploader",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-chatgpt.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_chatgpt",
+      "target": "libs_uploader_ryzumicdn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-chatgpt.js",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_chatgpt_execute",
+      "target": "libs_uploader_ryzumicdn"
     },
     {
       "relation": "imports",
@@ -6311,7 +6776,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "middlewares/handler.js",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler",
@@ -6322,7 +6787,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "middlewares/handler.js",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler",
@@ -6359,7 +6824,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "middlewares/handler.js",
-      "source_location": "L29",
+      "source_location": "L41",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler_bothandler",
@@ -7092,6 +7557,61 @@
       "_origin": "ast",
       "source": "plugins_account_account_unregister",
       "target": "plugins_account_account_unregister_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-auto.js",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_auto",
+      "target": "plugins_ai_ai_auto_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-chatgpt.js",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_chatgpt",
+      "target": "plugins_ai_ai_chatgpt_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-glm.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_glm",
+      "target": "plugins_ai_ai_glm_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-kimi.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_kimi",
+      "target": "plugins_ai_ai_kimi_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-tencent.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_tencent",
+      "target": "plugins_ai_ai_tencent_execute",
       "confidence_score": 1.0
     },
     {
@@ -8232,5 +8752,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e41ef91de3e9a85ce48e9c46643cc8f09f7f4284"
+  "built_at_commit": "0a545d33f0b22c0115e189e2dbf97d7d4aec4bb4"
 }
