@@ -846,8 +846,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_baileys",
-      "community": 21,
-      "community_name": "baileys",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "baileys"
     },
     {
@@ -857,8 +857,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "baileys",
-      "community": 21,
-      "community_name": "baileys",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "baileys"
     },
     {
@@ -868,8 +868,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "package_dependencies_chalk",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 21,
+      "community_name": "chalk",
       "norm_label": "chalk"
     },
     {
@@ -879,8 +879,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "chalk",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 21,
+      "community_name": "chalk",
       "norm_label": "chalk"
     },
     {
@@ -1484,8 +1484,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi",
-      "community": 67,
-      "community_name": "ai-kimi.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "ai-kimi.js"
     },
     {
@@ -1495,8 +1495,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi_execute",
-      "community": 67,
-      "community_name": "ai-kimi.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -1550,7 +1550,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_danbooru",
-      "community": 59,
+      "community": 67,
       "community_name": "downloader-danbooru.js",
       "norm_label": "downloader-danbooru.js"
     },
@@ -1561,7 +1561,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_danbooru_execute",
-      "community": 59,
+      "community": 67,
       "community_name": "downloader-danbooru.js",
       "norm_label": "execute()"
     },
@@ -1715,8 +1715,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pixiv",
-      "community": 6,
-      "community_name": "config",
+      "community": 59,
+      "community_name": "downloader-pixiv.js",
       "norm_label": "downloader-pixiv.js"
     },
     {
@@ -1726,8 +1726,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pixiv_execute",
-      "community": 6,
-      "community_name": "config",
+      "community": 59,
+      "community_name": "downloader-pixiv.js",
       "norm_label": "execute()"
     },
     {
@@ -5529,7 +5529,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L57",
+      "source_location": "L53",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -5541,7 +5541,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L86",
+      "source_location": "L87",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -8752,5 +8752,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0a545d33f0b22c0115e189e2dbf97d7d4aec4bb4"
+  "built_at_commit": "4f5a65afa33f9ac429c9479db199977af75142c1"
 }

@@ -1,7 +1,7 @@
 # Graph Report - Ryzumi-WABot V2  (2026-08-06)
 
 ## Corpus Check
-- 94 files · ~31,060 words
+- 94 files · ~31,095 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0a545d33`
+- Built from commit: `4f5a65af`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -35,7 +35,7 @@
 - jimp
 - jsdom
 - mariadb
-- baileys
+- chalk
 - moment-timezone
 - node-cron
 - node-fetch
@@ -114,7 +114,7 @@ Nodes (10): author, description, license, main, name, scripts, dev, start (+2 mo
 
 ### Community 7 - "dependencies"
 Cohesion: 0.29
-Nodes (7): axios, chalk, dependencies, axios, chalk, qrcode-terminal, qrcode-terminal
+Nodes (7): axios, baileys, dependencies, axios, baileys, qrcode-terminal, qrcode-terminal
 
 ### Community 8 - "sticker-to-media.js"
 Cohesion: 0.80
@@ -144,9 +144,9 @@ Nodes (4): backupDatabase(), pruneOldBackups(), uploadToNextcloud(), execute()
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `config` connect `config` to `config.js`, `index.js`, `ryzumiCDN`, `autoAiHandler.js`, `messageAdapter.js`, `downloader-mega.js`, `owner-eval.js`, `downloader-danbooru.js`, `downloader-facebook.js`, `downloader-instagram.js`, `downloader-krakenfiles.js`, `backup.js`, `downloader-pinterest.js`, `ai-tencent.js`, `ai-kimi.js`, `downloader-ytmp4.js`, `search-pddikti.js`, `search-pinterest.js`, `search-pixiv.js`, `search-lyrics.js`, `tool-cek-pln.js`, `tool-cek-resi.js`, `downloader-threads.js`?**
+- **Why does `config` connect `config` to `config.js`, `index.js`, `ryzumiCDN`, `autoAiHandler.js`, `messageAdapter.js`, `downloader-mega.js`, `owner-eval.js`, `downloader-pixiv.js`, `downloader-facebook.js`, `downloader-instagram.js`, `downloader-krakenfiles.js`, `backup.js`, `downloader-pinterest.js`, `ai-tencent.js`, `downloader-danbooru.js`, `downloader-ytmp4.js`, `search-pddikti.js`, `search-pinterest.js`, `search-pixiv.js`, `search-lyrics.js`, `tool-cek-pln.js`, `tool-cek-resi.js`, `downloader-threads.js`?**
   _High betweenness centrality (0.097) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `cheerio`, `fluent-ffmpeg`, `file-type`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `baileys`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `dotenv`?**
+- **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `cheerio`, `fluent-ffmpeg`, `file-type`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `chalk`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `dotenv`?**
   _High betweenness centrality (0.039) - this node is a cross-community bridge._
 - **What connects `startTime`, `groupCache`, `lidCache` to the rest of the system?**
   _75 weakly-connected nodes found - possible documentation gaps or missing edges._

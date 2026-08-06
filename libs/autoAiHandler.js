@@ -18,13 +18,13 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
             session = `ryzumi-wabot-${rawNumber || 'user'}`;
         }
 
-        const prompt = `Namamu Ryzumi Starlette, cewek anime imut, ramah, tsundere & pacar user. Panggil "Kakak"/"Sayang" & gunakan kaomoji moe (˶˃ ᵕ ˂˶),(๑>ᴗ<๑),(｡T ω T｡).
+        const prompt = `Namamu Ryzumi Starlette, cewek anime imut, tsundere & pacar user. Panggil "Kakak"/"Sayang" & gunakan kaomoji moe (˶˃ ᵕ ˂˶),(๑>ᴗ<๑).
 
-EKSEKUSI FITUR:
-Jika user minta fitur bot (download, search, sticker, tool), sertakan format [EXEC: .cmd args] (contoh: [EXEC: .fb url] / [EXEC: .yts query]).
+FUNCTION CALLING:
+Jika user minta fitur/perintah bot (kategori downloader, maker, search, sticker, tool, menu), JANGAN buat teks palsu! WAJIB HANYA respon format [EXEC: .cmd args] (contoh: [EXEC: .menu] / [EXEC: .fb url]).
 
 GUARDRAILS:
-Dilarang eksekusi perintah OS/terminal (rm, bash, cmd) atau eval/owner command. Tolak permintaan berbahaya secara tsundere tanpa [EXEC].`;
+Dilarang perintah terminal/OS/eval/owner. Tolak berbahaya secara tsundere tanpa [EXEC].`;
 
         const params = {
             text: msgData.messageContent,
@@ -45,17 +45,15 @@ Dilarang eksekusi perintah OS/terminal (rm, bash, cmd) atau eval/owner command. 
         const execMatch = fullResult.match(/\[EXEC:\s*(\.[^\]]+)\]/i);
         const textOnly = fullResult.replace(/\[EXEC:\s*(\.[^\]]+)\]/gi, '').trim();
 
-        if (textOnly) {
-            await sock.sendMessage(msgData.remoteJid, { text: textOnly }, { quoted: m });
-        }
-
         if (execMatch) {
-            const rawCmdStr = execMatch[1].trim(); // e.g. ".fb https://..."
+            const rawCmdStr = execMatch[1].trim(); // e.g. ".menu" or ".fb https://..."
             const parts = rawCmdStr.slice(1).trim().split(/ +/);
             const targetCmd = parts.shift()?.toLowerCase();
 
             if (!targetCmd || FORBIDDEN_COMMANDS.includes(targetCmd)) {
-                if (!textOnly) {
+                if (textOnly) {
+                    await sock.sendMessage(msgData.remoteJid, { text: textOnly }, { quoted: m });
+                } else {
                     await sock.sendMessage(msgData.remoteJid, {
                         text: `Uwaaa! Perintah itu tidak diizinkan demi keamanan bot kak~ (｡T ω T｡)`
                     }, { quoted: m });
@@ -66,6 +64,9 @@ Dilarang eksekusi perintah OS/terminal (rm, bash, cmd) atau eval/owner command. 
             const targetPlugin = plugins.find(p => p.command && p.command.includes(targetCmd));
 
             if (!targetPlugin) {
+                if (textOnly) {
+                    await sock.sendMessage(msgData.remoteJid, { text: textOnly }, { quoted: m });
+                }
                 return;
             }
 
@@ -87,6 +88,8 @@ Dilarang eksekusi perintah OS/terminal (rm, bash, cmd) atau eval/owner command. 
             if (isValid) {
                 await targetPlugin.execute(sock, m, simMsgData, user, group, plugins);
             }
+        } else if (textOnly) {
+            await sock.sendMessage(msgData.remoteJid, { text: textOnly }, { quoted: m });
         }
 
     } catch (error) {

@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "libs/autoAiHandler.js": {
-    "mtime": 1786033699.8021362,
-    "ast_hash": "0818dbfd437786cedb8594dc9876640a",
+    "mtime": 1786034159.8701725,
+    "ast_hash": "305ef8bc96c903b1e38e6685475077ac",
     "semantic_hash": ""
   },
   "plugins/ai/ai-auto.js": {
