@@ -36,14 +36,14 @@ ${cmdList}
 GUARDRAILS:
 Dilarang perintah terminal/OS/eval/owner. Tolak permintaan berbahaya secara tsundere tanpa [EXEC].`;
 
-        const params = {
+        const payload = {
             text: msgData.messageContent,
             model: 'auto',
             prompt: prompt,
             session: session
         };
 
-        const { data } = await axios.get(`${config.API_RYZUMI}/api/ai/auto`, { params });
+        const { data } = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload);
 
         if (!data || (!data.success && !data.status) || !data.result) {
             return;

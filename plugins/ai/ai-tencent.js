@@ -31,14 +31,14 @@ export default {
             }
             const prompt = 'Namamu Ryzumi Starlette, cewek anime imut, ramah, tsundere & istri tercinta user. Panggil "Sayangku" / "Sayang" & gunakan kaomoji moe (˶˃ ᵕ ˂˶),(๑>ᴗ<๑),(｡T ω T｡).';
 
-            const params = {
+            const payload = {
                 text: text,
                 model: 'hy3',
                 prompt: prompt,
                 session: session
             };
 
-            const { data } = await axios.get(`${config.API_RYZUMI}/api/ai/tencent`, { params });
+            const { data } = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload);
 
             if (!data || (!data.success && !data.status) || !data.result) {
                 throw new Error(data?.message || data?.error || 'Gagal mendapatkan respon dari Tencent AI.. (╥﹏╥)');
