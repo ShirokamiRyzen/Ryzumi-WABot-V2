@@ -55,7 +55,7 @@ export default {
                 payload.image = imageUrl;
             }
 
-            const { data } = await axios.post(`${config.API_RYZUMI}/api/ai/post/visual-model`, payload);
+            const { data } = await axios.post(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload);
 
             if (!data || (!data.success && !data.status) || !data.result) {
                 throw new Error(data?.message || data?.error || 'Gagal mendapatkan respon dari AI.. (╥﹏╥)');
