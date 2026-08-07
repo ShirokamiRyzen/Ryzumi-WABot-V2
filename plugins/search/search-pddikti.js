@@ -37,9 +37,10 @@ export default {
                 const nama = mahasiswa.nama || '-';
                 const nim = mahasiswa.nim || '-';
                 const namaPt = mahasiswa.nama_pt || '-';
+                const sinkatanPt = mahasiswa.sinkatan_pt ? ` (${mahasiswa.sinkatan_pt})` : '';
                 const namaProdi = mahasiswa.nama_prodi || '-';
 
-                message += `${index + 1}. *Nama:* ${nama}\n   *NIM:* ${nim}\n   *PT:* ${namaPt}\n   *Prodi:* ${namaProdi}\n\n`;
+                message += `${index + 1}. *Nama:* ${nama}\n   *NIM:* ${nim}\n   *PT:* ${namaPt}${sinkatanPt}\n   *Prodi:* ${namaProdi}\n\n`;
             });
 
             message += `Horeee! Itu tadi data yang Ryzumi temukan kak~ (๑>ᴗ<๑)`;

@@ -10,7 +10,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "config",
-      "community": 0,
+      "community": 59,
       "community_name": "config.js",
       "norm_label": "config.js"
     },
@@ -428,8 +428,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_hot_reload",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 21,
+      "community_name": "handler.js",
       "norm_label": "hot-reload.js"
     },
     {
@@ -439,8 +439,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "libs_hot_reload_plugins",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 21,
+      "community_name": "handler.js",
       "norm_label": "plugins"
     },
     {
@@ -450,8 +450,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "libs_hot_reload_loadplugins",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 21,
+      "community_name": "handler.js",
       "norm_label": "loadplugins()"
     },
     {
@@ -461,8 +461,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "libs_hot_reload_watchplugins",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 21,
+      "community_name": "handler.js",
       "norm_label": "watchplugins()"
     },
     {
@@ -637,8 +637,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_handler",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 21,
+      "community_name": "handler.js",
       "norm_label": "handler.js"
     },
     {
@@ -648,8 +648,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "middlewares_handler_plugindir",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 21,
+      "community_name": "handler.js",
       "norm_label": "plugindir"
     },
     {
@@ -868,8 +868,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "package_dependencies_chalk",
-      "community": 21,
-      "community_name": "chalk",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "chalk"
     },
     {
@@ -879,8 +879,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "chalk",
-      "community": 21,
-      "community_name": "chalk",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "chalk"
     },
     {
@@ -890,8 +890,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "package_dependencies_cheerio",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 62,
+      "community_name": "cheerio",
       "norm_label": "cheerio"
     },
     {
@@ -901,8 +901,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "cheerio",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 62,
+      "community_name": "cheerio",
       "norm_label": "cheerio"
     },
     {
@@ -1484,8 +1484,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi",
-      "community": 66,
-      "community_name": "ai-kimi.js",
+      "community": 59,
+      "community_name": "config.js",
       "norm_label": "ai-kimi.js"
     },
     {
@@ -1495,8 +1495,30 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi_execute",
-      "community": 66,
-      "community_name": "ai-kimi.js",
+      "community": 59,
+      "community_name": "config.js",
+      "norm_label": "execute()"
+    },
+    {
+      "label": "ai-qwen.js",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-qwen.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_qwen",
+      "community": 6,
+      "community_name": "config",
+      "norm_label": "ai-qwen.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-qwen.js",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_qwen_execute",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -1507,7 +1529,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_tencent",
       "community": 0,
-      "community_name": "config.js",
+      "community_name": "ai-tencent.js",
       "norm_label": "ai-tencent.js"
     },
     {
@@ -1518,7 +1540,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_tencent_execute",
       "community": 0,
-      "community_name": "config.js",
+      "community_name": "ai-tencent.js",
       "norm_label": "execute()"
     },
     {
@@ -1528,8 +1550,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_all_in_one",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 64,
+      "community_name": "downloader-all-in-one.js",
       "norm_label": "downloader-all-in-one.js"
     },
     {
@@ -1539,8 +1561,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_all_in_one_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 64,
+      "community_name": "downloader-all-in-one.js",
       "norm_label": "execute()"
     },
     {
@@ -1616,8 +1638,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_krakenfiles",
-      "community": 62,
-      "community_name": "downloader-krakenfiles.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "downloader-krakenfiles.js"
     },
     {
@@ -1627,8 +1649,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_krakenfiles_execute",
-      "community": 62,
-      "community_name": "downloader-krakenfiles.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -1638,8 +1660,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_mediafire",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "downloader-mediafire.js"
     },
     {
@@ -1649,8 +1671,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_mediafire_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -1693,8 +1715,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pinterest",
-      "community": 64,
-      "community_name": "downloader-pinterest.js",
+      "community": 59,
+      "community_name": "config.js",
       "norm_label": "downloader-pinterest.js"
     },
     {
@@ -1704,8 +1726,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pinterest_execute",
-      "community": 64,
-      "community_name": "downloader-pinterest.js",
+      "community": 59,
+      "community_name": "config.js",
       "norm_label": "execute()"
     },
     {
@@ -1716,7 +1738,7 @@
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pixiv",
       "community": 59,
-      "community_name": "downloader-pixiv.js",
+      "community_name": "config.js",
       "norm_label": "downloader-pixiv.js"
     },
     {
@@ -1727,7 +1749,7 @@
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pixiv_execute",
       "community": 59,
-      "community_name": "downloader-pixiv.js",
+      "community_name": "config.js",
       "norm_label": "execute()"
     },
     {
@@ -1759,8 +1781,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_threads",
-      "community": 75,
-      "community_name": "downloader-threads.js",
+      "community": 59,
+      "community_name": "config.js",
       "norm_label": "downloader-threads.js"
     },
     {
@@ -1770,8 +1792,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_threads_execute",
-      "community": 75,
-      "community_name": "downloader-threads.js",
+      "community": 59,
+      "community_name": "config.js",
       "norm_label": "execute()"
     },
     {
@@ -1803,8 +1825,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_twitter",
-      "community": 6,
-      "community_name": "config",
+      "community": 66,
+      "community_name": "downloader-twitter.js",
       "norm_label": "downloader-twitter.js"
     },
     {
@@ -1814,8 +1836,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_twitter_execute",
-      "community": 6,
-      "community_name": "config",
+      "community": 66,
+      "community_name": "downloader-twitter.js",
       "norm_label": "execute()"
     },
     {
@@ -1825,8 +1847,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_ytmp3",
-      "community": 6,
-      "community_name": "config",
+      "community": 69,
+      "community_name": "downloader-ytmp3.js",
       "norm_label": "downloader-ytmp3.js"
     },
     {
@@ -1836,8 +1858,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_ytmp3_execute",
-      "community": 6,
-      "community_name": "config",
+      "community": 69,
+      "community_name": "downloader-ytmp3.js",
       "norm_label": "execute()"
     },
     {
@@ -2177,8 +2199,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_main_main_menu",
-      "community": 6,
-      "community_name": "config",
+      "community": 59,
+      "community_name": "config.js",
       "norm_label": "main-menu.js"
     },
     {
@@ -2188,8 +2210,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_main_main_menu_execute",
-      "community": 6,
-      "community_name": "config",
+      "community": 59,
+      "community_name": "config.js",
       "norm_label": "execute()"
     },
     {
@@ -2496,8 +2518,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_search_search_pddikti",
-      "community": 69,
-      "community_name": "search-pddikti.js",
+      "community": 59,
+      "community_name": "config.js",
       "norm_label": "search-pddikti.js"
     },
     {
@@ -2507,8 +2529,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_search_search_pddikti_execute",
-      "community": 69,
-      "community_name": "search-pddikti.js",
+      "community": 59,
+      "community_name": "config.js",
       "norm_label": "execute()"
     },
     {
@@ -2694,8 +2716,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_alight_activator",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "tool-alight-activator.js"
     },
     {
@@ -2705,8 +2727,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_tool_tool_alight_activator_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -2716,8 +2738,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_bapenda_jabar",
-      "community": 6,
-      "community_name": "config",
+      "community": 75,
+      "community_name": "tool-cek-bapenda-jabar.js",
       "norm_label": "tool-cek-bapenda-jabar.js"
     },
     {
@@ -2727,8 +2749,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_bapenda_jabar_execute",
-      "community": 6,
-      "community_name": "config",
+      "community": 75,
+      "community_name": "tool-cek-bapenda-jabar.js",
       "norm_label": "execute()"
     },
     {
@@ -2804,8 +2826,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_read_viewonce",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 76,
+      "community_name": "tool-read-viewonce.js",
       "norm_label": "tool-read-viewonce.js"
     },
     {
@@ -2815,8 +2837,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "plugins_tool_tool_read_viewonce_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 76,
+      "community_name": "tool-read-viewonce.js",
       "norm_label": "execute()"
     },
     {
@@ -2826,8 +2848,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_ssweb",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 77,
+      "community_name": "tool-ssweb.js",
       "norm_label": "tool-ssweb.js"
     },
     {
@@ -2837,8 +2859,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_tool_tool_ssweb_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 77,
+      "community_name": "tool-ssweb.js",
       "norm_label": "execute()"
     },
     {
@@ -3510,6 +3532,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-qwen.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_qwen",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-tencent.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -4031,6 +4065,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_kimi",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-qwen.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_qwen",
       "target": "config_config",
       "confidence_score": 1.0
     },
@@ -7606,6 +7652,17 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-qwen.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_qwen",
+      "target": "plugins_ai_ai_qwen_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-tencent.js",
       "source_location": "L10",
       "weight": 1.0,
@@ -8752,5 +8809,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e1a43a993850e8ae03930e97dc6ebfc51031528c"
+  "built_at_commit": "49bc4e10646f0e49b9138f3edd5f8cd3f26ae3cc"
 }

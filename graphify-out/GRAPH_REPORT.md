@@ -1,16 +1,16 @@
 # Graph Report - Ryzumi-WABot V2  (2026-08-07)
 
 ## Corpus Check
-- 94 files · ~31,139 words
+- 95 files · ~31,387 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 302 nodes · 467 edges · 76 communities (40 shown, 36 thin omitted)
+- 304 nodes · 470 edges · 78 communities (42 shown, 36 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e1a43a99`
+- Built from commit: `49bc4e10`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -35,7 +35,7 @@
 - jimp
 - jsdom
 - mariadb
-- chalk
+- handler.js
 - moment-timezone
 - node-cron
 - node-fetch
@@ -60,11 +60,12 @@
 - messageAdapter.js
 - downloader-mega.js
 - owner-eval.js
+- cheerio
 - backup.js
 - dotenv
 
 ## God Nodes (most connected - your core abstractions)
-1. `config` - 45 edges
+1. `config` - 46 edges
 2. `Group` - 11 edges
 3. `resolveLidToJid()` - 11 edges
 4. `ryzumiCDN()` - 11 edges
@@ -90,11 +91,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (76 total, 36 thin omitted)
+## Communities (78 total, 36 thin omitted)
 
 ### Community 1 - "index.js"
-Cohesion: 0.15
-Nodes (20): Group, Setting, User, connectToWhatsApp(), startTime, syncGroups(), logMessage(), startCronJobs() (+12 more)
+Cohesion: 0.19
+Nodes (16): Group, Setting, User, connectToWhatsApp(), startTime, syncGroups(), logMessage(), startCronJobs() (+8 more)
 
 ### Community 2 - "ryzumiCDN"
 Cohesion: 0.22
@@ -114,7 +115,7 @@ Nodes (10): author, description, license, main, name, scripts, dev, start (+2 mo
 
 ### Community 7 - "dependencies"
 Cohesion: 0.29
-Nodes (7): axios, cheerio, dependencies, axios, cheerio, qrcode-terminal, qrcode-terminal
+Nodes (7): axios, chalk, dependencies, axios, chalk, qrcode-terminal, qrcode-terminal
 
 ### Community 8 - "sticker-to-media.js"
 Cohesion: 0.80
@@ -123,6 +124,10 @@ Nodes (3): webp2mp4(), webp2png(), execute()
 ### Community 14 - "autoAiHandler.js"
 Cohesion: 0.52
 Nodes (4): FORBIDDEN_COMMANDS, handleAutoAi(), validatePlugin(), execute()
+
+### Community 21 - "handler.js"
+Cohesion: 0.60
+Nodes (4): loadPlugins(), plugins, watchPlugins(), pluginDir
 
 ### Community 55 - "3. Tata Penulisan & Maintenance Sistem"
 Cohesion: 0.14
@@ -144,10 +149,10 @@ Nodes (4): backupDatabase(), pruneOldBackups(), uploadToNextcloud(), execute()
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `config` connect `config` to `config.js`, `index.js`, `ryzumiCDN`, `autoAiHandler.js`, `messageAdapter.js`, `downloader-mega.js`, `owner-eval.js`, `downloader-pixiv.js`, `downloader-facebook.js`, `downloader-instagram.js`, `downloader-krakenfiles.js`, `backup.js`, `downloader-pinterest.js`, `ai-kimi.js`, `downloader-danbooru.js`, `downloader-ytmp4.js`, `search-pddikti.js`, `search-pinterest.js`, `search-pixiv.js`, `search-lyrics.js`, `tool-cek-pln.js`, `tool-cek-resi.js`, `downloader-threads.js`?**
-  _High betweenness centrality (0.097) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `baileys`, `fluent-ffmpeg`, `file-type`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `chalk`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `dotenv`?**
-  _High betweenness centrality (0.039) - this node is a cross-community bridge._
+- **Why does `config` connect `config` to `ai-tencent.js`, `index.js`, `ryzumiCDN`, `autoAiHandler.js`, `handler.js`, `messageAdapter.js`, `downloader-mega.js`, `owner-eval.js`, `config.js`, `downloader-facebook.js`, `downloader-instagram.js`, `backup.js`, `downloader-all-in-one.js`, `downloader-twitter.js`, `downloader-danbooru.js`, `downloader-ytmp4.js`, `downloader-ytmp3.js`, `search-pinterest.js`, `search-pixiv.js`, `search-lyrics.js`, `tool-cek-pln.js`, `tool-cek-resi.js`, `tool-cek-bapenda-jabar.js`, `tool-read-viewonce.js`, `tool-ssweb.js`?**
+  _High betweenness centrality (0.099) - this node is a cross-community bridge._
+- **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `baileys`, `fluent-ffmpeg`, `file-type`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `cheerio`, `dotenv`?**
+  _High betweenness centrality (0.038) - this node is a cross-community bridge._
 - **What connects `startTime`, `groupCache`, `lidCache` to the rest of the system?**
   _75 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `3. Tata Penulisan & Maintenance Sistem` be split into smaller, more focused modules?**
