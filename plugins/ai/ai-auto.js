@@ -17,7 +17,7 @@ export default {
 
         if (!text) {
             return sock.sendMessage(msgData.remoteJid, {
-                text: `Uwaaa! Kakak mau tanya apa sama Auto AI Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan atau perintah dengan *.auto <teks>*\nAtau aktifkan Auto AI respon pesan biasa dengan perintah *.enable autogpt* yaa~! (๑>ᴗ<๑)`
+                text: `Uwaaa! Sayangku mau tanya apa sama Auto AI Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan atau perintah dengan *.autoai <teks>*\nAtau aktifkan Auto AI respon pesan biasa dengan perintah *.enable autogpt* yaa~! (๑>ᴗ<๑)`
             }, { quoted: m });
         }
 

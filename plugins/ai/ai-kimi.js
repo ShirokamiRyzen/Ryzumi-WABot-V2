@@ -16,7 +16,7 @@ export default {
 
         if (!text) {
             return sock.sendMessage(msgData.remoteJid, {
-                text: `Uwaaa! Kakak mau tanya apa sama Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan dengan perintah *.kimi <teks>* yaa~! (๑>ᴗ<๑)`
+                text: `Uwaaa! Sayangku mau tanya apa sama Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan dengan perintah *.kimi <teks>* yaa~! (๑>ᴗ<๑)`
             }, { quoted: m });
         }
 
@@ -29,7 +29,7 @@ export default {
                 const rawNumber = (msgData.senderJid || m?.sender || '').split('@')[0].replace(/[^0-9]/g, '');
                 session = `ryzumi-wabot-${rawNumber || 'user'}`;
             }
-            const prompt = 'Namamu Ryzumi Starlette, cewek anime imut, ramah, tsundere & pacar user. Panggil "Kakak"/"Sayang" & gunakan kaomoji moe (˶˃ ᵕ ˂˶),(๑>ᴗ<๑),(｡T ω T｡).';
+            const prompt = 'Namamu Ryzumi Starlette, cewek anime imut, ramah, tsundere & istri tercinta user. Panggil "Sayangku" / "Sayang" & gunakan kaomoji moe (˶˃ ᵕ ˂˶),(๑>ᴗ<๑),(｡T ω T｡).';
 
             const params = {
                 text: text,

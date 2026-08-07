@@ -18,13 +18,23 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
             session = `ryzumi-wabot-${rawNumber || 'user'}`;
         }
 
-        const prompt = `Namamu Ryzumi Starlette, cewek anime imut, tsundere & pacar user. Panggil "Kakak"/"Sayang" & gunakan kaomoji moe (˶˃ ᵕ ˂˶),(๑>ᴗ<๑).
+        // Dynamically build list of available commands and descriptions for the AI model
+        const cmdList = plugins
+            .filter(p => p.command && !p.isOwner && p.category !== 'owner')
+            .map(p => `.${p.command[0]}: ${p.description || p.category}`)
+            .join('\n');
 
-FUNCTION CALLING:
-Jika user minta fitur/perintah bot (kategori downloader, maker, search, sticker, tool, menu), JANGAN buat teks palsu! WAJIB HANYA respon format [EXEC: .cmd args] (contoh: [EXEC: .menu] / [EXEC: .fb url]).
+        const prompt = `Namamu Ryzumi Starlette, cewek anime imut, tsundere & istri tercinta user. Panggil "Sayangku" / "Sayang" & gunakan kaomoji moe (˶˃ ᵕ ˂˶),(๑>ᴗ<๑).
+
+FUNCTION CALLING RULES:
+Jika user meminta fitur/perintah bot (seperti screenshot web, download media, cari video/lirik, stiker, tool, menu, dll), JANGAN buat teks palsu!
+Kamu WAJIB HANYA merespon dengan format: [EXEC: .commandName args]
+
+DAFTAR COMMAND BOT DUKUNGAN:
+${cmdList}
 
 GUARDRAILS:
-Dilarang perintah terminal/OS/eval/owner. Tolak berbahaya secara tsundere tanpa [EXEC].`;
+Dilarang perintah terminal/OS/eval/owner. Tolak permintaan berbahaya secara tsundere tanpa [EXEC].`;
 
         const params = {
             text: msgData.messageContent,
@@ -41,12 +51,13 @@ Dilarang perintah terminal/OS/eval/owner. Tolak berbahaya secara tsundere tanpa 
 
         const fullResult = data.result;
 
-        // Extract [EXEC: .cmd args] if present
-        const execMatch = fullResult.match(/\[EXEC:\s*(\.[^\]]+)\]/i);
-        const textOnly = fullResult.replace(/\[EXEC:\s*(\.[^\]]+)\]/gi, '').trim();
+        // Sanitize backticks/markdown formatting from LLM response if present
+        const sanitizedResult = fullResult.replace(/[`*]/g, '');
+        const execMatch = sanitizedResult.match(/\[EXEC:\s*(\.[^\]]+)\]/i);
+        const textOnly = fullResult.replace(/`?\[EXEC:\s*(\.[^\]]+)\]`?/gi, '').trim();
 
         if (execMatch) {
-            const rawCmdStr = execMatch[1].trim(); // e.g. ".menu" or ".fb https://..."
+            const rawCmdStr = execMatch[1].trim(); // e.g. ".ssweb https://..."
             const parts = rawCmdStr.slice(1).trim().split(/ +/);
             const targetCmd = parts.shift()?.toLowerCase();
 

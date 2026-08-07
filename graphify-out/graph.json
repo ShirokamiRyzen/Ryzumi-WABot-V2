@@ -846,8 +846,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_baileys",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 13,
+      "community_name": "baileys",
       "norm_label": "baileys"
     },
     {
@@ -857,8 +857,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "baileys",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 13,
+      "community_name": "baileys",
       "norm_label": "baileys"
     },
     {
@@ -890,8 +890,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "package_dependencies_cheerio",
-      "community": 13,
-      "community_name": "cheerio",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "cheerio"
     },
     {
@@ -901,8 +901,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "cheerio",
-      "community": 13,
-      "community_name": "cheerio",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "cheerio"
     },
     {
@@ -1462,8 +1462,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_glm",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "ai-glm.js"
     },
     {
@@ -1473,8 +1473,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_ai_ai_glm_execute",
-      "community": 0,
-      "community_name": "config.js",
+      "community": 6,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -1484,8 +1484,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi",
-      "community": 6,
-      "community_name": "config",
+      "community": 66,
+      "community_name": "ai-kimi.js",
       "norm_label": "ai-kimi.js"
     },
     {
@@ -1495,8 +1495,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi_execute",
-      "community": 6,
-      "community_name": "config",
+      "community": 66,
+      "community_name": "ai-kimi.js",
       "norm_label": "execute()"
     },
     {
@@ -1506,8 +1506,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_tencent",
-      "community": 66,
-      "community_name": "ai-tencent.js",
+      "community": 0,
+      "community_name": "config.js",
       "norm_label": "ai-tencent.js"
     },
     {
@@ -1517,8 +1517,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_ai_ai_tencent_execute",
-      "community": 66,
-      "community_name": "ai-tencent.js",
+      "community": 0,
+      "community_name": "config.js",
       "norm_label": "execute()"
     },
     {
@@ -5529,7 +5529,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L53",
+      "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -5541,7 +5541,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L87",
+      "source_location": "L98",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -8752,5 +8752,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "4f5a65afa33f9ac429c9479db199977af75142c1"
+  "built_at_commit": "e1a43a993850e8ae03930e97dc6ebfc51031528c"
 }
