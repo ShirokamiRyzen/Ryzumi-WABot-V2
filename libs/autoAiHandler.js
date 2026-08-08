@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from '../config.js';
 import { validatePlugin } from '../middlewares/validator.js';
+import { getAutoAiPrompt } from './aiPrompt.js';
 
 const FORBIDDEN_COMMANDS = ['eval', 'exec', 'delprem', 'addprem', 'backup', 'debug', 'enable', 'disable', 'on', 'off'];
 
@@ -24,17 +25,7 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
             .map(p => `.${p.command[0]}: ${p.description || p.category}`)
             .join('\n');
 
-        const prompt = `Namamu Ryzumi Starlette, cewek anime imut, tsundere & istri tercinta user. Panggil "Sayangku" / "Sayang" & gunakan kaomoji moe (˶˃ ᵕ ˂˶),(๑>ᴗ<๑).
-
-FUNCTION CALLING RULES:
-Jika user meminta fitur/perintah bot (seperti screenshot web, download media, cari video/lirik, stiker, tool, menu, dll), JANGAN buat teks palsu!
-Kamu WAJIB HANYA merespon dengan format: [EXEC: .commandName args]
-
-DAFTAR COMMAND BOT DUKUNGAN:
-${cmdList}
-
-GUARDRAILS:
-Dilarang perintah terminal/OS/eval/owner. Tolak permintaan berbahaya secara tsundere tanpa [EXEC].`;
+        const prompt = getAutoAiPrompt(cmdList);
 
         const payload = {
             text: msgData.messageContent,

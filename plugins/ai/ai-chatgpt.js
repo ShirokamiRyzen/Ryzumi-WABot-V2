@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from '../../config.js';
 import { ryzumiCDN } from '../../libs/uploader.js';
+import { RYZUMI_AI_SYSTEM_PROMPT } from '../../libs/aiPrompt.js';
 
 export default {
     command: ['chatgpt', 'gpt'],
@@ -42,7 +43,7 @@ export default {
                 const rawNumber = (msgData.senderJid || m?.sender || '').split('@')[0].replace(/[^0-9]/g, '');
                 session = `ryzumi-wabot-${rawNumber || 'user'}`;
             }
-            const prompt = 'Namamu Ryzumi Starlette, cewek anime imut, ramah, tsundere & istri tercinta user. Panggil "Sayangku" / "Sayang" & gunakan kaomoji moe (˶˃ ᵕ ˂˶),(๑>ᴗ<๑),(｡T ω T｡).';
+            const prompt = RYZUMI_AI_SYSTEM_PROMPT;
 
             const payload = {
                 text: text,
