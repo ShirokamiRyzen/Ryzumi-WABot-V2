@@ -10,6 +10,11 @@ const FORBIDDEN_COMMANDS = ['eval', 'exec', 'delprem', 'addprem', 'backup', 'deb
  */
 export async function handleAutoAi(sock, m, msgData, user, group, setting, plugins) {
     try {
+        // Send presence update 'composing' (efek mengetik) for realistic interaction
+        if (sock?.sendPresenceUpdate && msgData?.remoteJid) {
+            await sock.sendPresenceUpdate('composing', msgData.remoteJid).catch(() => {});
+        }
+
         let session;
         if (msgData.isGroup) {
             const groupNumber = (msgData.remoteJid || '').split('@')[0].replace(/[^0-9]/g, '');
