@@ -27,16 +27,29 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
 
         const prompt = getAutoAiPrompt(cmdList);
 
-        const payload = {
-            text: msgData.messageContent,
-            model: 'auto',
-            prompt: prompt,
-            session: session
-        };
+        const modelsToTry = ['auto', 'hy3', 'auto-debug'];
+        let data = null;
 
-        const { data } = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload);
+        for (const modelName of modelsToTry) {
+            try {
+                const payload = {
+                    text: msgData.messageContent,
+                    model: modelName,
+                    prompt: prompt,
+                    session: session
+                };
 
-        if (!data || (!data.success && !data.status) || !data.result) {
+                const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload);
+                if (res?.data && (res.data.success || res.data.status) && res.data.result) {
+                    data = res.data;
+                    break;
+                }
+            } catch (err) {
+                console.warn(`Auto AI model '${modelName}' failed, attempting next fallback...`);
+            }
+        }
+
+        if (!data || !data.result) {
             return;
         }
 
