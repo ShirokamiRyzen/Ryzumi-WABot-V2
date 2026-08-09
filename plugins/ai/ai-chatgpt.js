@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../../config.js';
 import { ryzumiCDN } from '../../libs/uploader.js';
-import { RYZUMI_AI_SYSTEM_PROMPT } from '../../libs/aiPrompt.js';
+import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from '../../libs/aiPrompt.js';
 
 export default {
     command: ['chatgpt', 'gpt'],
@@ -62,7 +62,7 @@ export default {
                 throw new Error(data?.message || data?.error || 'Gagal mendapatkan respon dari AI.. (╥﹏╥)');
             }
 
-            await sock.sendMessage(msgData.remoteJid, { text: data.result }, { quoted: m });
+            await sock.sendMessage(msgData.remoteJid, { text: cleanAiResponse(data.result) }, { quoted: m });
 
         } catch (error) {
             console.error('ChatGPT AI Plugin Error:', error);

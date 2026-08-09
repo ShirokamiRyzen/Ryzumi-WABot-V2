@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../config.js';
 import { validatePlugin } from '../middlewares/validator.js';
-import { getAutoAiPrompt } from './aiPrompt.js';
+import { getAutoAiPrompt, cleanAiResponse } from './aiPrompt.js';
 
 const FORBIDDEN_COMMANDS = ['eval', 'exec', 'delprem', 'addprem', 'backup', 'debug', 'enable', 'disable', 'on', 'off'];
 
@@ -12,7 +12,7 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
     try {
         // Send presence update 'composing' (efek mengetik) for realistic interaction
         if (sock?.sendPresenceUpdate && msgData?.remoteJid) {
-            await sock.sendPresenceUpdate('composing', msgData.remoteJid).catch(() => {});
+            await sock.sendPresenceUpdate('composing', msgData.remoteJid).catch(() => { });
         }
 
         let session;
@@ -63,7 +63,8 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
         // Sanitize backticks/markdown formatting from LLM response if present
         const sanitizedResult = fullResult.replace(/[`*]/g, '');
         const execMatch = sanitizedResult.match(/\[EXEC:\s*(\.[^\]]+)\]/i);
-        const textOnly = fullResult.replace(/`?\[EXEC:\s*(\.[^\]]+)\]`?/gi, '').trim();
+        const rawTextOnly = fullResult.replace(/`?\[EXEC:\s*(\.[^\]]+)\]`?/gi, '').trim();
+        const textOnly = cleanAiResponse(rawTextOnly);
 
         if (execMatch) {
             const rawCmdStr = execMatch[1].trim(); // e.g. ".ssweb https://..."
