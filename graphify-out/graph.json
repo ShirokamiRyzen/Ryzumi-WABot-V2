@@ -153,8 +153,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageadapter",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "messageadapter.js"
     },
     {
@@ -164,8 +164,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "libs_adapter_messageadapter_extractmessagedata",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "extractmessagedata()"
     },
     {
@@ -175,8 +175,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "messageunwrapper.js"
     },
     {
@@ -186,8 +186,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_unwrapmessage",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "unwrapmessage()"
     },
     {
@@ -197,8 +197,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_getmessagetype",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "getmessagetype()"
     },
     {
@@ -208,8 +208,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_getmessagecontent",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "getmessagecontent()"
     },
     {
@@ -285,8 +285,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_backup",
-      "community": 63,
-      "community_name": "backup.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "backup.js"
     },
     {
@@ -296,8 +296,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "libs_backup_uploadtonextcloud",
-      "community": 63,
-      "community_name": "backup.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "uploadtonextcloud()"
     },
     {
@@ -307,8 +307,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "libs_backup_backupdatabase",
-      "community": 63,
-      "community_name": "backup.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "backupdatabase()"
     },
     {
@@ -318,8 +318,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "libs_backup_pruneoldbackups",
-      "community": 63,
-      "community_name": "backup.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "pruneoldbackups()"
     },
     {
@@ -329,8 +329,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_baileys_utils",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "baileys-utils.js"
     },
     {
@@ -340,8 +340,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "libs_baileys_utils_getpp",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "getpp()"
     },
     {
@@ -351,8 +351,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "libs_baileys_utils_sendalbummessage",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "sendalbummessage()"
     },
     {
@@ -384,8 +384,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_cronjob",
-      "community": 63,
-      "community_name": "backup.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "cronjob.js"
     },
     {
@@ -395,8 +395,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "libs_cronjob_startcronjobs",
-      "community": 63,
-      "community_name": "backup.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "startcronjobs()"
     },
     {
@@ -505,8 +505,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_lid_resolver",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "lid-resolver.js"
     },
     {
@@ -516,8 +516,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "libs_lid_resolver_lidcache",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "lidcache"
     },
     {
@@ -527,8 +527,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "libs_lid_resolver_resolvelidtojid",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "resolvelidtojid()"
     },
     {
@@ -692,8 +692,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "middlewares_handler_bothandler",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 14,
+      "community_name": "handler.js",
       "norm_label": "bothandler()"
     },
     {
@@ -1533,6 +1533,28 @@
       "norm_label": "execute()"
     },
     {
+      "label": "ai-grok.js",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-grok.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_grok",
+      "community": 6,
+      "community_name": "config.js",
+      "norm_label": "ai-grok.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-grok.js",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_grok_execute",
+      "community": 6,
+      "community_name": "config.js",
+      "norm_label": "execute()"
+    },
+    {
       "label": "ai-kimi.js",
       "file_type": "code",
       "source_file": "plugins/ai/ai-kimi.js",
@@ -2210,8 +2232,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "group-welcome-leave.js"
     },
     {
@@ -2221,8 +2243,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave_onparticipantsupdate",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "onparticipantsupdate()"
     },
     {
@@ -2232,8 +2254,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_group_kick_member",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "kick-member.js"
     },
     {
@@ -2243,8 +2265,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_group_kick_member_execute",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "execute()"
     },
     {
@@ -2452,8 +2474,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db",
-      "community": 63,
-      "community_name": "backup.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "owner-backup-db.js"
     },
     {
@@ -2463,8 +2485,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db_execute",
-      "community": 63,
-      "community_name": "backup.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "execute()"
     },
     {
@@ -2474,8 +2496,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "owner-debug-info.js"
     },
     {
@@ -2485,8 +2507,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info_execute",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "execute()"
     },
     {
@@ -3587,6 +3609,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-grok.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_grok",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-kimi.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -4132,6 +4166,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_glm",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-grok.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_grok",
       "target": "config_config",
       "confidence_score": 1.0
     },
@@ -5652,6 +5698,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-grok.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_grok",
+      "target": "libs_aiprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-kimi.js",
       "source_location": "L3",
       "weight": 1.0,
@@ -5750,7 +5808,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/ai/ai-chatgpt.js",
-      "source_location": "L65",
+      "source_location": "L79",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_chatgpt_execute",
@@ -5802,6 +5860,30 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_glm_execute",
+      "target": "libs_aiprompt_cleanairesponse"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-grok.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_grok",
+      "target": "libs_aiprompt_cleanairesponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-grok.js",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_grok_execute",
       "target": "libs_aiprompt_cleanairesponse"
     },
     {
@@ -8029,6 +8111,17 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-grok.js",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_grok",
+      "target": "plugins_ai_ai_grok_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-kimi.js",
       "source_location": "L11",
       "weight": 1.0,
@@ -9197,5 +9290,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "529d9aefe513e14b0436402397ad9b077b0e97af"
+  "built_at_commit": "2db51e3b00567dba6d41b01500830dd8dcbd46e3"
 }

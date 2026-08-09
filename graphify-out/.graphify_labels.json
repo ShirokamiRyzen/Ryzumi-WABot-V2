@@ -1,4 +1,5 @@
 {
+  "0": "messageAdapter.js",
   "1": "index.js",
   "2": "ryzumiCDN",
   "3": "Ryzumi-WABot V2",
@@ -55,6 +56,5 @@
   "55": "3. Tata Penulisan & Maintenance Sistem",
   "57": "downloader-mega.js",
   "62": "cheerio",
-  "63": "backup.js",
   "65": "dotenv"
 }

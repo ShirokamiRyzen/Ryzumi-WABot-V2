@@ -44,22 +44,36 @@ export default {
                 session = `ryzumi-wabot-${rawNumber || 'user'}`;
             }
             const prompt = RYZUMI_AI_SYSTEM_PROMPT;
+            const modelsToTry = ['gpt-5.6-luna', 'gpt-5.6'];
+            let data = null;
+            let lastError = null;
 
-            const payload = {
-                text: text,
-                model: 'gpt-5.6-luna',
-                prompt: prompt,
-                session: session
-            };
+            for (const modelName of modelsToTry) {
+                try {
+                    const payload = {
+                        text: text,
+                        model: modelName,
+                        prompt: prompt,
+                        session: session
+                    };
 
-            if (imageUrl) {
-                payload.image = imageUrl;
+                    if (imageUrl) {
+                        payload.image = imageUrl;
+                    }
+
+                    const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload);
+                    if (res?.data && (res.data.success || res.data.status) && res.data.result) {
+                        data = res.data;
+                        break;
+                    }
+                } catch (err) {
+                    lastError = err;
+                    console.warn(`ChatGPT model '${modelName}' failed, attempting fallback...`);
+                }
             }
 
-            const { data } = await axios.post(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload);
-
-            if (!data || (!data.success && !data.status) || !data.result) {
-                throw new Error(data?.message || data?.error || 'Gagal mendapatkan respon dari AI.. (╥﹏╥)');
+            if (!data || !data.result) {
+                throw new Error(lastError?.message || data?.message || data?.error || 'Gagal mendapatkan respon dari AI.. (╥﹏╥)');
             }
 
             await sock.sendMessage(msgData.remoteJid, { text: cleanAiResponse(data.result) }, { quoted: m });

@@ -32,7 +32,7 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
 
         const prompt = getAutoAiPrompt(cmdList);
 
-        const modelsToTry = ['auto', 'hy3', 'auto-debug'];
+        const modelsToTry = ['auto', 'grok-4.3-b', 'deepseek-v4-pro', 'deepseek-v4-mod', 'deepseek-v4-pro-b', 'hy3', 'auto-debug'];
         let data = null;
 
         for (const modelName of modelsToTry) {

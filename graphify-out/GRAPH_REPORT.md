@@ -1,20 +1,21 @@
 # Graph Report - Ryzumi-WABot V2  (2026-08-09)
 
 ## Corpus Check
-- 97 files · ~32,062 words
+- 98 files · ~32,333 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 309 nodes · 498 edges · 58 communities (24 shown, 34 thin omitted)
+- 311 nodes · 504 edges · 58 communities (24 shown, 34 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `529d9aef`
+- Built from commit: `2db51e3b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
+- messageAdapter.js
 - index.js
 - ryzumiCDN
 - Ryzumi-WABot V2
@@ -58,12 +59,11 @@
 - 3. Tata Penulisan & Maintenance Sistem
 - downloader-mega.js
 - cheerio
-- backup.js
 - dotenv
 
 ## God Nodes (most connected - your core abstractions)
-1. `config` - 47 edges
-2. `cleanAiResponse()` - 15 edges
+1. `config` - 48 edges
+2. `cleanAiResponse()` - 17 edges
 3. `Group` - 11 edges
 4. `resolveLidToJid()` - 11 edges
 5. `ryzumiCDN()` - 11 edges
@@ -74,25 +74,29 @@
 10. `extractMessageData()` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `onParticipantsUpdate()` --references--> `Group`  [EXTRACTED]
+  plugins/group/group-welcome-leave.js → databases/orm/Group.js
 - `execute()` --references--> `Setting`  [EXTRACTED]
   plugins/misc/misc-enable-disable.js → databases/orm/Setting.js
-- `startCronJobs()` --references--> `User`  [EXTRACTED]
-  libs/cronjob.js → databases/orm/User.js
-- `connectToWhatsApp()` --calls--> `startCronJobs()`  [EXTRACTED]
-  index.js → libs/cronjob.js
-- `execute()` --calls--> `cleanAiResponse()`  [EXTRACTED]
-  plugins/ai/ai-deepseek.js → libs/aiPrompt.js
-- `execute()` --calls--> `cleanAiResponse()`  [EXTRACTED]
-  plugins/ai/ai-glm.js → libs/aiPrompt.js
+- `onParticipantsUpdate()` --references--> `User`  [EXTRACTED]
+  plugins/group/group-welcome-leave.js → databases/orm/User.js
+- `connectToWhatsApp()` --calls--> `extractMessageData()`  [EXTRACTED]
+  index.js → libs/adapter/messageAdapter.js
+- `connectToWhatsApp()` --calls--> `botHandler()`  [EXTRACTED]
+  index.js → middlewares/handler.js
 
 ## Import Cycles
 - None detected.
 
 ## Communities (58 total, 34 thin omitted)
 
+### Community 0 - "messageAdapter.js"
+Cohesion: 0.25
+Nodes (11): extractMessageData(), getMessageContent(), getMessageType(), unwrapMessage(), getPP(), sendAlbumMessage(), lidCache, resolveLidToJid() (+3 more)
+
 ### Community 1 - "index.js"
-Cohesion: 0.13
-Nodes (26): Group, Setting, User, connectToWhatsApp(), startTime, syncGroups(), extractMessageData(), getMessageContent() (+18 more)
+Cohesion: 0.15
+Nodes (19): Group, Setting, User, connectToWhatsApp(), startTime, syncGroups(), backupDatabase(), pruneOldBackups() (+11 more)
 
 ### Community 2 - "ryzumiCDN"
 Cohesion: 0.25
@@ -112,7 +116,7 @@ Nodes (10): author, description, license, main, name, scripts, dev, start (+2 mo
 
 ### Community 6 - "config.js"
 Cohesion: 0.05
-Nodes (9): config, cleanAiResponse(), execute(), execute(), execute(), execute(), execute(), execute() (+1 more)
+Nodes (10): config, cleanAiResponse(), execute(), execute(), execute(), execute(), execute(), execute() (+2 more)
 
 ### Community 7 - "dependencies"
 Cohesion: 0.29
@@ -123,16 +127,12 @@ Cohesion: 0.80
 Nodes (3): webp2mp4(), webp2png(), execute()
 
 ### Community 14 - "handler.js"
-Cohesion: 0.29
-Nodes (9): getAutoAiPrompt(), FORBIDDEN_COMMANDS, handleAutoAi(), loadPlugins(), plugins, watchPlugins(), pluginDir, validatePlugin() (+1 more)
+Cohesion: 0.28
+Nodes (10): getAutoAiPrompt(), FORBIDDEN_COMMANDS, handleAutoAi(), loadPlugins(), plugins, watchPlugins(), botHandler(), pluginDir (+2 more)
 
 ### Community 55 - "3. Tata Penulisan & Maintenance Sistem"
 Cohesion: 0.14
 Nodes (13): 1. Tata Penulisan & Struktur Plugin, 2. Standar Operasi Plugin (Add, Edit, Delete), 3. Tata Penulisan & Maintenance Sistem, A. Add Plugin (Menambah Plugin Baru), A. Middlewares (`/middlewares`), B. Adapters & Libs (`/libs/adapter` & `/libs`), B. Update / Edit Plugin (Memperbarui Plugin), C. Database & Migrations (`/databases`) (+5 more)
-
-### Community 63 - "backup.js"
-Cohesion: 0.46
-Nodes (5): backupDatabase(), pruneOldBackups(), uploadToNextcloud(), startCronJobs(), execute()
 
 ## Knowledge Gaps
 - **75 isolated node(s):** `startTime`, `groupCache`, `lidCache`, `tmpDir`, `pluginDir` (+70 more)
@@ -142,17 +142,15 @@ Nodes (5): backupDatabase(), pruneOldBackups(), uploadToNextcloud(), startCronJo
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `config` connect `config.js` to `index.js`, `ryzumiCDN`, `handler.js`, `downloader-mega.js`, `backup.js`?**
-  _High betweenness centrality (0.100) - this node is a cross-community bridge._
+- **Why does `config` connect `config.js` to `messageAdapter.js`, `index.js`, `ryzumiCDN`, `handler.js`, `downloader-mega.js`?**
+  _High betweenness centrality (0.102) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `chalk`, `fluent-ffmpeg`, `file-type`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `cheerio`, `dotenv`?**
   _High betweenness centrality (0.037) - this node is a cross-community bridge._
 - **Why does `ryzumiCDN()` connect `ryzumiCDN` to `config.js`?**
   _High betweenness centrality (0.009) - this node is a cross-community bridge._
 - **What connects `startTime`, `groupCache`, `lidCache` to the rest of the system?**
   _75 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `index.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.12579281183932348 - nodes in this community are weakly interconnected._
 - **Should `config.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.051560379918588875 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05115089514066496 - nodes in this community are weakly interconnected._
 - **Should `3. Tata Penulisan & Maintenance Sistem` be split into smaller, more focused modules?**
   _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
