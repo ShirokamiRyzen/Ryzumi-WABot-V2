@@ -3,7 +3,7 @@ import config from '../../config.js';
 import { handleAutoAi } from '../../libs/autoAiHandler.js';
 
 export default {
-    command: ['autoai', 'autogpt'],
+    command: ['ai'],
     category: 'ai',
     description: 'Bertanya atau merespon secara otomatis dengan Auto AI (Ryzumi Starlette)',
     isRegistered: false,
