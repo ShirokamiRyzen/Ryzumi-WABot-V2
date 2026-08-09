@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "middlewares/handler.js": {
-    "mtime": 1786286071.6600778,
-    "ast_hash": "94927064297bee8fa42465b542da9130",
+    "mtime": 1786286366.748986,
+    "ast_hash": "5a8adf6050b9144f6219df3554e45ecd",
     "semantic_hash": ""
   },
   "middlewares/validator.js": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "libs/autoAiHandler.js": {
-    "mtime": 1786286127.7101855,
-    "ast_hash": "cdf54defa549cf697e9740e2218dfb55",
+    "mtime": 1786286494.0495543,
+    "ast_hash": "46232cd3c5a2d9f84df56d2daea69cca",
     "semantic_hash": ""
   },
   "plugins/ai/ai-auto.js": {

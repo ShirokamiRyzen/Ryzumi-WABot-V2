@@ -13,7 +13,7 @@ watchPlugins(pluginDir);
 export default async function botHandler(sock, m, msgData) {
     try {
         if (!msgData.commandName) {
-            if (m.key.fromMe || !msgData.messageContent || msgData.senderJid === 'status@broadcast') return;
+            if (m.key.fromMe || (!msgData.messageContent && !msgData.isMedia && !msgData.isQuotedMedia) || msgData.senderJid === 'status@broadcast') return;
 
             const { user, group, setting } = await processAuth(sock, msgData);
 

@@ -5795,7 +5795,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L104",
+      "source_location": "L106",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -6164,7 +6164,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L113",
+      "source_location": "L115",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -6175,7 +6175,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L106",
+      "source_location": "L108",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -6368,7 +6368,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L147",
+      "source_location": "L149",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -9612,5 +9612,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d5525939f2c42322862cafebf70356269525849a"
+  "built_at_commit": "fbc4469c2ca6f66482612804073053aecb1ffe9e"
 }
