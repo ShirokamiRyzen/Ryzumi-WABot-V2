@@ -17,21 +17,21 @@ export default {
         }
 
         // Fitur autogpt / autoai
-        if (feature === 'autogpt' || feature === 'autoai') {
+        if (feature === 'ai') {
             if (msgData.isGroup) {
                 if (!msgData.isAdmin && !user.isOwner && !msgData.fromMe) {
                     return sock.sendMessage(msgData.remoteJid, {
-                        text: `Hanya Admin Grup, Owner Bot, atau Bot yang bisa mengatur fitur *Auto AI (AutoGPT)* di grup ya kak~ (｡T ω T｡)`
+                        text: `Hanya Admin Grup, Owner Bot, atau Bot yang bisa mengatur fitur *Auto AI* di grup ya kak~ (｡T ω T｡)`
                     }, { quoted: m });
                 }
                 await group.update({ is_autogpt: status });
                 return sock.sendMessage(msgData.remoteJid, {
-                    text: `Horeee! Fitur *Auto AI (AutoGPT)* di grup ini sekarang sudah Ryzumi ${status ? 'aktifkan (merespon pesan biasa)' : 'matikan'} yaa~ (˶˃ ᵕ ˂˶)`
+                    text: `Horeee! Fitur *Auto AI* di grup ini sekarang sudah Ryzumi ${status ? 'aktifkan (merespon pesan biasa)' : 'matikan'} yaa~ (˶˃ ᵕ ˂˶)`
                 }, { quoted: m });
             } else {
                 await user.update({ is_autogpt: status });
                 return sock.sendMessage(msgData.remoteJid, {
-                    text: `Selesai! Fitur *Auto AI (AutoGPT)* untuk chat pribadi kakak sekarang sudah Ryzumi ${status ? 'aktifkan (merespon pesan biasa)' : 'matikan'} yaa~ (๑>ᴗ<๑)`
+                    text: `Selesai! Fitur *Auto AI* untuk chat pribadi kakak sekarang sudah Ryzumi ${status ? 'aktifkan (merespon pesan biasa)' : 'matikan'} yaa~ (๑>ᴗ<๑)`
                 }, { quoted: m });
             }
         }
