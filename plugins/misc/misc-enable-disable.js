@@ -5,7 +5,7 @@ export default {
     category: 'misc',
     description: 'Mengaktifkan atau menonaktifkan fitur bot',
     async execute(sock, m, msgData, user, group) {
-        const availableFeatures = ['welcome', 'limit', 'public', 'register', 'gconly', 'autogpt', 'autoai'];
+        const availableFeatures = ['welcome', 'limit', 'public', 'register', 'gconly', 'ai'];
         const feature = msgData.args[0]?.toLowerCase();
         const action = msgData.commandName;
         const status = (action === 'enable' || action === 'on');
@@ -16,7 +16,7 @@ export default {
             return sock.sendMessage(msgData.remoteJid, { text: text.trim() }, { quoted: m });
         }
 
-        // Fitur autogpt / autoai
+        // Fitur Auto AI
         if (feature === 'ai') {
             if (msgData.isGroup) {
                 if (!msgData.isAdmin && !user.isOwner && !msgData.fromMe) {
