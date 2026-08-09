@@ -3,6 +3,7 @@ import { plugins, loadPlugins, watchPlugins } from '../libs/hot-reload.js';
 import { processAuth } from './auth.js';
 import { validatePlugin } from './validator.js';
 import { handleAutoAi } from '../libs/autoAiHandler.js';
+import { resolveLidToJid } from '../libs/lid-resolver.js';
 import config from '../config.js';
 
 // Inisialisasi Hot-Reload untuk Plugins
@@ -25,15 +26,24 @@ export default async function botHandler(sock, m, msgData) {
 
             if (msgData.isGroup) {
                 const rawBotId = sock?.user?.id || sock?.user?.jid || '';
-                const botNumber = rawBotId.split(':')[0].split('@')[0];
+                const rawBotLid = sock?.user?.lid || '';
 
-                const isMentioned = (msgData.mentions || []).some(jid => jid.includes(botNumber)) ||
-                    (msgData.messageContent && msgData.messageContent.includes(`@${botNumber}`));
+                const botNumber = rawBotId.split(':')[0].split('@')[0];
+                const botLidNumber = rawBotLid.split(':')[0].split('@')[0];
+
+                const botIdentifiers = [botNumber, botLidNumber].filter(Boolean);
+
+                const isMentioned = (msgData.mentions || []).some(jid => {
+                    const resolved = resolveLidToJid(jid, sock);
+                    return botIdentifiers.some(b => b && (jid.includes(b) || resolved.includes(b)));
+                }) || (msgData.messageContent && botIdentifiers.some(b => b && msgData.messageContent.includes(b)));
 
                 const quotedParticipant = msgData.contextInfo?.participant || '';
+                const resolvedQuotedParticipant = resolveLidToJid(quotedParticipant, sock);
+
                 const isQuotedBot = msgData.isQuoted && (
-                    (quotedParticipant && quotedParticipant.includes(botNumber)) ||
-                    msgData.contextInfo?.quotedMessage?.fromMe === true
+                    msgData.contextInfo?.quotedMessage?.fromMe === true ||
+                    (quotedParticipant && botIdentifiers.some(b => b && (quotedParticipant.includes(b) || resolvedQuotedParticipant.includes(b))))
                 );
 
                 if (!isMentioned && !isQuotedBot) return;

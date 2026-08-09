@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "middlewares/handler.js": {
-    "mtime": 1786286366.748986,
-    "ast_hash": "5a8adf6050b9144f6219df3554e45ecd",
+    "mtime": 1786288052.6870532,
+    "ast_hash": "e3c1aac82730dc42aa815d417d3b36d2",
     "semantic_hash": ""
   },
   "middlewares/validator.js": {

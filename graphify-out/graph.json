@@ -87,8 +87,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "databases_orm_user",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "user.js"
     },
     {
@@ -98,8 +98,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "databases_orm_user_user",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "user"
     },
     {
@@ -153,8 +153,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageadapter",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "messageadapter.js"
     },
     {
@@ -164,8 +164,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "libs_adapter_messageadapter_extractmessagedata",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "extractmessagedata()"
     },
     {
@@ -175,8 +175,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "messageunwrapper.js"
     },
     {
@@ -186,8 +186,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_unwrapmessage",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "unwrapmessage()"
     },
     {
@@ -197,8 +197,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_getmessagetype",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "getmessagetype()"
     },
     {
@@ -208,8 +208,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_getmessagecontent",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "getmessagecontent()"
     },
     {
@@ -219,8 +219,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_aiprompt",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "aiprompt.js"
     },
     {
@@ -230,8 +230,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "libs_aiprompt_getautoaiprompt",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 14,
+      "community_name": "handleAutoAi",
       "norm_label": "getautoaiprompt()"
     },
     {
@@ -241,8 +241,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "libs_aiprompt_cleanairesponse",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "cleanairesponse()"
     },
     {
@@ -252,8 +252,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_autoaihandler",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "autoaihandler.js"
     },
     {
@@ -264,7 +264,7 @@
       "_origin": "ast",
       "id": "libs_autoaihandler_forbidden_commands",
       "community": 14,
-      "community_name": "handler.js",
+      "community_name": "handleAutoAi",
       "norm_label": "forbidden_commands"
     },
     {
@@ -274,8 +274,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "libs_autoaihandler_getquoteoption",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "getquoteoption()"
     },
     {
@@ -286,7 +286,7 @@
       "_origin": "ast",
       "id": "libs_autoaihandler_handleautoai",
       "community": 14,
-      "community_name": "handler.js",
+      "community_name": "handleAutoAi",
       "norm_label": "handleautoai()"
     },
     {
@@ -296,8 +296,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_backup",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "backup.js"
     },
     {
@@ -307,8 +307,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "libs_backup_uploadtonextcloud",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "uploadtonextcloud()"
     },
     {
@@ -318,8 +318,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "libs_backup_backupdatabase",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "backupdatabase()"
     },
     {
@@ -329,8 +329,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "libs_backup_pruneoldbackups",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "pruneoldbackups()"
     },
     {
@@ -340,8 +340,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_baileys_utils",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "baileys-utils.js"
     },
     {
@@ -351,8 +351,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "libs_baileys_utils_getpp",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "getpp()"
     },
     {
@@ -362,8 +362,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "libs_baileys_utils_sendalbummessage",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "sendalbummessage()"
     },
     {
@@ -395,8 +395,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_cronjob",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "cronjob.js"
     },
     {
@@ -406,8 +406,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "libs_cronjob_startcronjobs",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "startcronjobs()"
     },
     {
@@ -472,8 +472,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_hot_reload",
-      "community": 14,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "hot-reload.js"
     },
     {
@@ -483,8 +483,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "libs_hot_reload_plugins",
-      "community": 14,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "plugins"
     },
     {
@@ -494,8 +494,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "libs_hot_reload_loadplugins",
-      "community": 14,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "loadplugins()"
     },
     {
@@ -505,8 +505,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "libs_hot_reload_watchplugins",
-      "community": 14,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "watchplugins()"
     },
     {
@@ -681,30 +681,30 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_handler",
-      "community": 14,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "handler.js"
     },
     {
       "label": "pluginDir",
       "file_type": "code",
       "source_file": "middlewares/handler.js",
-      "source_location": "L9",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "middlewares_handler_plugindir",
-      "community": 14,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "plugindir"
     },
     {
       "label": "botHandler()",
       "file_type": "code",
       "source_file": "middlewares/handler.js",
-      "source_location": "L13",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "middlewares_handler_bothandler",
-      "community": 14,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "bothandler()"
     },
     {
@@ -714,8 +714,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_validator",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "validator.js"
     },
     {
@@ -725,8 +725,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "middlewares_validator_validateplugin",
-      "community": 14,
-      "community_name": "handler.js",
+      "community": 1,
+      "community_name": "index.js",
       "norm_label": "validateplugin()"
     },
     {
@@ -890,8 +890,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_baileys",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 56,
+      "community_name": "baileys",
       "norm_label": "baileys"
     },
     {
@@ -901,8 +901,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "baileys",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 56,
+      "community_name": "baileys",
       "norm_label": "baileys"
     },
     {
@@ -912,8 +912,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "package_dependencies_chalk",
-      "community": 13,
-      "community_name": "chalk",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "chalk"
     },
     {
@@ -923,8 +923,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "chalk",
-      "community": 13,
-      "community_name": "chalk",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "chalk"
     },
     {
@@ -1463,7 +1463,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_auto",
       "community": 14,
-      "community_name": "handler.js",
+      "community_name": "handleAutoAi",
       "norm_label": "ai-auto.js"
     },
     {
@@ -1474,7 +1474,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_auto_execute",
       "community": 14,
-      "community_name": "handler.js",
+      "community_name": "handleAutoAi",
       "norm_label": "execute()"
     },
     {
@@ -1484,8 +1484,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_chatgpt",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "ai-chatgpt.js"
     },
     {
@@ -1495,8 +1495,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "plugins_ai_ai_chatgpt_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "execute()"
     },
     {
@@ -1506,8 +1506,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_deepseek",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "ai-deepseek.js"
     },
     {
@@ -1517,8 +1517,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_deepseek_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "execute()"
     },
     {
@@ -1528,8 +1528,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_glm",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "ai-glm.js"
     },
     {
@@ -1539,8 +1539,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_glm_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "execute()"
     },
     {
@@ -1550,8 +1550,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_grok",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "ai-grok.js"
     },
     {
@@ -1561,8 +1561,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_grok_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "execute()"
     },
     {
@@ -1572,8 +1572,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "ai-kimi.js"
     },
     {
@@ -1583,8 +1583,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "execute()"
     },
     {
@@ -1594,8 +1594,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_qwen",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "ai-qwen.js"
     },
     {
@@ -1605,8 +1605,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_qwen_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "execute()"
     },
     {
@@ -1616,8 +1616,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_tencent",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "ai-tencent.js"
     },
     {
@@ -1627,8 +1627,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_tencent_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 13,
+      "community_name": "autoAiHandler.js",
       "norm_label": "execute()"
     },
     {
@@ -2243,8 +2243,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "group-welcome-leave.js"
     },
     {
@@ -2254,8 +2254,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave_onparticipantsupdate",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "onparticipantsupdate()"
     },
     {
@@ -2485,8 +2485,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "owner-backup-db.js"
     },
     {
@@ -2496,8 +2496,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db_execute",
-      "community": 1,
-      "community_name": "index.js",
+      "community": 0,
+      "community_name": "messageAdapter.js",
       "norm_label": "execute()"
     },
     {
@@ -2551,8 +2551,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_eval",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 21,
+      "community_name": "owner-eval.js",
       "norm_label": "owner-eval.js"
     },
     {
@@ -2562,8 +2562,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "plugins_owner_owner_eval_execpromise",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 21,
+      "community_name": "owner-eval.js",
       "norm_label": "execpromise"
     },
     {
@@ -2573,8 +2573,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_owner_owner_eval_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 21,
+      "community_name": "owner-eval.js",
       "norm_label": "execute()"
     },
     {
@@ -3549,7 +3549,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "middlewares/handler.js",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler",
@@ -4113,7 +4113,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "middlewares/handler.js",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler",
@@ -6392,7 +6392,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "middlewares/handler.js",
-      "source_location": "L42",
+      "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler_bothandler",
@@ -6879,6 +6879,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "middlewares/handler.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "middlewares_handler",
+      "target": "libs_lid_resolver",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/group/group-welcome-leave.js",
       "source_location": "L4",
       "weight": 1.0,
@@ -6933,6 +6945,30 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_auth_processauth",
+      "target": "libs_lid_resolver_resolvelidtojid"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "middlewares/handler.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "middlewares_handler",
+      "target": "libs_lid_resolver_resolvelidtojid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "middlewares/handler.js",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "middlewares_handler_bothandler",
       "target": "libs_lid_resolver_resolvelidtojid"
     },
     {
@@ -7593,7 +7629,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "middlewares/handler.js",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler_bothandler",
@@ -7603,7 +7639,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "middlewares/handler.js",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler",
@@ -7614,7 +7650,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "middlewares/handler.js",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler",
@@ -7651,7 +7687,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "middlewares/handler.js",
-      "source_location": "L57",
+      "source_location": "L67",
       "weight": 1.0,
       "_origin": "ast",
       "source": "middlewares_handler_bothandler",
@@ -9612,5 +9648,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "fbc4469c2ca6f66482612804073053aecb1ffe9e"
+  "built_at_commit": "a17cd44371d5d596f91e59b915786d3f1f94a926"
 }
