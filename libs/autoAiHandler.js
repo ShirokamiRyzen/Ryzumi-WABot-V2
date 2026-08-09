@@ -2,8 +2,22 @@ import axios from 'axios';
 import config from '../config.js';
 import { validatePlugin } from '../middlewares/validator.js';
 import { getAutoAiPrompt, cleanAiResponse } from './aiPrompt.js';
+import { ryzumiCDN } from './uploader.js';
 
 const FORBIDDEN_COMMANDS = ['eval', 'exec', 'delprem', 'addprem', 'backup', 'debug', 'enable', 'disable', 'on', 'off'];
+
+/**
+ * Determine quote option based on chat type and media presence.
+ * In private chat (PC), do NOT quote unless there is media (image, video, file, document, audio).
+ * In group chat, always quote.
+ */
+export function getQuoteOption(msgData, m) {
+    if (!msgData.isGroup) {
+        const hasMedia = msgData.isMedia || msgData.isQuotedMedia;
+        return hasMedia ? { quoted: m } : {};
+    }
+    return { quoted: m };
+}
 
 /**
  * Handler for Auto AI / AutoGPT (Processes non-command messages when enabled)
@@ -24,6 +38,23 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
             session = `ryzumi-wabot-${rawNumber || 'user'}`;
         }
 
+        // Image handling: upload image if message or quoted message contains an image
+        let imageUrl = null;
+        const isMediaImage = msgData.isMedia && /image/i.test(msgData.mime);
+        const isQuotedImage = msgData.isQuotedMedia && /image/i.test(msgData.quotedMime);
+
+        if (isMediaImage || isQuotedImage) {
+            try {
+                const buffer = await msgData.downloadMedia();
+                if (buffer) {
+                    const cdnRes = await ryzumiCDN(buffer);
+                    imageUrl = cdnRes?.url || cdnRes?.result?.url || (typeof cdnRes?.result === 'string' ? cdnRes.result : (Array.isArray(cdnRes?.result) ? cdnRes.result[0]?.url : null));
+                }
+            } catch (err) {
+                console.warn('Auto AI image upload failed:', err.message);
+            }
+        }
+
         // Dynamically build list of available commands and descriptions for the AI model
         const cmdList = plugins
             .filter(p => p.command && !p.isOwner && p.category !== 'owner')
@@ -32,19 +63,25 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
 
         const prompt = getAutoAiPrompt(cmdList);
 
-        const modelsToTry = ['auto', 'grok-4.3-b', 'deepseek-v4-pro', 'deepseek-v4-mod', 'deepseek-v4-pro-b', 'hy3', 'auto-debug'];
+        const modelsToTry = ['auto', 'hy3', 'auto-debug'];
         let data = null;
 
         for (const modelName of modelsToTry) {
             try {
                 const payload = {
-                    text: msgData.messageContent,
+                    text: msgData.messageContent || (imageUrl ? 'Jelaskan gambar ini' : ''),
                     model: modelName,
                     prompt: prompt,
                     session: session
                 };
 
-                const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload);
+                if (imageUrl) {
+                    payload.image = imageUrl;
+                }
+
+                // Call vision-model endpoint if image exists, otherwise text-model
+                const endpoint = imageUrl ? `${config.API_RYZUMI}/api/ai/post/vision-model` : `${config.API_RYZUMI}/api/ai/post/text-model`;
+                const res = await axios.post(endpoint, payload);
                 if (res?.data && (res.data.success || res.data.status) && res.data.result) {
                     data = res.data;
                     break;
@@ -66,6 +103,8 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
         const rawTextOnly = fullResult.replace(/`?\[EXEC:\s*(\.[^\]]+)\]`?/gi, '').trim();
         const textOnly = cleanAiResponse(rawTextOnly);
 
+        const quoteOptions = getQuoteOption(msgData, m);
+
         if (execMatch) {
             const rawCmdStr = execMatch[1].trim(); // e.g. ".ssweb https://..."
             const parts = rawCmdStr.slice(1).trim().split(/ +/);
@@ -73,11 +112,11 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
 
             if (!targetCmd || FORBIDDEN_COMMANDS.includes(targetCmd)) {
                 if (textOnly) {
-                    await sock.sendMessage(msgData.remoteJid, { text: textOnly }, { quoted: m });
+                    await sock.sendMessage(msgData.remoteJid, { text: textOnly }, quoteOptions);
                 } else {
                     await sock.sendMessage(msgData.remoteJid, {
                         text: `Uwaaa! Perintah itu tidak diizinkan demi keamanan bot kak~ (｡T ω T｡)`
-                    }, { quoted: m });
+                    }, quoteOptions);
                 }
                 return;
             }
@@ -86,7 +125,7 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
 
             if (!targetPlugin) {
                 if (textOnly) {
-                    await sock.sendMessage(msgData.remoteJid, { text: textOnly }, { quoted: m });
+                    await sock.sendMessage(msgData.remoteJid, { text: textOnly }, quoteOptions);
                 }
                 return;
             }
@@ -94,7 +133,7 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
             if (targetPlugin.isOwner && !user.isOwner) {
                 await sock.sendMessage(msgData.remoteJid, {
                     text: `Aduuh! Perintah ini khusus untuk Owner Ryzumi kak~ (｡T ω T｡)`
-                }, { quoted: m });
+                }, quoteOptions);
                 return;
             }
 
@@ -110,7 +149,7 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
                 await targetPlugin.execute(sock, m, simMsgData, user, group, plugins);
             }
         } else if (textOnly) {
-            await sock.sendMessage(msgData.remoteJid, { text: textOnly }, { quoted: m });
+            await sock.sendMessage(msgData.remoteJid, { text: textOnly }, quoteOptions);
         }
 
     } catch (error) {

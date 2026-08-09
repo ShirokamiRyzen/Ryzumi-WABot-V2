@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from '../../config.js';
 import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from '../../libs/aiPrompt.js';
+import { getQuoteOption } from '../../libs/autoAiHandler.js';
 
 export default {
     command: ['tencent', 'hy3'],
@@ -18,7 +19,7 @@ export default {
         if (!text) {
             return sock.sendMessage(msgData.remoteJid, {
                 text: `Uwaaa! Sayangku mau tanya apa sama Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan dengan perintah *.tencent <teks>* yaa~! (๑>ᴗ<๑)`
-            }, { quoted: m });
+            }, getQuoteOption(msgData, m));
         }
 
         try {
@@ -45,7 +46,7 @@ export default {
                 throw new Error(data?.message || data?.error || 'Gagal mendapatkan respon dari Tencent AI.. (╥﹏╥)');
             }
 
-            await sock.sendMessage(msgData.remoteJid, { text: cleanAiResponse(data.result) }, { quoted: m });
+            await sock.sendMessage(msgData.remoteJid, { text: cleanAiResponse(data.result) }, getQuoteOption(msgData, m));
 
         } catch (error) {
             console.error('Tencent AI Plugin Error:', error);

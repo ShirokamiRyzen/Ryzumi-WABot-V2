@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from '../../config.js';
 import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from '../../libs/aiPrompt.js';
+import { getQuoteOption } from '../../libs/autoAiHandler.js';
 
 export default {
     command: ['deepseek', 'deepseekai', 'ds'],
@@ -18,7 +19,7 @@ export default {
         if (!text) {
             return sock.sendMessage(msgData.remoteJid, {
                 text: `Uwaaa! Sayangku mau tanya apa sama DeepSeek Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan dengan perintah *.deepseek <teks>* yaa~! (๑>ᴗ<๑)`
-            }, { quoted: m });
+            }, getQuoteOption(msgData, m));
         }
 
         try {
@@ -60,7 +61,7 @@ export default {
                 throw new Error(lastError?.message || data?.message || data?.error || 'Gagal mendapatkan respon dari DeepSeek AI.. (╥﹏╥)');
             }
 
-            await sock.sendMessage(msgData.remoteJid, { text: cleanAiResponse(data.result) }, { quoted: m });
+            await sock.sendMessage(msgData.remoteJid, { text: cleanAiResponse(data.result) }, getQuoteOption(msgData, m));
 
         } catch (error) {
             console.error('DeepSeek AI Plugin Error:', error);

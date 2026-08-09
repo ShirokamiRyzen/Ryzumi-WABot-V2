@@ -23,6 +23,22 @@ export default async function botHandler(sock, m, msgData) {
             const isAutoAiEnabled = msgData.isGroup ? (group?.is_autogpt ?? false) : (user?.is_autogpt || setting?.is_autogpt || false);
             if (!isAutoAiEnabled) return;
 
+            if (msgData.isGroup) {
+                const rawBotId = sock?.user?.id || sock?.user?.jid || '';
+                const botNumber = rawBotId.split(':')[0].split('@')[0];
+
+                const isMentioned = (msgData.mentions || []).some(jid => jid.includes(botNumber)) ||
+                    (msgData.messageContent && msgData.messageContent.includes(`@${botNumber}`));
+
+                const quotedParticipant = msgData.contextInfo?.participant || '';
+                const isQuotedBot = msgData.isQuoted && (
+                    (quotedParticipant && quotedParticipant.includes(botNumber)) ||
+                    msgData.contextInfo?.quotedMessage?.fromMe === true
+                );
+
+                if (!isMentioned && !isQuotedBot) return;
+            }
+
             await handleAutoAi(sock, m, msgData, user, group, setting, plugins);
             return;
         }

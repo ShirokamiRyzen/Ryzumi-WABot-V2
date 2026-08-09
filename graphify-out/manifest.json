@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "middlewares/handler.js": {
-    "mtime": 1786033464.776249,
-    "ast_hash": "9f41ee186648a3b543067312da0a3bcd",
+    "mtime": 1786286071.6600778,
+    "ast_hash": "94927064297bee8fa42465b542da9130",
     "semantic_hash": ""
   },
   "middlewares/validator.js": {
@@ -445,28 +445,28 @@
     "semantic_hash": ""
   },
   "plugins/ai/ai-chatgpt.js": {
-    "mtime": 1786284746.8530672,
-    "ast_hash": "3c99f0608ac4012c3f2918091553de03",
+    "mtime": 1786286078.883678,
+    "ast_hash": "9be338022a3e535af3f0845a79590a96",
     "semantic_hash": ""
   },
   "plugins/ai/ai-tencent.js": {
-    "mtime": 1786284588.9742424,
-    "ast_hash": "cfcb7a5a38e60e0c1f4ec31f4125412c",
+    "mtime": 1786286109.6743062,
+    "ast_hash": "8804add02a5c9e726879835c9f4af05f",
     "semantic_hash": ""
   },
   "plugins/ai/ai-kimi.js": {
-    "mtime": 1786284580.5461688,
-    "ast_hash": "b83a3b0716b030ebf5d608554141deb9",
+    "mtime": 1786286100.4875414,
+    "ast_hash": "264acee36cf708ae4edea359964a8e02",
     "semantic_hash": ""
   },
   "plugins/ai/ai-glm.js": {
-    "mtime": 1786284576.171095,
-    "ast_hash": "c522cbd93a88599f8f297a57f1307c3f",
+    "mtime": 1786286091.1631768,
+    "ast_hash": "090dfe06c2b56444496854b2146fe081",
     "semantic_hash": ""
   },
   "libs/autoAiHandler.js": {
-    "mtime": 1786284843.449369,
-    "ast_hash": "d311f73995012f697418373baaf9ac1f",
+    "mtime": 1786286127.7101855,
+    "ast_hash": "cdf54defa549cf697e9740e2218dfb55",
     "semantic_hash": ""
   },
   "plugins/ai/ai-auto.js": {
@@ -475,8 +475,8 @@
     "semantic_hash": ""
   },
   "plugins/ai/ai-qwen.js": {
-    "mtime": 1786284584.5815272,
-    "ast_hash": "491db09b3086edee3985c33b8d9ebfcb",
+    "mtime": 1786286104.9213166,
+    "ast_hash": "7e8bd82c1cf788831c3e84a0d7e7197a",
     "semantic_hash": ""
   },
   "libs/aiPrompt.js": {
@@ -485,13 +485,13 @@
     "semantic_hash": ""
   },
   "plugins/ai/ai-deepseek.js": {
-    "mtime": 1786284806.810065,
-    "ast_hash": "ff865bfd335f093b9976d48a3db77931",
+    "mtime": 1786286086.874919,
+    "ast_hash": "b7db592d7697867dc9076c8e9ac33f38",
     "semantic_hash": ""
   },
   "plugins/ai/ai-grok.js": {
-    "mtime": 1786284838.1256845,
-    "ast_hash": "f363b68fa8843fc8893768eee172a473",
+    "mtime": 1786286096.0973878,
+    "ast_hash": "10b75dfe27abb8b6e4ee816c3943c665",
     "semantic_hash": ""
   }
 }
