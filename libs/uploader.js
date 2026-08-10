@@ -28,7 +28,7 @@ const ryzumiCDN = async (inp) => {
             });
         }
 
-        const res = await fetch(`${config.API_RYZUMI}/api/uploader/ryzumicdn`, {
+        const res = await fetch(`${config.API_RYZUMI}/api/uploader/ryzumi-r1`, {
             method: 'POST',
             headers: {
                 'accept': 'application/json',
