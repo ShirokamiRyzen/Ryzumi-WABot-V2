@@ -68,10 +68,21 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
             : ['auto', 'hy3', 'auto-debug'];
         let data = null;
 
+        let inputContent = msgData.messageContent || '';
+        if (msgData.isQuoted && msgData.quotedContent && !inputContent.includes(msgData.quotedContent)) {
+            inputContent = inputContent
+                ? `[Pesan yang di-reply]: "${msgData.quotedContent}"\n\n[Pertanyaan/Pesan]: ${inputContent}`
+                : msgData.quotedContent;
+        }
+
+        if (!inputContent && imageUrl) {
+            inputContent = 'Jelaskan gambar ini';
+        }
+
         for (const modelName of modelsToTry) {
             try {
                 const payload = {
-                    text: msgData.messageContent || (imageUrl ? 'Jelaskan gambar ini' : ''),
+                    text: inputContent,
                     model: modelName,
                     prompt: prompt,
                     session: session

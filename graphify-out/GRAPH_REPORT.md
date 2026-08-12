@@ -1,7 +1,7 @@
-# Graph Report - Ryzumi-WABot V2  (2026-08-09)
+# Graph Report - Ryzumi-WABot V2  (2026-08-12)
 
 ## Corpus Check
-- 98 files · ~32,629 words
+- 98 files · ~32,758 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a17cd443`
+- Built from commit: `00bb544a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -58,7 +58,7 @@
 - group-reset-invite.js
 - group-unlock.js
 - 3. Tata Penulisan & Maintenance Sistem
-- baileys
+- chalk
 - downloader-mega.js
 - cheerio
 - dotenv
@@ -118,7 +118,7 @@ Nodes (10): author, description, license, main, name, scripts, dev, start (+2 mo
 
 ### Community 7 - "dependencies"
 Cohesion: 0.29
-Nodes (7): axios, chalk, dependencies, axios, chalk, qrcode-terminal, qrcode-terminal
+Nodes (7): axios, baileys, dependencies, axios, baileys, qrcode-terminal, qrcode-terminal
 
 ### Community 8 - "sticker-to-media.js"
 Cohesion: 0.80
@@ -146,7 +146,7 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `config` connect `config.js` to `messageAdapter.js`, `index.js`, `ryzumiCDN`, `autoAiHandler.js`, `handleAutoAi`, `owner-eval.js`, `downloader-mega.js`?**
   _High betweenness centrality (0.098) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `fluent-ffmpeg`, `file-type`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `baileys`, `cheerio`, `dotenv`?**
+- **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `fluent-ffmpeg`, `file-type`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `chalk`, `cheerio`, `dotenv`?**
   _High betweenness centrality (0.036) - this node is a cross-community bridge._
 - **Why does `ryzumiCDN()` connect `ryzumiCDN` to `autoAiHandler.js`, `handleAutoAi`?**
   _High betweenness centrality (0.013) - this node is a cross-community bridge._

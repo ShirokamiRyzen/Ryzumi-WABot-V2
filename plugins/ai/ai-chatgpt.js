@@ -13,14 +13,10 @@ export default {
     async execute(sock, m, msgData) {
         let text = msgData.args.join(' ');
 
-        if (!text && msgData.isQuoted && msgData.quotedContent) {
-            text = msgData.quotedContent;
-        }
-
-        if (!text) {
-            return sock.sendMessage(msgData.remoteJid, {
-                text: `Uwaaa! Sayangku mau tanya apa sama Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan atau kirim/balas gambar dengan perintah *.chatgpt <teks>* yaa~! (๑>ᴗ<๑)`
-            }, getQuoteOption(msgData, m));
+        if (msgData.isQuoted && msgData.quotedContent) {
+            text = text
+                ? `[Pesan yang di-reply]: "${msgData.quotedContent}"\n\n[Pertanyaan/Pesan]: ${text}`
+                : msgData.quotedContent;
         }
 
         try {
@@ -34,6 +30,16 @@ export default {
                     const cdnRes = await ryzumiCDN(buffer);
                     imageUrl = cdnRes?.url || cdnRes?.result?.url || (typeof cdnRes?.result === 'string' ? cdnRes.result : null);
                 }
+            }
+
+            if (!text && imageUrl) {
+                text = 'Jelaskan gambar ini';
+            }
+
+            if (!text) {
+                return sock.sendMessage(msgData.remoteJid, {
+                    text: `Uwaaa! Sayangku mau tanya apa sama Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan atau kirim/balas gambar dengan perintah *.chatgpt <teks>* yaa~! (๑>ᴗ<๑)`
+                }, getQuoteOption(msgData, m));
             }
 
             let session;

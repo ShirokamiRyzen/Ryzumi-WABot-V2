@@ -12,8 +12,10 @@ export default {
     async execute(sock, m, msgData) {
         let text = msgData.args.join(' ');
 
-        if (!text && msgData.isQuoted && msgData.quotedContent) {
-            text = msgData.quotedContent;
+        if (msgData.isQuoted && msgData.quotedContent) {
+            text = text
+                ? `[Pesan yang di-reply]: "${msgData.quotedContent}"\n\n[Pertanyaan/Pesan]: ${text}`
+                : msgData.quotedContent;
         }
 
         if (!text) {

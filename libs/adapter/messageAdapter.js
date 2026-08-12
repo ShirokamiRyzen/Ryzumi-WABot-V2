@@ -113,13 +113,22 @@ export const extractMessageData = (m, sock) => {
         },
 
         downloadMedia: async () => {
-            const q = isQuoted ? quotedMsg : msg;
-            const type = isQuoted ? quotedType : messageType;
-            if (!/image|video|audio|sticker|document/i.test(type)) return null;
+            let targetMsg = null;
+            let targetType = '';
 
-            const mediaType = type.replace('Message', '');
+            if (/image|video|audio|sticker|document/i.test(messageType)) {
+                targetMsg = msg;
+                targetType = messageType;
+            } else if (isQuoted && /image|video|audio|sticker|document/i.test(quotedType)) {
+                targetMsg = quotedMsg;
+                targetType = quotedType;
+            }
+
+            if (!targetMsg || !targetType) return null;
+
+            const mediaType = targetType.replace('Message', '');
             const stream = await import('baileys').then(mod => mod.downloadContentFromMessage(
-                q[type] || q,
+                targetMsg[targetType] || targetMsg,
                 mediaType === 'sticker' ? 'image' : mediaType
             ));
 
