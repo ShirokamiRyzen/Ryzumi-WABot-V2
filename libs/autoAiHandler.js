@@ -64,8 +64,56 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
         const prompt = getAutoAiPrompt(cmdList);
 
         const modelsToTry = imageUrl
-            ? ['gpt-5.6-luna', 'gpt-5.6']
-            : ['auto', 'hy3', 'auto-debug'];
+            ? [
+                // Available & enabled vision models
+                'gpt-5.6-luna',
+                'gpt-5.6-terra',
+                'gpt-5.6',
+                // Fallback vision models
+                'gpt-5.6-luna-b',
+                'gpt-5.6-terra-b',
+                'gpt-5.6-sol-b',
+                'gpt-5.6-sol',
+                'gpt-5.6-sol-xhigh',
+                'gpt-5.5',
+                'claude-sonnet-5',
+                'claude-sonnet-5-b',
+                'claude-opus-5',
+                'claude-opus-5-b',
+                'claude-opus-4.8',
+                'auto-debug'
+            ]
+            : [
+                // Available & enabled models (cheapest / fast first)
+                'auto',
+                'deepseek-v4-flash',
+                'kimi-k2.7-code-highspeed',
+                'hy3',
+                'kimi-k2.7-code',
+                'kimi-k3',
+                'deepseek-v4-mod',
+                'deepseek-v4-pro',
+                'deepseek-v4-pro-0813',
+                'glm-5.2',
+                'glm-5.3',
+                'gpt-5.6-luna',
+                'gpt-5.6-terra',
+                'gpt-5.6',
+                'gemini',
+                'chatgpt',
+                // Fallback models (non-enabled / Grade B / Heavy)
+                'deepseek-v4-pro-b',
+                'claude-sonnet-4.6-b',
+                'claude-sonnet-4.5',
+                'claude-sonnet-4.5-thinking',
+                'claude-opus-4.8-b',
+                'grok-4.3-b',
+                'qwen3.7-max',
+                'qwen3.8-max',
+                'mimo-v2.5-pro',
+                'mistral-large-3-675b-instruct',
+                'auto-debug'
+            ];
         let data = null;
 
         let inputContent = msgData.messageContent || '';

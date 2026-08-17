@@ -35,17 +35,36 @@ export default {
             }
             const prompt = RYZUMI_AI_SYSTEM_PROMPT;
 
-            const payload = {
-                text: text,
-                model: 'qwen3.8-max-b',
-                prompt: prompt,
-                session: session
-            };
+            const modelsToTry = [
+                'qwen3.7-max',
+                'qwen3.8-max',
+                'qwen3.8-max-b'
+            ];
+            let data = null;
+            let lastError = null;
 
-            const { data } = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload);
+            for (const modelName of modelsToTry) {
+                try {
+                    const payload = {
+                        text: text,
+                        model: modelName,
+                        prompt: prompt,
+                        session: session
+                    };
 
-            if (!data || (!data.success && !data.status) || !data.result) {
-                throw new Error(data?.message || data?.error || 'Gagal mendapatkan respon dari Qwen AI.. (╥﹏╥)');
+                    const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload);
+                    if (res?.data && (res.data.success || res.data.status) && res.data.result) {
+                        data = res.data;
+                        break;
+                    }
+                } catch (err) {
+                    lastError = err;
+                    console.warn(`Qwen model '${modelName}' failed, attempting fallback...`);
+                }
+            }
+
+            if (!data || !data.result) {
+                throw new Error(lastError?.message || data?.message || data?.error || 'Gagal mendapatkan respon dari Qwen AI.. (╥﹏╥)');
             }
 
             await sock.sendMessage(msgData.remoteJid, { text: cleanAiResponse(data.result) }, getQuoteOption(msgData, m));

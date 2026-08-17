@@ -4,9 +4,9 @@ import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from '../../libs/aiPrompt.js
 import { getQuoteOption } from '../../libs/autoAiHandler.js';
 
 export default {
-    command: ['tencent', 'hy3'],
+    command: ['gemini', 'geminiai', 'googleai'],
     category: 'ai',
-    description: 'Bertanya atau berinteraksi dengan Tencent AI (Ryzumi Starlette)',
+    description: 'Bertanya atau berinteraksi dengan Google Gemini AI (Ryzumi Starlette)',
     isRegistered: false,
     isLimit: false,
     async execute(sock, m, msgData) {
@@ -20,7 +20,7 @@ export default {
 
         if (!text) {
             return sock.sendMessage(msgData.remoteJid, {
-                text: `Uwaaa! Sayangku mau tanya apa sama Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan dengan perintah *.tencent <teks>* yaa~! (๑>ᴗ<๑)`
+                text: `Uwaaa! Sayangku mau tanya apa sama Gemini Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan dengan perintah *.gemini <teks>* yaa~! (๑>ᴗ<๑)`
             }, getQuoteOption(msgData, m));
         }
 
@@ -35,7 +35,7 @@ export default {
             }
             const prompt = RYZUMI_AI_SYSTEM_PROMPT;
 
-            const modelsToTry = ['hy3'];
+            const modelsToTry = ['gemini'];
             let data = null;
             let lastError = null;
 
@@ -55,18 +55,18 @@ export default {
                     }
                 } catch (err) {
                     lastError = err;
-                    console.warn(`Tencent model '${modelName}' failed, attempting fallback...`);
+                    console.warn(`Gemini model '${modelName}' failed, attempting fallback...`);
                 }
             }
 
             if (!data || !data.result) {
-                throw new Error(lastError?.message || data?.message || data?.error || 'Gagal mendapatkan respon dari Tencent AI.. (╥﹏╥)');
+                throw new Error(lastError?.message || data?.message || data?.error || 'Gagal mendapatkan respon dari Gemini AI.. (╥﹏╥)');
             }
 
             await sock.sendMessage(msgData.remoteJid, { text: cleanAiResponse(data.result) }, getQuoteOption(msgData, m));
 
         } catch (error) {
-            console.error('Tencent AI Plugin Error:', error);
+            console.error('Gemini AI Plugin Error:', error);
             await sock.sendMessage(msgData.remoteJid, {
                 text: `Uwaaa gawat! Ryzumi lagi pusing atau ada masalah saat memproses pesan kakak.. (╥﹏╥)\n\n*Error:* ${error.message || 'Internal Server Error'}`
             }, { quoted: m });

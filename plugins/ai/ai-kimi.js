@@ -35,17 +35,36 @@ export default {
             }
             const prompt = RYZUMI_AI_SYSTEM_PROMPT;
 
-            const payload = {
-                text: text,
-                model: 'kimi-k2.7-code',
-                prompt: prompt,
-                session: session
-            };
+            const modelsToTry = [
+                'kimi-k2.7-code-highspeed',
+                'kimi-k2.7-code',
+                'kimi-k3'
+            ];
+            let data = null;
+            let lastError = null;
 
-            const { data } = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload);
+            for (const modelName of modelsToTry) {
+                try {
+                    const payload = {
+                        text: text,
+                        model: modelName,
+                        prompt: prompt,
+                        session: session
+                    };
 
-            if (!data || (!data.success && !data.status) || !data.result) {
-                throw new Error(data?.message || data?.error || 'Gagal mendapatkan respon dari Kimi AI.. (╥﹏╥)');
+                    const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload);
+                    if (res?.data && (res.data.success || res.data.status) && res.data.result) {
+                        data = res.data;
+                        break;
+                    }
+                } catch (err) {
+                    lastError = err;
+                    console.warn(`Kimi model '${modelName}' failed, attempting fallback...`);
+                }
+            }
+
+            if (!data || !data.result) {
+                throw new Error(lastError?.message || data?.message || data?.error || 'Gagal mendapatkan respon dari Kimi AI.. (╥﹏╥)');
             }
 
             await sock.sendMessage(msgData.remoteJid, { text: cleanAiResponse(data.result) }, getQuoteOption(msgData, m));

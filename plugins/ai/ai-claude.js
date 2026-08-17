@@ -5,9 +5,9 @@ import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from '../../libs/aiPrompt.js
 import { getQuoteOption } from '../../libs/autoAiHandler.js';
 
 export default {
-    command: ['chatgpt', 'gpt'],
+    command: ['claude', 'anthropic', 'sonnet', 'opus'],
     category: 'ai',
-    description: 'Bertanya atau berinteraksi dengan AI ChatGPT (Ryzumi Starlette)',
+    description: 'Bertanya atau berinteraksi dengan Claude AI (Ryzumi Starlette)',
     isRegistered: false,
     isLimit: false,
     async execute(sock, m, msgData) {
@@ -38,7 +38,7 @@ export default {
 
             if (!text) {
                 return sock.sendMessage(msgData.remoteJid, {
-                    text: `Uwaaa! Sayangku mau tanya apa sama Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan atau kirim/balas gambar dengan perintah *.chatgpt <teks>* yaa~! (๑>ᴗ<๑)`
+                    text: `Uwaaa! Sayangku mau tanya apa sama Claude Ryzumi? (˶˃ ᵕ ˂˶)\n\nSilakan masukkan pertanyaan atau kirim/balas gambar dengan perintah *.claude <teks>* yaa~! (๑>ᴗ<๑)`
                 }, getQuoteOption(msgData, m));
             }
 
@@ -51,29 +51,25 @@ export default {
                 session = `ryzumi-wabot-${rawNumber || 'user'}`;
             }
             const prompt = RYZUMI_AI_SYSTEM_PROMPT;
+
             const modelsToTry = imageUrl
                 ? [
-                    'gpt-5.6-luna',
-                    'gpt-5.6-terra',
-                    'gpt-5.6',
-                    'gpt-5.6-luna-b',
-                    'gpt-5.6-terra-b',
-                    'gpt-5.6-sol-b',
-                    'gpt-5.6-sol',
-                    'gpt-5.6-sol-xhigh',
-                    'gpt-5.5'
+                    'claude-sonnet-5',
+                    'claude-sonnet-5-b',
+                    'claude-opus-5',
+                    'claude-opus-5-b',
+                    'claude-opus-4.8'
                 ]
                 : [
-                    'chatgpt',
-                    'gpt-5.6-luna',
-                    'gpt-5.6-terra',
-                    'gpt-5.6',
-                    'gpt-5.6-luna-b',
-                    'gpt-5.6-terra-b',
-                    'gpt-5.6-sol-b',
-                    'gpt-5.6-sol',
-                    'gpt-5.6-sol-xhigh',
-                    'gpt-5.5'
+                    'claude-sonnet-4.6-b',
+                    'claude-sonnet-4.5',
+                    'claude-sonnet-4.5-thinking',
+                    'claude-sonnet-5',
+                    'claude-sonnet-5-b',
+                    'claude-opus-4.8-b',
+                    'claude-opus-4.8',
+                    'claude-opus-5',
+                    'claude-opus-5-b'
                 ];
             let data = null;
             let lastError = null;
@@ -99,18 +95,18 @@ export default {
                     }
                 } catch (err) {
                     lastError = err;
-                    console.warn(`ChatGPT model '${modelName}' failed, attempting fallback...`);
+                    console.warn(`Claude model '${modelName}' failed, attempting fallback...`);
                 }
             }
 
             if (!data || !data.result) {
-                throw new Error(lastError?.message || data?.message || data?.error || 'Gagal mendapatkan respon dari AI.. (╥﹏╥)');
+                throw new Error(lastError?.message || data?.message || data?.error || 'Gagal mendapatkan respon dari Claude AI.. (╥﹏╥)');
             }
 
             await sock.sendMessage(msgData.remoteJid, { text: cleanAiResponse(data.result) }, getQuoteOption(msgData, m));
 
         } catch (error) {
-            console.error('ChatGPT AI Plugin Error:', error);
+            console.error('Claude AI Plugin Error:', error);
             await sock.sendMessage(msgData.remoteJid, {
                 text: `Uwaaa gawat! Ryzumi lagi pusing atau ada masalah saat memproses pesan kakak.. (╥﹏╥)\n\n*Error:* ${error.message || 'Internal Server Error'}`
             }, { quoted: m });

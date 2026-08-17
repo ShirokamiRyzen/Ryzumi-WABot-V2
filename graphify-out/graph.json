@@ -219,8 +219,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_aiprompt",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "aiprompt.js"
     },
     {
@@ -230,8 +230,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "libs_aiprompt_getautoaiprompt",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
       "norm_label": "getautoaiprompt()"
     },
     {
@@ -241,8 +241,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "libs_aiprompt_cleanairesponse",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "cleanairesponse()"
     },
     {
@@ -252,8 +252,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_autoaihandler",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
       "norm_label": "autoaihandler.js"
     },
     {
@@ -263,8 +263,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "libs_autoaihandler_forbidden_commands",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
       "norm_label": "forbidden_commands"
     },
     {
@@ -274,8 +274,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "libs_autoaihandler_getquoteoption",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "getquoteoption()"
     },
     {
@@ -285,8 +285,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "libs_autoaihandler_handleautoai",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
       "norm_label": "handleautoai()"
     },
     {
@@ -296,8 +296,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_backup",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 13,
+      "community_name": "backup.js",
       "norm_label": "backup.js"
     },
     {
@@ -307,8 +307,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "libs_backup_uploadtonextcloud",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 13,
+      "community_name": "backup.js",
       "norm_label": "uploadtonextcloud()"
     },
     {
@@ -318,8 +318,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "libs_backup_backupdatabase",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 13,
+      "community_name": "backup.js",
       "norm_label": "backupdatabase()"
     },
     {
@@ -329,8 +329,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "libs_backup_pruneoldbackups",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 13,
+      "community_name": "backup.js",
       "norm_label": "pruneoldbackups()"
     },
     {
@@ -395,8 +395,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_cronjob",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 13,
+      "community_name": "backup.js",
       "norm_label": "cronjob.js"
     },
     {
@@ -406,8 +406,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "libs_cronjob_startcronjobs",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 13,
+      "community_name": "backup.js",
       "norm_label": "startcronjobs()"
     },
     {
@@ -417,8 +417,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_groupcache",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "groupcache.js"
     },
     {
@@ -428,8 +428,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_groupcache_groupcache",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "groupcache"
     },
     {
@@ -450,8 +450,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "libs_groupcache_getgroupmetadata",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "getgroupmetadata()"
     },
     {
@@ -461,8 +461,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "libs_groupcache_cleargroupcache",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "cleargroupcache()"
     },
     {
@@ -472,8 +472,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_hot_reload",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "hot-reload.js"
     },
     {
@@ -483,8 +483,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "libs_hot_reload_plugins",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "plugins"
     },
     {
@@ -494,8 +494,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "libs_hot_reload_loadplugins",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "loadplugins()"
     },
     {
@@ -505,8 +505,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "libs_hot_reload_watchplugins",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "watchplugins()"
     },
     {
@@ -516,8 +516,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_lid_resolver",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "lid-resolver.js"
     },
     {
@@ -527,8 +527,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "libs_lid_resolver_lidcache",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "lidcache"
     },
     {
@@ -538,8 +538,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "libs_lid_resolver_resolvelidtojid",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "resolvelidtojid()"
     },
     {
@@ -659,8 +659,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_auth",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "auth.js"
     },
     {
@@ -670,8 +670,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "middlewares_auth_processauth",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "processauth()"
     },
     {
@@ -681,8 +681,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_handler",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "handler.js"
     },
     {
@@ -692,8 +692,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "middlewares_handler_plugindir",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "plugindir"
     },
     {
@@ -703,8 +703,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "middlewares_handler_bothandler",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "bothandler()"
     },
     {
@@ -714,8 +714,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_validator",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "validator.js"
     },
     {
@@ -725,8 +725,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "middlewares_validator_validateplugin",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "validateplugin()"
     },
     {
@@ -890,8 +890,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_baileys",
-      "community": 13,
-      "community_name": "baileys",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "baileys"
     },
     {
@@ -901,8 +901,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "baileys",
-      "community": 13,
-      "community_name": "baileys",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "baileys"
     },
     {
@@ -978,8 +978,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "package_dependencies_file_type",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 16,
+      "community_name": "file-type",
       "norm_label": "file-type"
     },
     {
@@ -989,8 +989,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "file_type",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 16,
+      "community_name": "file-type",
       "norm_label": "file-type"
     },
     {
@@ -1462,8 +1462,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_auto",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
       "norm_label": "ai-auto.js"
     },
     {
@@ -1473,8 +1473,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_ai_ai_auto_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 14,
+      "community_name": "autoAiHandler.js",
       "norm_label": "execute()"
     },
     {
@@ -1484,8 +1484,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_chatgpt",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "ai-chatgpt.js"
     },
     {
@@ -1495,8 +1495,30 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "plugins_ai_ai_chatgpt_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
+      "norm_label": "execute()"
+    },
+    {
+      "label": "ai-claude.js",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_claude",
+      "community": 1,
+      "community_name": "getQuoteOption",
+      "norm_label": "ai-claude.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_claude_execute",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "execute()"
     },
     {
@@ -1506,8 +1528,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_clear",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "ai-clear.js"
     },
     {
@@ -1517,8 +1539,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_ai_ai_clear_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "execute()"
     },
     {
@@ -1528,8 +1550,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_deepseek",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "ai-deepseek.js"
     },
     {
@@ -1539,8 +1561,30 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_deepseek_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
+      "norm_label": "execute()"
+    },
+    {
+      "label": "ai-gemini.js",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-gemini.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_gemini",
+      "community": 1,
+      "community_name": "getQuoteOption",
+      "norm_label": "ai-gemini.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-gemini.js",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_gemini_execute",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "execute()"
     },
     {
@@ -1550,8 +1594,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_glm",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "ai-glm.js"
     },
     {
@@ -1561,8 +1605,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_glm_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "execute()"
     },
     {
@@ -1572,8 +1616,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_grok",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "ai-grok.js"
     },
     {
@@ -1583,8 +1627,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_grok_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "execute()"
     },
     {
@@ -1594,8 +1638,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "ai-kimi.js"
     },
     {
@@ -1605,8 +1649,52 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
+      "norm_label": "execute()"
+    },
+    {
+      "label": "ai-mimo.js",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-mimo.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_mimo",
+      "community": 1,
+      "community_name": "getQuoteOption",
+      "norm_label": "ai-mimo.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-mimo.js",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_mimo_execute",
+      "community": 1,
+      "community_name": "getQuoteOption",
+      "norm_label": "execute()"
+    },
+    {
+      "label": "ai-mistral.js",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-mistral.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_mistral",
+      "community": 1,
+      "community_name": "getQuoteOption",
+      "norm_label": "ai-mistral.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/ai/ai-mistral.js",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "plugins_ai_ai_mistral_execute",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "execute()"
     },
     {
@@ -1616,8 +1704,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_qwen",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "ai-qwen.js"
     },
     {
@@ -1627,8 +1715,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_qwen_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "execute()"
     },
     {
@@ -1638,8 +1726,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_tencent",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "ai-tencent.js"
     },
     {
@@ -1649,8 +1737,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_ai_ai_tencent_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 1,
+      "community_name": "getQuoteOption",
       "norm_label": "execute()"
     },
     {
@@ -2287,8 +2375,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_group_kick_member",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "kick-member.js"
     },
     {
@@ -2298,8 +2386,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_group_kick_member_execute",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "execute()"
     },
     {
@@ -2507,8 +2595,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 13,
+      "community_name": "backup.js",
       "norm_label": "owner-backup-db.js"
     },
     {
@@ -2518,8 +2606,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db_execute",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 13,
+      "community_name": "backup.js",
       "norm_label": "execute()"
     },
     {
@@ -2529,8 +2617,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "owner-debug-info.js"
     },
     {
@@ -2540,8 +2628,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info_execute",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "execute()"
     },
     {
@@ -3618,6 +3706,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-clear.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -3635,6 +3735,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_deepseek",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-gemini.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_gemini",
       "target": "config",
       "confidence_score": 1.0
     },
@@ -3671,6 +3783,30 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_kimi",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mimo.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mimo",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mistral.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mistral",
       "target": "config",
       "confidence_score": 1.0
     },
@@ -4194,6 +4330,18 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-clear.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -4211,6 +4359,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_deepseek",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-gemini.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_gemini",
       "target": "config_config",
       "confidence_score": 1.0
     },
@@ -4247,6 +4407,30 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_kimi",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mimo.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mimo",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mistral.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mistral",
       "target": "config_config",
       "confidence_score": 1.0
     },
@@ -5731,11 +5915,35 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude",
+      "target": "libs_aiprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-deepseek.js",
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_deepseek",
+      "target": "libs_aiprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-gemini.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_gemini",
       "target": "libs_aiprompt",
       "confidence_score": 1.0
     },
@@ -5772,6 +5980,30 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_kimi",
+      "target": "libs_aiprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mimo.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mimo",
+      "target": "libs_aiprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mistral.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mistral",
       "target": "libs_aiprompt",
       "confidence_score": 1.0
     },
@@ -5841,7 +6073,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L117",
+      "source_location": "L165",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -5865,10 +6097,34 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/ai/ai-chatgpt.js",
-      "source_location": "L86",
+      "source_location": "L110",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_chatgpt_execute",
+      "target": "libs_aiprompt_cleanairesponse"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude",
+      "target": "libs_aiprompt_cleanairesponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L106",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude_execute",
       "target": "libs_aiprompt_cleanairesponse"
     },
     {
@@ -5889,10 +6145,34 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/ai/ai-deepseek.js",
-      "source_location": "L66",
+      "source_location": "L72",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_deepseek_execute",
+      "target": "libs_aiprompt_cleanairesponse"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-gemini.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_gemini",
+      "target": "libs_aiprompt_cleanairesponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-gemini.js",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_gemini_execute",
       "target": "libs_aiprompt_cleanairesponse"
     },
     {
@@ -5913,7 +6193,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/ai/ai-glm.js",
-      "source_location": "L51",
+      "source_location": "L66",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_glm_execute",
@@ -5937,7 +6217,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/ai/ai-grok.js",
-      "source_location": "L51",
+      "source_location": "L66",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_grok_execute",
@@ -5961,10 +6241,58 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/ai/ai-kimi.js",
-      "source_location": "L51",
+      "source_location": "L70",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_kimi_execute",
+      "target": "libs_aiprompt_cleanairesponse"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mimo.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mimo",
+      "target": "libs_aiprompt_cleanairesponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-mimo.js",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mimo_execute",
+      "target": "libs_aiprompt_cleanairesponse"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mistral.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mistral",
+      "target": "libs_aiprompt_cleanairesponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-mistral.js",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mistral_execute",
       "target": "libs_aiprompt_cleanairesponse"
     },
     {
@@ -5985,7 +6313,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/ai/ai-qwen.js",
-      "source_location": "L51",
+      "source_location": "L70",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_qwen_execute",
@@ -6009,7 +6337,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/ai/ai-tencent.js",
-      "source_location": "L51",
+      "source_location": "L66",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_tencent_execute",
@@ -6136,6 +6464,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude",
+      "target": "libs_autoaihandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-clear.js",
       "source_location": "L3",
       "weight": 1.0,
@@ -6153,6 +6493,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_deepseek",
+      "target": "libs_autoaihandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-gemini.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_gemini",
       "target": "libs_autoaihandler",
       "confidence_score": 1.0
     },
@@ -6196,6 +6548,30 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mimo.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mimo",
+      "target": "libs_autoaihandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mistral.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mistral",
+      "target": "libs_autoaihandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-qwen.js",
       "source_location": "L4",
       "weight": 1.0,
@@ -6222,7 +6598,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L126",
+      "source_location": "L174",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -6233,7 +6609,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L119",
+      "source_location": "L167",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -6262,6 +6638,30 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_chatgpt_execute",
+      "target": "libs_autoaihandler_getquoteoption"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude",
+      "target": "libs_autoaihandler_getquoteoption",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L42",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude_execute",
       "target": "libs_autoaihandler_getquoteoption"
     },
     {
@@ -6310,6 +6710,30 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_deepseek_execute",
+      "target": "libs_autoaihandler_getquoteoption"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-gemini.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_gemini",
+      "target": "libs_autoaihandler_getquoteoption",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-gemini.js",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_gemini_execute",
       "target": "libs_autoaihandler_getquoteoption"
     },
     {
@@ -6388,6 +6812,54 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mimo.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mimo",
+      "target": "libs_autoaihandler_getquoteoption",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-mimo.js",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mimo_execute",
+      "target": "libs_autoaihandler_getquoteoption"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mistral.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mistral",
+      "target": "libs_autoaihandler_getquoteoption",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-mistral.js",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mistral_execute",
+      "target": "libs_autoaihandler_getquoteoption"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-qwen.js",
       "source_location": "L4",
       "weight": 1.0,
@@ -6450,7 +6922,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L160",
+      "source_location": "L208",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -7424,6 +7896,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude",
+      "target": "libs_uploader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/maker/maker-fake-ig.js",
       "source_location": "L3",
       "weight": 1.0,
@@ -7490,6 +7974,30 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_chatgpt_execute",
+      "target": "libs_uploader_ryzumicdn"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude",
+      "target": "libs_uploader_ryzumicdn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude_execute",
       "target": "libs_uploader_ryzumicdn"
     },
     {
@@ -8529,6 +9037,17 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-claude.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_claude",
+      "target": "plugins_ai_ai_claude_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-clear.js",
       "source_location": "L11",
       "weight": 1.0,
@@ -8546,6 +9065,17 @@
       "_origin": "ast",
       "source": "plugins_ai_ai_deepseek",
       "target": "plugins_ai_ai_deepseek_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-gemini.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_gemini",
+      "target": "plugins_ai_ai_gemini_execute",
       "confidence_score": 1.0
     },
     {
@@ -8579,6 +9109,28 @@
       "_origin": "ast",
       "source": "plugins_ai_ai_kimi",
       "target": "plugins_ai_ai_kimi_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mimo.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mimo",
+      "target": "plugins_ai_ai_mimo_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-mistral.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_mistral",
+      "target": "plugins_ai_ai_mistral_execute",
       "confidence_score": 1.0
     },
     {
@@ -9741,5 +10293,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "19503326aa645e7bc2db405b147b4047ab131a01"
+  "built_at_commit": "2843b8077542ef1eb2485402424d108f1aae2cb1"
 }

@@ -35,7 +35,13 @@ export default {
             }
             const prompt = RYZUMI_AI_SYSTEM_PROMPT;
 
-            const modelsToTry = ['deepseek-v4-pro', 'deepseek-v4-mod', 'deepseek-v4-pro-b'];
+            const modelsToTry = [
+                'deepseek-v4-flash',
+                'deepseek-v4-mod',
+                'deepseek-v4-pro',
+                'deepseek-v4-pro-0813',
+                'deepseek-v4-pro-b'
+            ];
             let data = null;
             let lastError = null;
 

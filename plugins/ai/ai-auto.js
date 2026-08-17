@@ -1,5 +1,3 @@
-import axios from 'axios';
-import config from '../../config.js';
 import { handleAutoAi } from '../../libs/autoAiHandler.js';
 
 export default {

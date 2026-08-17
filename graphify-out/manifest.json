@@ -445,28 +445,28 @@
     "semantic_hash": ""
   },
   "plugins/ai/ai-chatgpt.js": {
-    "mtime": 1786549711.5491374,
-    "ast_hash": "a96f94f4900e967798b2da3347b4d63d",
+    "mtime": 1786952902.4296894,
+    "ast_hash": "5f6efb2932563b8508608544de775171",
     "semantic_hash": ""
   },
   "plugins/ai/ai-tencent.js": {
-    "mtime": 1786549634.1677341,
-    "ast_hash": "20b8a9a84b933b443e8321136f5db922",
+    "mtime": 1786952939.6341133,
+    "ast_hash": "c849c12670132f3dc65f687e218b5f6b",
     "semantic_hash": ""
   },
   "plugins/ai/ai-kimi.js": {
-    "mtime": 1786549627.1219902,
-    "ast_hash": "3a0ddbf85ef60f780a273c8544944ca6",
+    "mtime": 1786952921.7318695,
+    "ast_hash": "d62bf5a73ceeda689c307a463ca21722",
     "semantic_hash": ""
   },
   "plugins/ai/ai-glm.js": {
-    "mtime": 1786549619.576783,
-    "ast_hash": "db8ea704bced76b081fe4fdd8a904830",
+    "mtime": 1786952915.234035,
+    "ast_hash": "8caf44a888c4fba2154bc16d54e48868",
     "semantic_hash": ""
   },
   "libs/autoAiHandler.js": {
-    "mtime": 1786549704.5340743,
-    "ast_hash": "2fb2fb3c4c4cc40051fffe1594fef7fb",
+    "mtime": 1786952896.4619386,
+    "ast_hash": "02dc360f5851b063bac558067840cbad",
     "semantic_hash": ""
   },
   "plugins/ai/ai-auto.js": {
@@ -475,8 +475,8 @@
     "semantic_hash": ""
   },
   "plugins/ai/ai-qwen.js": {
-    "mtime": 1786549630.6585574,
-    "ast_hash": "452b02e0a548c7f463e459091fc2f694",
+    "mtime": 1786952927.9357395,
+    "ast_hash": "6446091f8518f9163045323e9f66430e",
     "semantic_hash": ""
   },
   "libs/aiPrompt.js": {
@@ -485,18 +485,38 @@
     "semantic_hash": ""
   },
   "plugins/ai/ai-deepseek.js": {
-    "mtime": 1786549615.666614,
-    "ast_hash": "362b544e3190d5700944671c2af3b028",
+    "mtime": 1786952908.041353,
+    "ast_hash": "bf47431388e76cb05a9bf49a2bfda478",
     "semantic_hash": ""
   },
   "plugins/ai/ai-grok.js": {
-    "mtime": 1786549623.34003,
-    "ast_hash": "614d42166fb8bf810ee02f9c3057eb4a",
+    "mtime": 1786952934.139124,
+    "ast_hash": "a47ab70ad5ee5d98ba55898dc9f90d24",
     "semantic_hash": ""
   },
   "plugins/ai/ai-clear.js": {
     "mtime": 1786630307.170513,
     "ast_hash": "6a732040621e56f26b1ca4752b68aad2",
+    "semantic_hash": ""
+  },
+  "plugins/ai/ai-claude.js": {
+    "mtime": 1786952945.0841253,
+    "ast_hash": "9e9bda54802ece5ddea43aaee2814fc3",
+    "semantic_hash": ""
+  },
+  "plugins/ai/ai-gemini.js": {
+    "mtime": 1786952949.283144,
+    "ast_hash": "59c9731da6822049b61e447c1a125dbb",
+    "semantic_hash": ""
+  },
+  "plugins/ai/ai-mimo.js": {
+    "mtime": 1786952960.716158,
+    "ast_hash": "27f2e2fb599678e54c043eeb2b23261f",
+    "semantic_hash": ""
+  },
+  "plugins/ai/ai-mistral.js": {
+    "mtime": 1786952955.0928993,
+    "ast_hash": "607cdc67d94945fe237f1a4a5a8531da",
     "semantic_hash": ""
   }
 }
