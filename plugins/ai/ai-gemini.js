@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from '../../config.js';
 import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from '../../libs/aiPrompt.js';
 import { getQuoteOption } from '../../libs/autoAiHandler.js';
+import { getTextModels } from '../../libs/aiModels.js';
 
 export default {
     command: ['gemini', 'geminiai', 'googleai'],
@@ -10,6 +11,10 @@ export default {
     isRegistered: false,
     isLimit: false,
     async execute(sock, m, msgData) {
+        if (sock?.sendPresenceUpdate && msgData?.remoteJid) {
+            await sock.sendPresenceUpdate('composing', msgData.remoteJid).catch(() => { });
+        }
+
         let text = msgData.args.join(' ');
 
         if (msgData.isQuoted && msgData.quotedContent) {
@@ -35,7 +40,7 @@ export default {
             }
             const prompt = RYZUMI_AI_SYSTEM_PROMPT;
 
-            const modelsToTry = ['gemini'];
+            const modelsToTry = await getTextModels({ brandFilter: 'gemini' });
             let data = null;
             let lastError = null;
 

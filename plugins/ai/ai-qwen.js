@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from '../../config.js';
 import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from '../../libs/aiPrompt.js';
 import { getQuoteOption } from '../../libs/autoAiHandler.js';
+import { getTextModels } from '../../libs/aiModels.js';
 
 export default {
     command: ['qwen', 'qwenai'],
@@ -10,6 +11,10 @@ export default {
     isRegistered: false,
     isLimit: false,
     async execute(sock, m, msgData) {
+        if (sock?.sendPresenceUpdate && msgData?.remoteJid) {
+            await sock.sendPresenceUpdate('composing', msgData.remoteJid).catch(() => { });
+        }
+
         let text = msgData.args.join(' ');
 
         if (msgData.isQuoted && msgData.quotedContent) {
@@ -35,11 +40,7 @@ export default {
             }
             const prompt = RYZUMI_AI_SYSTEM_PROMPT;
 
-            const modelsToTry = [
-                'qwen3.7-max',
-                'qwen3.8-max',
-                'qwen3.8-max-b'
-            ];
+            const modelsToTry = await getTextModels({ brandFilter: 'qwen' });
             let data = null;
             let lastError = null;
 

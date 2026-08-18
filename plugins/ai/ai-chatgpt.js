@@ -3,6 +3,7 @@ import config from '../../config.js';
 import { ryzumiCDN } from '../../libs/uploader.js';
 import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from '../../libs/aiPrompt.js';
 import { getQuoteOption } from '../../libs/autoAiHandler.js';
+import { getVisionModels, getTextModels } from '../../libs/aiModels.js';
 
 export default {
     command: ['chatgpt', 'gpt'],
@@ -11,6 +12,10 @@ export default {
     isRegistered: false,
     isLimit: false,
     async execute(sock, m, msgData) {
+        if (sock?.sendPresenceUpdate && msgData?.remoteJid) {
+            await sock.sendPresenceUpdate('composing', msgData.remoteJid).catch(() => { });
+        }
+
         let text = msgData.args.join(' ');
 
         if (msgData.isQuoted && msgData.quotedContent) {
@@ -51,55 +56,53 @@ export default {
                 session = `ryzumi-wabot-${rawNumber || 'user'}`;
             }
             const prompt = RYZUMI_AI_SYSTEM_PROMPT;
-            const modelsToTry = imageUrl
-                ? [
-                    'gpt-5.6-luna',
-                    'gpt-5.6-terra',
-                    'gpt-5.6',
-                    'gpt-5.6-luna-b',
-                    'gpt-5.6-terra-b',
-                    'gpt-5.6-sol-b',
-                    'gpt-5.6-sol',
-                    'gpt-5.6-sol-xhigh',
-                    'gpt-5.5'
-                ]
-                : [
-                    'chatgpt',
-                    'gpt-5.6-luna',
-                    'gpt-5.6-terra',
-                    'gpt-5.6',
-                    'gpt-5.6-luna-b',
-                    'gpt-5.6-terra-b',
-                    'gpt-5.6-sol-b',
-                    'gpt-5.6-sol',
-                    'gpt-5.6-sol-xhigh',
-                    'gpt-5.5'
-                ];
+            const visionModels = await getVisionModels({ allowClaude: false, prioritizeLuna: true });
+            const textModels = await getTextModels({ allowClaude: false, brandFilter: 'gpt' });
+
             let data = null;
             let lastError = null;
 
-            for (const modelName of modelsToTry) {
-                try {
-                    const payload = {
-                        text: text,
-                        model: modelName,
-                        prompt: prompt,
-                        session: session
-                    };
-
-                    if (imageUrl) {
-                        payload.image = imageUrl;
+            if (imageUrl) {
+                for (const modelName of visionModels) {
+                    try {
+                        const payload = {
+                            text: text,
+                            model: modelName,
+                            prompt: prompt,
+                            session: session,
+                            image: imageUrl
+                        };
+                        const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload, { timeout: 15000 });
+                        if (res?.data && (res.data.success || res.data.status) && res.data.result) {
+                            data = res.data;
+                            break;
+                        }
+                    } catch (err) {
+                        lastError = err;
+                        console.warn(`ChatGPT vision model '${modelName}' failed, attempting fallback...`);
                     }
+                }
+            }
 
-                    const endpoint = imageUrl ? `${config.API_RYZUMI}/api/ai/post/vision-model` : `${config.API_RYZUMI}/api/ai/post/text-model`;
-                    const res = await axios.post(endpoint, payload);
-                    if (res?.data && (res.data.success || res.data.status) && res.data.result) {
-                        data = res.data;
-                        break;
+            if (!data || !data.result) {
+                const textInput = imageUrl ? `[Lampiran Media: User melampirkan gambar/foto]\n\n[Pertanyaan/Pesan]: ${text}` : text;
+                for (const modelName of textModels) {
+                    try {
+                        const payload = {
+                            text: textInput,
+                            model: modelName,
+                            prompt: prompt,
+                            session: session
+                        };
+                        const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, { timeout: 15000 });
+                        if (res?.data && (res.data.success || res.data.status) && res.data.result) {
+                            data = res.data;
+                            break;
+                        }
+                    } catch (err) {
+                        lastError = err;
+                        console.warn(`ChatGPT text model '${modelName}' failed, attempting fallback...`);
                     }
-                } catch (err) {
-                    lastError = err;
-                    console.warn(`ChatGPT model '${modelName}' failed, attempting fallback...`);
                 }
             }
 

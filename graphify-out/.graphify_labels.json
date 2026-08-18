@@ -1,6 +1,6 @@
 {
   "0": "index.js",
-  "1": "getQuoteOption",
+  "1": "backup.js",
   "2": "ryzumiCDN",
   "3": "Ryzumi-WABot V2",
   "4": "Ryzumi-WABot V2 - Agent Context & Guidelines",
@@ -12,7 +12,7 @@
   "10": "rules/graphify.md",
   "11": "workflows/graphify.md",
   "12": "mime-types",
-  "13": "backup.js",
+  "13": "chalk",
   "14": "autoAiHandler.js",
   "15": "fluent-ffmpeg",
   "16": "file-type",
@@ -20,8 +20,8 @@
   "18": "jimp",
   "19": "jsdom",
   "20": "mariadb",
-  "21": "owner-eval.js",
-  "22": "moment-timezone",
+  "21": "moment-timezone",
+  "22": "baileys",
   "23": "node-cron",
   "24": "node-fetch",
   "25": "node-os-utils",
@@ -55,8 +55,5 @@
   "53": "sticker-get-exif.js",
   "54": "tool-fetch.js",
   "55": "3. Tata Penulisan & Maintenance Sistem",
-  "56": "chalk",
-  "57": "downloader-mega.js",
-  "62": "cheerio",
-  "65": "dotenv"
+  "62": "cheerio"
 }

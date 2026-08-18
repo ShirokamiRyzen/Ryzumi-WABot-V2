@@ -3,6 +3,7 @@ import config from '../../config.js';
 import { ryzumiCDN } from '../../libs/uploader.js';
 import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from '../../libs/aiPrompt.js';
 import { getQuoteOption } from '../../libs/autoAiHandler.js';
+import { getVisionModels, getTextModels } from '../../libs/aiModels.js';
 
 export default {
     command: ['claude', 'anthropic', 'sonnet', 'opus'],
@@ -11,6 +12,10 @@ export default {
     isRegistered: false,
     isLimit: false,
     async execute(sock, m, msgData) {
+        if (sock?.sendPresenceUpdate && msgData?.remoteJid) {
+            await sock.sendPresenceUpdate('composing', msgData.remoteJid).catch(() => { });
+        }
+
         let text = msgData.args.join(' ');
 
         if (msgData.isQuoted && msgData.quotedContent) {
@@ -52,25 +57,9 @@ export default {
             }
             const prompt = RYZUMI_AI_SYSTEM_PROMPT;
 
-            const modelsToTry = imageUrl
-                ? [
-                    'claude-sonnet-5',
-                    'claude-sonnet-5-b',
-                    'claude-opus-5',
-                    'claude-opus-5-b',
-                    'claude-opus-4.8'
-                ]
-                : [
-                    'claude-sonnet-4.6-b',
-                    'claude-sonnet-4.5',
-                    'claude-sonnet-4.5-thinking',
-                    'claude-sonnet-5',
-                    'claude-sonnet-5-b',
-                    'claude-opus-4.8-b',
-                    'claude-opus-4.8',
-                    'claude-opus-5',
-                    'claude-opus-5-b'
-                ];
+            const visionModels = await getVisionModels({ allowClaude: true });
+            const textModels = await getTextModels({ allowClaude: true, brandFilter: 'claude' });
+            const modelsToTry = imageUrl ? visionModels.filter(m => /claude/i.test(m)) : textModels;
             let data = null;
             let lastError = null;
 

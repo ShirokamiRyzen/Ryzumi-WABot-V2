@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from '../../config.js';
 import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from '../../libs/aiPrompt.js';
 import { getQuoteOption } from '../../libs/autoAiHandler.js';
+import { getTextModels } from '../../libs/aiModels.js';
 
 export default {
     command: ['deepseek', 'deepseekai', 'ds'],
@@ -10,6 +11,10 @@ export default {
     isRegistered: false,
     isLimit: false,
     async execute(sock, m, msgData) {
+        if (sock?.sendPresenceUpdate && msgData?.remoteJid) {
+            await sock.sendPresenceUpdate('composing', msgData.remoteJid).catch(() => { });
+        }
+
         let text = msgData.args.join(' ');
 
         if (msgData.isQuoted && msgData.quotedContent) {
@@ -35,13 +40,7 @@ export default {
             }
             const prompt = RYZUMI_AI_SYSTEM_PROMPT;
 
-            const modelsToTry = [
-                'deepseek-v4-flash',
-                'deepseek-v4-mod',
-                'deepseek-v4-pro',
-                'deepseek-v4-pro-0813',
-                'deepseek-v4-pro-b'
-            ];
+            const modelsToTry = await getTextModels({ brandFilter: 'deepseek' });
             let data = null;
             let lastError = null;
 

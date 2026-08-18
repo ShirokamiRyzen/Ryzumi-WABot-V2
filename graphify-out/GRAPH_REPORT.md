@@ -1,22 +1,22 @@
-# Graph Report - Ryzumi-WABot V2  (2026-08-17)
+# Graph Report - Ryzumi-WABot V2  (2026-08-18)
 
 ## Corpus Check
-- 103 files · ~34,487 words
+- 104 files · ~35,807 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 322 nodes · 578 edges · 60 communities (24 shown, 36 thin omitted)
+- 327 nodes · 627 edges · 57 communities (24 shown, 33 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2843b807`
+- Built from commit: `1301a0d4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - index.js
-- getQuoteOption
+- backup.js
 - ryzumiCDN
 - Ryzumi-WABot V2
 - Ryzumi-WABot V2 - Agent Context & Guidelines
@@ -28,7 +28,7 @@
 - rules/graphify.md
 - workflows/graphify.md
 - mime-types
-- backup.js
+- chalk
 - autoAiHandler.js
 - fluent-ffmpeg
 - file-type
@@ -36,8 +36,8 @@
 - jimp
 - jsdom
 - mariadb
-- owner-eval.js
 - moment-timezone
+- baileys
 - node-cron
 - node-fetch
 - node-os-utils
@@ -58,47 +58,44 @@
 - group-reset-invite.js
 - group-unlock.js
 - 3. Tata Penulisan & Maintenance Sistem
-- chalk
-- downloader-mega.js
 - cheerio
-- dotenv
 
 ## God Nodes (most connected - your core abstractions)
 1. `config` - 53 edges
-2. `getQuoteOption()` - 26 edges
-3. `cleanAiResponse()` - 25 edges
-4. `ryzumiCDN()` - 15 edges
-5. `resolveLidToJid()` - 13 edges
-6. `Group` - 11 edges
-7. `handleAutoAi()` - 11 edges
-8. `User` - 10 edges
-9. `connectToWhatsApp()` - 10 edges
-10. `processAuth()` - 10 edges
+2. `getTextModels()` - 26 edges
+3. `getQuoteOption()` - 26 edges
+4. `cleanAiResponse()` - 25 edges
+5. `ryzumiCDN()` - 15 edges
+6. `handleAutoAi()` - 14 edges
+7. `resolveLidToJid()` - 13 edges
+8. `Group` - 11 edges
+9. `User` - 10 edges
+10. `connectToWhatsApp()` - 10 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `execute()` --references--> `Setting`  [EXTRACTED]
   plugins/misc/misc-enable-disable.js → databases/orm/Setting.js
-- `startCronJobs()` --references--> `User`  [EXTRACTED]
-  libs/cronjob.js → databases/orm/User.js
-- `connectToWhatsApp()` --calls--> `startCronJobs()`  [EXTRACTED]
-  index.js → libs/cronjob.js
 - `execute()` --calls--> `getQuoteOption()`  [EXTRACTED]
   plugins/ai/ai-clear.js → libs/autoAiHandler.js
-- `handleAutoAi()` --calls--> `validatePlugin()`  [EXTRACTED]
-  libs/autoAiHandler.js → middlewares/validator.js
+- `botHandler()` --calls--> `handleAutoAi()`  [EXTRACTED]
+  middlewares/handler.js → libs/autoAiHandler.js
+- `execute()` --calls--> `handleAutoAi()`  [EXTRACTED]
+  plugins/ai/ai-auto.js → libs/autoAiHandler.js
+- `execute()` --calls--> `backupDatabase()`  [EXTRACTED]
+  plugins/owner/owner-backup-db.js → libs/backup.js
 
 ## Import Cycles
 - None detected.
 
-## Communities (60 total, 36 thin omitted)
+## Communities (57 total, 33 thin omitted)
 
 ### Community 0 - "index.js"
 Cohesion: 0.11
 Nodes (31): Group, Setting, User, connectToWhatsApp(), startTime, syncGroups(), extractMessageData(), getMessageContent() (+23 more)
 
-### Community 1 - "getQuoteOption"
-Cohesion: 0.20
-Nodes (14): cleanAiResponse(), getQuoteOption(), execute(), execute(), execute(), execute(), execute(), execute() (+6 more)
+### Community 1 - "backup.js"
+Cohesion: 0.60
+Nodes (4): backupDatabase(), pruneOldBackups(), uploadToNextcloud(), execute()
 
 ### Community 2 - "ryzumiCDN"
 Cohesion: 0.25
@@ -116,21 +113,21 @@ Nodes (10): Database, Handler & Adapter, Ketentuan Teknis & Refactoring, Konfigu
 Cohesion: 0.18
 Nodes (10): author, description, license, main, name, scripts, dev, start (+2 more)
 
+### Community 6 - "config.js"
+Cohesion: 0.05
+Nodes (4): config, execute(), formatSize, execPromise
+
 ### Community 7 - "dependencies"
 Cohesion: 0.29
-Nodes (7): axios, baileys, dependencies, axios, baileys, qrcode-terminal, qrcode-terminal
+Nodes (7): axios, dotenv, dependencies, axios, dotenv, qrcode-terminal, qrcode-terminal
 
 ### Community 8 - "sticker-to-media.js"
 Cohesion: 0.80
 Nodes (3): webp2mp4(), webp2png(), execute()
 
-### Community 13 - "backup.js"
-Cohesion: 0.46
-Nodes (5): backupDatabase(), pruneOldBackups(), uploadToNextcloud(), startCronJobs(), execute()
-
 ### Community 14 - "autoAiHandler.js"
-Cohesion: 0.60
-Nodes (4): getAutoAiPrompt(), FORBIDDEN_COMMANDS, handleAutoAi(), execute()
+Cohesion: 0.19
+Nodes (23): fetchAiModels(), getTextModels(), getVisionModels(), cleanAiResponse(), getAutoAiPrompt(), FORBIDDEN_COMMANDS, getQuoteOption(), handleAutoAi() (+15 more)
 
 ### Community 55 - "3. Tata Penulisan & Maintenance Sistem"
 Cohesion: 0.14
@@ -139,22 +136,22 @@ Nodes (13): 1. Tata Penulisan & Struktur Plugin, 2. Standar Operasi Plugin (Add,
 ## Knowledge Gaps
 - **75 isolated node(s):** `startTime`, `groupCache`, `lidCache`, `tmpDir`, `pluginDir` (+70 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **36 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **33 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `config` connect `config.js` to `index.js`, `getQuoteOption`, `ryzumiCDN`, `backup.js`, `autoAiHandler.js`, `owner-eval.js`, `downloader-mega.js`?**
+- **Why does `config` connect `config.js` to `index.js`, `backup.js`, `ryzumiCDN`, `autoAiHandler.js`?**
   _High betweenness centrality (0.104) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `fluent-ffmpeg`, `file-type`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `chalk`, `cheerio`, `dotenv`?**
-  _High betweenness centrality (0.034) - this node is a cross-community bridge._
-- **Why does `ryzumiCDN()` connect `ryzumiCDN` to `getQuoteOption`, `autoAiHandler.js`?**
+- **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `chalk`, `fluent-ffmpeg`, `file-type`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `moment-timezone`, `baileys`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `cheerio`?**
+  _High betweenness centrality (0.033) - this node is a cross-community bridge._
+- **Why does `ryzumiCDN()` connect `ryzumiCDN` to `autoAiHandler.js`?**
   _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **What connects `startTime`, `groupCache`, `lidCache` to the rest of the system?**
   _75 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `index.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.10558069381598793 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10784313725490197 - nodes in this community are weakly interconnected._
 - **Should `config.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.05959183673469388 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.053246753246753244 - nodes in this community are weakly interconnected._
 - **Should `3. Tata Penulisan & Maintenance Sistem` be split into smaller, more focused modules?**
   _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
