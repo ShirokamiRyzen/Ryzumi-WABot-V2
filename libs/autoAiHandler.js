@@ -149,8 +149,8 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
 
         const prompt = getAutoAiPrompt(cmdList);
 
-        // Fetch dynamic active models from API (excluding Claude, prioritizing Luna for vision)
-        const visionModels = await getVisionModels({ allowClaude: false, prioritizeLuna: true });
+        // Fetch dynamic active models from API (strictly excluding Claude)
+        const visionModels = await getVisionModels({ allowClaude: false });
         const textModels = await getTextModels({ allowClaude: false });
 
         let baseContent = msgData.messageContent || '';

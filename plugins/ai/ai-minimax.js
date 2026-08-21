@@ -1,9 +1,9 @@
 import { executeAiRequest } from '../../libs/aiModels.js';
 
 export default {
-    command: ['gemini', 'geminiai', 'googleai'],
+    command: ['minimax', 'minimaxai'],
     category: 'ai',
-    description: 'Bertanya atau berinteraksi dengan Google Gemini AI (Ryzumi Starlette)',
+    description: 'Bertanya atau berinteraksi dengan MiniMax AI (Ryzumi Starlette)',
     isRegistered: false,
     isLimit: false,
     async execute(sock, m, msgData) {
@@ -11,9 +11,9 @@ export default {
             sock,
             m,
             msgData,
-            brandFilter: 'gemini',
+            brandFilter: 'minimax',
             allowClaude: false,
-            pluginName: 'Gemini AI'
+            pluginName: 'MiniMax AI'
         });
     }
 };
