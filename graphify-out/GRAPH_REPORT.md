@@ -1,7 +1,7 @@
 # Graph Report - Ryzumi-WABot V2  (2026-08-22)
 
 ## Corpus Check
-- 105 files · ~33,948 words
+- 105 files · ~33,968 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6c8f7d6c`
+- Built from commit: `cc10e31f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -33,7 +33,7 @@
 - fluent-ffmpeg
 - file-type
 - human-readable
-- jimp
+- baileys
 - jsdom
 - mariadb
 - moment-timezone
@@ -119,7 +119,7 @@ Nodes (6): config, getPP(), execute(), formatSize, onParticipantsUpdate(), execP
 
 ### Community 7 - "dependencies"
 Cohesion: 0.29
-Nodes (7): axios, baileys, dependencies, axios, baileys, qrcode-terminal, qrcode-terminal
+Nodes (7): axios, jimp, dependencies, axios, jimp, qrcode-terminal, qrcode-terminal
 
 ### Community 8 - "sticker-to-media.js"
 Cohesion: 0.80
@@ -143,7 +143,7 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `config` connect `config.js` to `index.js`, `handler.js`, `ryzumiCDN`, `executeAiRequest`?**
   _High betweenness centrality (0.113) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `chalk`, `fluent-ffmpeg`, `file-type`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `dotenv`, `cheerio`?**
+- **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `chalk`, `fluent-ffmpeg`, `file-type`, `human-readable`, `baileys`, `jsdom`, `mariadb`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `dotenv`, `cheerio`?**
   _High betweenness centrality (0.031) - this node is a cross-community bridge._
 - **What connects `startTime`, `groupCache`, `lidCache` to the rest of the system?**
   _75 weakly-connected nodes found - possible documentation gaps or missing edges._

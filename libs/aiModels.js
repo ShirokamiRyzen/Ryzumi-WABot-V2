@@ -32,7 +32,7 @@ export async function compressImageToBase64(buffer, { maxDimension = 1024, quali
 }
 
 /**
- * Send request to AI endpoint with automated retry mechanism and backoff delay
+ * Send request to AI endpoint with automated retry mechanism and fixed delay
  * @param {string} url 
  * @param {Object} payload 
  * @param {Object} options 
@@ -41,7 +41,7 @@ export async function compressImageToBase64(buffer, { maxDimension = 1024, quali
  * @param {number} options.delayMs
  * @returns {Promise<any>}
  */
-export async function postAiWithRetry(url, payload, { retries = 2, timeout = 15000, delayMs = 1000 } = {}) {
+export async function postAiWithRetry(url, payload, { retries = 3, timeout = 25000, delayMs = 5000 } = {}) {
     let lastErr = null;
     for (let attempt = 1; attempt <= retries; attempt++) {
         try {
@@ -49,14 +49,13 @@ export async function postAiWithRetry(url, payload, { retries = 2, timeout = 150
             if (res?.data && (res.data.success || res.data.status) && res.data.result) {
                 return res.data;
             }
-            const errorMsg = res?.data?.message || res?.data?.error || (res?.data?.errors ? res.data.errors.join(', ') : 'Respon AI tidak valid / kosong');
+            const errorMsg = res?.data?.message || res?.data?.error || (res?.data?.errors ? res.data.errors.join(', ') : 'Invalid / empty AI response');
             throw new Error(errorMsg);
         } catch (err) {
             lastErr = err;
             if (attempt < retries) {
-                const backoff = delayMs * attempt;
-                console.warn(`[AI Request] Attempt ${attempt}/${retries} failed for model '${payload?.model}': ${err.message}. Retrying in ${backoff}ms...`);
-                await new Promise(resolve => setTimeout(resolve, backoff));
+                console.warn(`[AI Request] Attempt ${attempt}/${retries} failed for model '${payload?.model}': ${err.message}. Retrying in ${delayMs / 1000} seconds...`);
+                await new Promise(resolve => setTimeout(resolve, delayMs));
             }
         }
     }
@@ -342,13 +341,13 @@ export async function executeAiRequest({
                     };
                     data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload, {
                         retries: 3,
-                        timeout: 20000,
-                        delayMs: 1000
+                        timeout: 25000,
+                        delayMs: 5000
                     });
                     if (data?.result) break;
                 } catch (err) {
                     lastError = err;
-                    console.warn(`[${pluginName}] Vision model '${modelName}' failed after retries, attempting fallback...`);
+                    console.warn(`[${pluginName}] Vision model '${modelName}' failed after 3 retries, attempting fallback...`);
                 }
             }
         }
@@ -372,14 +371,14 @@ export async function executeAiRequest({
                         session: session
                     };
                     data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, {
-                        retries: 2,
-                        timeout: 20000,
-                        delayMs: 1000
+                        retries: 3,
+                        timeout: 25000,
+                        delayMs: 5000
                     });
                     if (data?.result) break;
                 } catch (err) {
                     lastError = err;
-                    console.warn(`[${pluginName}] Text model '${modelName}' failed after retries, attempting fallback...`);
+                    console.warn(`[${pluginName}] Text model '${modelName}' failed after 3 retries, attempting fallback...`);
                 }
             }
         }
@@ -397,9 +396,9 @@ export async function executeAiRequest({
                         session: session
                     };
                     data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, {
-                        retries: 2,
-                        timeout: 20000,
-                        delayMs: 1000
+                        retries: 3,
+                        timeout: 25000,
+                        delayMs: 5000
                     });
                     if (data?.result) break;
                 } catch (err) {

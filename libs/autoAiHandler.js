@@ -176,12 +176,12 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
                     };
                     data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload, {
                         retries: 3,
-                        timeout: 20000,
-                        delayMs: 1000
+                        timeout: 25000,
+                        delayMs: 5000
                     });
                     if (data?.result) break;
                 } catch (err) {
-                    console.warn(`Auto AI vision model '${modelName}' failed after retries: ${err.message}`);
+                    console.warn(`Auto AI vision model '${modelName}' failed after 3 retries: ${err.message}`);
                 }
             }
         }
@@ -207,13 +207,13 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
                         session: session
                     };
                     data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, {
-                        retries: 2,
-                        timeout: 15000,
-                        delayMs: 1000
+                        retries: 3,
+                        timeout: 25000,
+                        delayMs: 5000
                     });
                     if (data?.result) break;
                 } catch (err) {
-                    console.warn(`Auto AI text model '${modelName}' failed after retries: ${err.message}`);
+                    console.warn(`Auto AI text model '${modelName}' failed after 3 retries: ${err.message}`);
                 }
             }
         }
