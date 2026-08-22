@@ -32,6 +32,38 @@ export async function compressImageToBase64(buffer, { maxDimension = 1024, quali
 }
 
 /**
+ * Send request to AI endpoint with automated retry mechanism and backoff delay
+ * @param {string} url 
+ * @param {Object} payload 
+ * @param {Object} options 
+ * @param {number} options.retries
+ * @param {number} options.timeout
+ * @param {number} options.delayMs
+ * @returns {Promise<any>}
+ */
+export async function postAiWithRetry(url, payload, { retries = 2, timeout = 15000, delayMs = 1000 } = {}) {
+    let lastErr = null;
+    for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+            const res = await axios.post(url, payload, { timeout });
+            if (res?.data && (res.data.success || res.data.status) && res.data.result) {
+                return res.data;
+            }
+            const errorMsg = res?.data?.message || res?.data?.error || (res?.data?.errors ? res.data.errors.join(', ') : 'Respon AI tidak valid / kosong');
+            throw new Error(errorMsg);
+        } catch (err) {
+            lastErr = err;
+            if (attempt < retries) {
+                const backoff = delayMs * attempt;
+                console.warn(`[AI Request] Attempt ${attempt}/${retries} failed for model '${payload?.model}': ${err.message}. Retrying in ${backoff}ms...`);
+                await new Promise(resolve => setTimeout(resolve, backoff));
+            }
+        }
+    }
+    throw lastErr;
+}
+
+/**
  * Fetch models dynamically from Ryzumi API / Proxy
  * @param {boolean} forceRefresh 
  * @returns {Promise<Array>}
@@ -308,14 +340,15 @@ export async function executeAiRequest({
                         session: session,
                         image: imageUrl
                     };
-                    const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload, { timeout: 20000 });
-                    if (res?.data && (res.data.success || res.data.status) && res.data.result) {
-                        data = res.data;
-                        break;
-                    }
+                    data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload, {
+                        retries: 3,
+                        timeout: 20000,
+                        delayMs: 1000
+                    });
+                    if (data?.result) break;
                 } catch (err) {
                     lastError = err;
-                    console.warn(`[${pluginName}] Vision model '${modelName}' failed, attempting fallback...`);
+                    console.warn(`[${pluginName}] Vision model '${modelName}' failed after retries, attempting fallback...`);
                 }
             }
         }
@@ -338,14 +371,15 @@ export async function executeAiRequest({
                         prompt: prompt,
                         session: session
                     };
-                    const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, { timeout: 20000 });
-                    if (res?.data && (res.data.success || res.data.status) && res.data.result) {
-                        data = res.data;
-                        break;
-                    }
+                    data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, {
+                        retries: 2,
+                        timeout: 20000,
+                        delayMs: 1000
+                    });
+                    if (data?.result) break;
                 } catch (err) {
                     lastError = err;
-                    console.warn(`[${pluginName}] Text model '${modelName}' failed, attempting fallback...`);
+                    console.warn(`[${pluginName}] Text model '${modelName}' failed after retries, attempting fallback...`);
                 }
             }
         }
@@ -362,11 +396,12 @@ export async function executeAiRequest({
                         prompt: prompt,
                         session: session
                     };
-                    const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, { timeout: 20000 });
-                    if (res?.data && (res.data.success || res.data.status) && res.data.result) {
-                        data = res.data;
-                        break;
-                    }
+                    data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, {
+                        retries: 2,
+                        timeout: 20000,
+                        delayMs: 1000
+                    });
+                    if (data?.result) break;
                 } catch (err) {
                     lastError = err;
                 }

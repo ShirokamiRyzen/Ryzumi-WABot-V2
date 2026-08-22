@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../config.js';
 import { validatePlugin } from '../middlewares/validator.js';
 import { getAutoAiPrompt, cleanAiResponse } from './aiPrompt.js';
-import { getVisionModels, getTextModels, compressImageToBase64 } from './aiModels.js';
+import { getVisionModels, getTextModels, compressImageToBase64, postAiWithRetry } from './aiModels.js';
 
 const FORBIDDEN_COMMANDS = ['eval', 'exec', 'delprem', 'addprem', 'backup', 'debug', 'enable', 'disable', 'on', 'off'];
 
@@ -174,13 +174,14 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
                         session: session,
                         image: imageUrl
                     };
-                    const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload, { timeout: 15000 });
-                    if (res?.data && (res.data.success || res.data.status) && res.data.result) {
-                        data = res.data;
-                        break;
-                    }
+                    data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload, {
+                        retries: 3,
+                        timeout: 20000,
+                        delayMs: 1000
+                    });
+                    if (data?.result) break;
                 } catch (err) {
-                    console.warn(`Auto AI vision model '${modelName}' failed, attempting next fallback...`);
+                    console.warn(`Auto AI vision model '${modelName}' failed after retries: ${err.message}`);
                 }
             }
         }
@@ -205,13 +206,14 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
                         prompt: prompt,
                         session: session
                     };
-                    const res = await axios.post(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, { timeout: 15000 });
-                    if (res?.data && (res.data.success || res.data.status) && res.data.result) {
-                        data = res.data;
-                        break;
-                    }
+                    data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, {
+                        retries: 2,
+                        timeout: 15000,
+                        delayMs: 1000
+                    });
+                    if (data?.result) break;
                 } catch (err) {
-                    console.warn(`Auto AI text model '${modelName}' failed, attempting next fallback...`);
+                    console.warn(`Auto AI text model '${modelName}' failed after retries: ${err.message}`);
                 }
             }
         }

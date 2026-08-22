@@ -1,6 +1,6 @@
 {
   "0": "index.js",
-  "1": "autoAiHandler.js",
+  "1": "handler.js",
   "2": "ryzumiCDN",
   "3": "Ryzumi-WABot V2",
   "4": "Ryzumi-WABot V2 - Agent Context & Guidelines",
@@ -21,7 +21,6 @@
   "19": "jsdom",
   "20": "mariadb",
   "21": "moment-timezone",
-  "22": "messageAdapter.js",
   "23": "node-cron",
   "24": "node-fetch",
   "25": "node-os-utils",
