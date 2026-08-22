@@ -224,10 +224,21 @@
       "norm_label": "aimodels.js"
     },
     {
+      "label": "uploadCompressedImage()",
+      "file_type": "code",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "libs_aimodels_uploadcompressedimage",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
+      "norm_label": "uploadcompressedimage()"
+    },
+    {
       "label": "compressImageToBase64()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L19",
+      "source_location": "L52",
       "_origin": "ast",
       "id": "libs_aimodels_compressimagetobase64",
       "community": 14,
@@ -238,18 +249,18 @@
       "label": "postAiWithRetry()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L44",
+      "source_location": "L77",
       "_origin": "ast",
       "id": "libs_aimodels_postaiwithretry",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "postaiwithretry()"
     },
     {
       "label": "fetchAiModels()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L72",
+      "source_location": "L105",
       "_origin": "ast",
       "id": "libs_aimodels_fetchaimodels",
       "community": 14,
@@ -260,7 +271,7 @@
       "label": "isVisionModel()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L104",
+      "source_location": "L137",
       "_origin": "ast",
       "id": "libs_aimodels_isvisionmodel",
       "community": 14,
@@ -271,7 +282,7 @@
       "label": "getBrandRegex()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L114",
+      "source_location": "L147",
       "_origin": "ast",
       "id": "libs_aimodels_getbrandregex",
       "community": 14,
@@ -282,7 +293,7 @@
       "label": "sortModels()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L137",
+      "source_location": "L170",
       "_origin": "ast",
       "id": "libs_aimodels_sortmodels",
       "community": 14,
@@ -293,7 +304,7 @@
       "label": "getVisionModels()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L168",
+      "source_location": "L201",
       "_origin": "ast",
       "id": "libs_aimodels_getvisionmodels",
       "community": 14,
@@ -304,7 +315,7 @@
       "label": "getTextModels()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L204",
+      "source_location": "L237",
       "_origin": "ast",
       "id": "libs_aimodels_gettextmodels",
       "community": 14,
@@ -315,7 +326,7 @@
       "label": "getQuoteOption()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L243",
+      "source_location": "L276",
       "_origin": "ast",
       "id": "libs_aimodels_getquoteoption",
       "community": 14,
@@ -326,7 +337,7 @@
       "label": "executeAiRequest()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L264",
+      "source_location": "L297",
       "_origin": "ast",
       "id": "libs_aimodels_executeairequest",
       "community": 14,
@@ -340,8 +351,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_aiprompt",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "aiprompt.js"
     },
     {
@@ -351,8 +362,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "libs_aiprompt_getautoaiprompt",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "getautoaiprompt()"
     },
     {
@@ -362,8 +373,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "libs_aiprompt_cleanairesponse",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "cleanairesponse()"
     },
     {
@@ -373,8 +384,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_autoaihandler",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "autoaihandler.js"
     },
     {
@@ -384,8 +395,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "libs_autoaihandler_forbidden_commands",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "forbidden_commands"
     },
     {
@@ -395,8 +406,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "libs_autoaihandler_parseexeccommand",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "parseexeccommand()"
     },
     {
@@ -406,8 +417,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "libs_autoaihandler_getquoteoption",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "getquoteoption()"
     },
     {
@@ -417,8 +428,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "libs_autoaihandler_handleautoai",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "handleautoai()"
     },
     {
@@ -428,8 +439,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_backup",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 22,
+      "community_name": "backup.js",
       "norm_label": "backup.js"
     },
     {
@@ -439,8 +450,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "libs_backup_uploadtonextcloud",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 22,
+      "community_name": "backup.js",
       "norm_label": "uploadtonextcloud()"
     },
     {
@@ -450,8 +461,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "libs_backup_backupdatabase",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 22,
+      "community_name": "backup.js",
       "norm_label": "backupdatabase()"
     },
     {
@@ -461,8 +472,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "libs_backup_pruneoldbackups",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 22,
+      "community_name": "backup.js",
       "norm_label": "pruneoldbackups()"
     },
     {
@@ -472,8 +483,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_baileys_utils",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "baileys-utils.js"
     },
     {
@@ -483,8 +494,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "libs_baileys_utils_getpp",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "getpp()"
     },
     {
@@ -549,8 +560,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_groupcache",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "groupcache.js"
     },
     {
@@ -560,8 +571,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_groupcache_groupcache",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "groupcache"
     },
     {
@@ -582,8 +593,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "libs_groupcache_getgroupmetadata",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "getgroupmetadata()"
     },
     {
@@ -593,8 +604,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "libs_groupcache_cleargroupcache",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "cleargroupcache()"
     },
     {
@@ -605,7 +616,7 @@
       "_origin": "ast",
       "id": "libs_hot_reload",
       "community": 1,
-      "community_name": "handler.js",
+      "community_name": "autoAiHandler.js",
       "norm_label": "hot-reload.js"
     },
     {
@@ -616,7 +627,7 @@
       "_origin": "ast",
       "id": "libs_hot_reload_plugins",
       "community": 1,
-      "community_name": "handler.js",
+      "community_name": "autoAiHandler.js",
       "norm_label": "plugins"
     },
     {
@@ -627,7 +638,7 @@
       "_origin": "ast",
       "id": "libs_hot_reload_loadplugins",
       "community": 1,
-      "community_name": "handler.js",
+      "community_name": "autoAiHandler.js",
       "norm_label": "loadplugins()"
     },
     {
@@ -638,7 +649,7 @@
       "_origin": "ast",
       "id": "libs_hot_reload_watchplugins",
       "community": 1,
-      "community_name": "handler.js",
+      "community_name": "autoAiHandler.js",
       "norm_label": "watchplugins()"
     },
     {
@@ -648,8 +659,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_lid_resolver",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "lid-resolver.js"
     },
     {
@@ -659,8 +670,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "libs_lid_resolver_lidcache",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "lidcache"
     },
     {
@@ -670,8 +681,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "libs_lid_resolver_resolvelidtojid",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "resolvelidtojid()"
     },
     {
@@ -791,8 +802,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_auth",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "auth.js"
     },
     {
@@ -802,8 +813,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "middlewares_auth_processauth",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "processauth()"
     },
     {
@@ -814,7 +825,7 @@
       "_origin": "ast",
       "id": "middlewares_handler",
       "community": 1,
-      "community_name": "handler.js",
+      "community_name": "autoAiHandler.js",
       "norm_label": "handler.js"
     },
     {
@@ -825,7 +836,7 @@
       "_origin": "ast",
       "id": "middlewares_handler_plugindir",
       "community": 1,
-      "community_name": "handler.js",
+      "community_name": "autoAiHandler.js",
       "norm_label": "plugindir"
     },
     {
@@ -835,8 +846,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "middlewares_handler_bothandler",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "bothandler()"
     },
     {
@@ -847,7 +858,7 @@
       "_origin": "ast",
       "id": "middlewares_validator",
       "community": 1,
-      "community_name": "handler.js",
+      "community_name": "autoAiHandler.js",
       "norm_label": "validator.js"
     },
     {
@@ -858,7 +869,7 @@
       "_origin": "ast",
       "id": "middlewares_validator_validateplugin",
       "community": 1,
-      "community_name": "handler.js",
+      "community_name": "autoAiHandler.js",
       "norm_label": "validateplugin()"
     },
     {
@@ -1022,8 +1033,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_baileys",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 57,
+      "community_name": "baileys",
       "norm_label": "baileys"
     },
     {
@@ -1033,8 +1044,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "baileys",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 57,
+      "community_name": "baileys",
       "norm_label": "baileys"
     },
     {
@@ -1066,8 +1077,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "package_dependencies_cheerio",
-      "community": 62,
-      "community_name": "cheerio",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "cheerio"
     },
     {
@@ -1077,8 +1088,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "cheerio",
-      "community": 62,
-      "community_name": "cheerio",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "cheerio"
     },
     {
@@ -1594,8 +1605,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_auto",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "ai-auto.js"
     },
     {
@@ -1605,8 +1616,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "plugins_ai_ai_auto_execute",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "execute()"
     },
     {
@@ -1660,8 +1671,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_clear",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "ai-clear.js"
     },
     {
@@ -1671,8 +1682,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_ai_ai_clear_execute",
-      "community": 14,
-      "community_name": "executeAiRequest",
+      "community": 1,
+      "community_name": "autoAiHandler.js",
       "norm_label": "execute()"
     },
     {
@@ -2507,8 +2518,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "group-welcome-leave.js"
     },
     {
@@ -2518,8 +2529,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave_onparticipantsupdate",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "onparticipantsupdate()"
     },
     {
@@ -2529,8 +2540,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_group_kick_member",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "kick-member.js"
     },
     {
@@ -2540,8 +2551,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_group_kick_member_execute",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "execute()"
     },
     {
@@ -2749,8 +2760,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 22,
+      "community_name": "backup.js",
       "norm_label": "owner-backup-db.js"
     },
     {
@@ -2760,8 +2771,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_owner_owner_backup_db_execute",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 22,
+      "community_name": "backup.js",
       "norm_label": "execute()"
     },
     {
@@ -2771,8 +2782,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "owner-debug-info.js"
     },
     {
@@ -2782,8 +2793,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info_execute",
-      "community": 1,
-      "community_name": "handler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "execute()"
     },
     {
@@ -5759,7 +5770,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L19",
+      "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5770,7 +5781,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L264",
+      "source_location": "L297",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5781,7 +5792,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L72",
+      "source_location": "L105",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5792,7 +5803,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L114",
+      "source_location": "L147",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5803,7 +5814,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L243",
+      "source_location": "L276",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5814,7 +5825,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L204",
+      "source_location": "L237",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5825,7 +5836,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L168",
+      "source_location": "L201",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5836,7 +5847,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L104",
+      "source_location": "L137",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5847,7 +5858,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L44",
+      "source_location": "L77",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5858,7 +5869,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L137",
+      "source_location": "L170",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5866,11 +5877,22 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels",
+      "target": "libs_aimodels_uploadcompressedimage",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5882,11 +5904,35 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
       "target": "libs_aiprompt_cleanairesponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels",
+      "target": "libs_uploader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels",
+      "target": "libs_uploader_ryzumicdn",
       "confidence_score": 1.0
     },
     {
@@ -6050,12 +6096,24 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L294",
+      "source_location": "L327",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_executeairequest",
-      "target": "libs_aimodels_compressimagetobase64",
+      "target": "libs_aimodels_uploadcompressedimage",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/aiModels.js",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels_uploadcompressedimage",
+      "target": "libs_uploader_ryzumicdn"
     },
     {
       "relation": "imports",
@@ -6066,7 +6124,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler",
-      "target": "libs_aimodels_compressimagetobase64",
+      "target": "libs_aimodels_uploadcompressedimage",
       "confidence_score": 1.0
     },
     {
@@ -6079,14 +6137,14 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
-      "target": "libs_aimodels_compressimagetobase64"
+      "target": "libs_aimodels_uploadcompressedimage"
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L344",
+      "source_location": "L377",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_executeairequest",
@@ -6122,7 +6180,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L205",
+      "source_location": "L238",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_gettextmodels",
@@ -6134,7 +6192,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L169",
+      "source_location": "L202",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_getvisionmodels",
@@ -6146,7 +6204,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L171",
+      "source_location": "L204",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_getvisionmodels",
@@ -6158,45 +6216,45 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
+      "source_location": "L247",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels_gettextmodels",
+      "target": "libs_aimodels_getbrandregex",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L211",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels_getvisionmodels",
+      "target": "libs_aimodels_getbrandregex",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L250",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels_gettextmodels",
+      "target": "libs_aimodels_sortmodels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
       "source_location": "L214",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "libs_aimodels_gettextmodels",
-      "target": "libs_aimodels_getbrandregex",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "libs/aiModels.js",
-      "source_location": "L178",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libs_aimodels_getvisionmodels",
-      "target": "libs_aimodels_getbrandregex",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "libs/aiModels.js",
-      "source_location": "L217",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libs_aimodels_gettextmodels",
-      "target": "libs_aimodels_sortmodels",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "libs/aiModels.js",
-      "source_location": "L181",
-      "weight": 1.0,
-      "_origin": "ast",
       "source": "libs_aimodels_getvisionmodels",
       "target": "libs_aimodels_sortmodels",
       "confidence_score": 1.0
@@ -6206,7 +6264,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L328",
+      "source_location": "L361",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_executeairequest",
@@ -6242,7 +6300,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L360",
+      "source_location": "L393",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_executeairequest",
@@ -6278,7 +6336,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L310",
+      "source_location": "L343",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_executeairequest",
@@ -6291,7 +6349,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/aiModels.js",
-      "source_location": "L416",
+      "source_location": "L449",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_executeairequest",
@@ -10147,5 +10205,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "1faf4e87860187b262a52eef86c08f88e621c981"
+  "built_at_commit": "2afe4bf85d612c2eea493a14a38b99b6998805d3"
 }
