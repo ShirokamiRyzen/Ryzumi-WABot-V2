@@ -520,8 +520,8 @@
     "semantic_hash": ""
   },
   "libs/aiModels.js": {
-    "mtime": 1787374584.8205166,
-    "ast_hash": "b379a338d574eebeae124b244d7d160c",
+    "mtime": 1787397090.4924254,
+    "ast_hash": "06647780b4872eed5071608ce3acbec9",
     "semantic_hash": ""
   },
   "plugins/ai/ai-minimax.js": {

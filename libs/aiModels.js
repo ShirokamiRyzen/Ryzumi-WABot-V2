@@ -52,9 +52,11 @@ export async function postAiWithRetry(url, payload, { retries = 3, timeout = 250
             const errorMsg = res?.data?.message || res?.data?.error || (res?.data?.errors ? res.data.errors.join(', ') : 'Invalid / empty AI response');
             throw new Error(errorMsg);
         } catch (err) {
-            lastErr = err;
+            const serverMsg = err?.response?.data?.message || err?.response?.data?.error || (err?.response?.data?.errors ? err.response.data.errors.join(', ') : null);
+            const detailedMsg = serverMsg ? `${err.message} (${serverMsg})` : err.message;
+            lastErr = new Error(detailedMsg);
             if (attempt < retries) {
-                console.warn(`[AI Request] Attempt ${attempt}/${retries} failed for model '${payload?.model}': ${err.message}. Retrying in ${delayMs / 1000} seconds...`);
+                console.warn(`[AI Request] Attempt ${attempt}/${retries} failed for model '${payload?.model}': ${detailedMsg}. Retrying in ${delayMs / 1000} seconds...`);
                 await new Promise(resolve => setTimeout(resolve, delayMs));
             }
         }
