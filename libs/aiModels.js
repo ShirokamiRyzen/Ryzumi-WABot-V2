@@ -1,11 +1,35 @@
 import axios from 'axios';
+import sharp from 'sharp';
 import config from '../config.js';
-import { ryzumiCDN } from './uploader.js';
 import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from './aiPrompt.js';
 
 let cachedModels = null;
 let lastFetchTime = 0;
 const CACHE_TTL = 15000; // 15 seconds cache to stay reactive to dynamic proxy model updates
+
+/**
+ * Compress an image buffer and return a base64 Data URL (data:image/jpeg;base64,...).
+ * Resizes large dimensions and optimizes JPEG quality to ensure minimal payload size.
+ * @param {Buffer} buffer 
+ * @param {Object} options
+ * @param {number} options.maxDimension
+ * @param {number} options.quality
+ * @returns {Promise<string|null>}
+ */
+export async function compressImageToBase64(buffer, { maxDimension = 1024, quality = 75 } = {}) {
+    if (!buffer || !Buffer.isBuffer(buffer)) return null;
+    try {
+        const compressedBuffer = await sharp(buffer)
+            .rotate() // auto-orient based on EXIF
+            .resize(maxDimension, maxDimension, { fit: 'inside', withoutEnlargement: true })
+            .jpeg({ quality, progressive: true })
+            .toBuffer();
+        return `data:image/jpeg;base64,${compressedBuffer.toString('base64')}`;
+    } catch (err) {
+        console.warn('Image compression with sharp failed, fallback to raw base64:', err.message);
+        return `data:image/jpeg;base64,${buffer.toString('base64')}`;
+    }
+}
 
 /**
  * Fetch models dynamically from Ryzumi API / Proxy
@@ -234,11 +258,10 @@ export async function executeAiRequest({
             try {
                 const buffer = await msgData.downloadMedia();
                 if (buffer) {
-                    const cdnRes = await ryzumiCDN(buffer);
-                    imageUrl = cdnRes?.url || cdnRes?.result?.url || (typeof cdnRes?.result === 'string' ? cdnRes.result : (Array.isArray(cdnRes?.result) ? cdnRes.result[0]?.url : null));
+                    imageUrl = await compressImageToBase64(buffer);
                 }
             } catch (uploadErr) {
-                console.warn(`[${pluginName}] Image upload failed:`, uploadErr.message);
+                console.warn(`[${pluginName}] Image processing failed:`, uploadErr.message);
             }
         }
 

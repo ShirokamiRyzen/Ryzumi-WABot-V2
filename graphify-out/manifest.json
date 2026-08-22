@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "libs/autoAiHandler.js": {
-    "mtime": 1787328291.006552,
-    "ast_hash": "ca0d21495b5d7db7d6ec12b59e849ca5",
+    "mtime": 1787373944.6158645,
+    "ast_hash": "e37baad5a81106151d997547b742ba81",
     "semantic_hash": ""
   },
   "plugins/ai/ai-auto.js": {
@@ -520,8 +520,8 @@
     "semantic_hash": ""
   },
   "libs/aiModels.js": {
-    "mtime": 1787328382.5943346,
-    "ast_hash": "4b6899f38faa851e7fc84b68ff88b37f",
+    "mtime": 1787373935.540541,
+    "ast_hash": "54c24d6ed257a512777eff5e031abd42",
     "semantic_hash": ""
   },
   "plugins/ai/ai-minimax.js": {

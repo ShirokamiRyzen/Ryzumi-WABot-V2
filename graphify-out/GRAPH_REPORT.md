@@ -1,16 +1,16 @@
-# Graph Report - Ryzumi-WABot V2  (2026-08-21)
+# Graph Report - Ryzumi-WABot V2  (2026-08-22)
 
 ## Corpus Check
-- 105 files · ~33,749 words
+- 105 files · ~33,822 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 334 nodes · 552 edges · 58 communities (25 shown, 33 thin omitted)
+- 335 nodes · 550 edges · 58 communities (25 shown, 33 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8af34b27`
+- Built from commit: `437b4186`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -66,12 +66,12 @@
 2. `executeAiRequest()` - 30 edges
 3. `handleAutoAi()` - 14 edges
 4. `resolveLidToJid()` - 13 edges
-5. `ryzumiCDN()` - 13 edges
-6. `Group` - 11 edges
-7. `User` - 10 edges
-8. `connectToWhatsApp()` - 10 edges
-9. `processAuth()` - 10 edges
-10. `Setting` - 9 edges
+5. `Group` - 11 edges
+6. `User` - 10 edges
+7. `connectToWhatsApp()` - 10 edges
+8. `processAuth()` - 10 edges
+9. `Setting` - 9 edges
+10. `extractMessageData()` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `onParticipantsUpdate()` --references--> `Group`  [EXTRACTED]
@@ -95,8 +95,8 @@ Cohesion: 0.15
 Nodes (19): Group, Setting, User, connectToWhatsApp(), startTime, syncGroups(), backupDatabase(), pruneOldBackups() (+11 more)
 
 ### Community 1 - "autoAiHandler.js"
-Cohesion: 0.20
-Nodes (14): cleanAiResponse(), getAutoAiPrompt(), FORBIDDEN_COMMANDS, getQuoteOption(), handleAutoAi(), parseExecCommand(), loadPlugins(), plugins (+6 more)
+Cohesion: 0.19
+Nodes (15): compressImageToBase64(), cleanAiResponse(), getAutoAiPrompt(), FORBIDDEN_COMMANDS, getQuoteOption(), handleAutoAi(), parseExecCommand(), loadPlugins() (+7 more)
 
 ### Community 2 - "ryzumiCDN"
 Cohesion: 0.25
@@ -147,11 +147,11 @@ Nodes (13): 1. Tata Penulisan & Struktur Plugin, 2. Standar Operasi Plugin (Add,
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `config` connect `config.js` to `index.js`, `autoAiHandler.js`, `ryzumiCDN`, `executeAiRequest`, `messageAdapter.js`?**
-  _High betweenness centrality (0.106) - this node is a cross-community bridge._
+  _High betweenness centrality (0.113) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `dependencies` to `package.json`, `mime-types`, `chalk`, `fluent-ffmpeg`, `file-type`, `human-readable`, `jimp`, `jsdom`, `mariadb`, `moment-timezone`, `node-cron`, `node-fetch`, `node-os-utils`, `node-webpmux`, `nodemon`, `sequelize`, `sharp`, `sqlite3`, `syntax-error`, `yargs`, `yt-search`, `dotenv`, `cheerio`?**
-  _High betweenness centrality (0.032) - this node is a cross-community bridge._
-- **Why does `executeAiRequest()` connect `executeAiRequest` to `autoAiHandler.js`, `ryzumiCDN`?**
-  _High betweenness centrality (0.027) - this node is a cross-community bridge._
+  _High betweenness centrality (0.031) - this node is a cross-community bridge._
+- **Why does `executeAiRequest()` connect `executeAiRequest` to `autoAiHandler.js`?**
+  _High betweenness centrality (0.024) - this node is a cross-community bridge._
 - **What connects `startTime`, `groupCache`, `lidCache` to the rest of the system?**
   _75 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `config.js` be split into smaller, more focused modules?**

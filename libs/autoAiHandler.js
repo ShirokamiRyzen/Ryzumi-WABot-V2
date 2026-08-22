@@ -2,8 +2,7 @@ import axios from 'axios';
 import config from '../config.js';
 import { validatePlugin } from '../middlewares/validator.js';
 import { getAutoAiPrompt, cleanAiResponse } from './aiPrompt.js';
-import { ryzumiCDN } from './uploader.js';
-import { getVisionModels, getTextModels } from './aiModels.js';
+import { getVisionModels, getTextModels, compressImageToBase64 } from './aiModels.js';
 
 const FORBIDDEN_COMMANDS = ['eval', 'exec', 'delprem', 'addprem', 'backup', 'debug', 'enable', 'disable', 'on', 'off'];
 
@@ -128,16 +127,15 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
             mediaDescription = 'dokumen/file';
         }
 
-        // Try uploading image if present
+        // Try processing and compressing image to base64 if present
         if (isMediaImage || isQuotedImage) {
             try {
                 const buffer = await msgData.downloadMedia();
                 if (buffer) {
-                    const cdnRes = await ryzumiCDN(buffer);
-                    imageUrl = cdnRes?.url || cdnRes?.result?.url || (typeof cdnRes?.result === 'string' ? cdnRes.result : (Array.isArray(cdnRes?.result) ? cdnRes.result[0]?.url : null));
+                    imageUrl = await compressImageToBase64(buffer);
                 }
             } catch (err) {
-                console.warn('Auto AI image upload failed:', err.message);
+                console.warn('Auto AI image processing failed:', err.message);
             }
         }
 
