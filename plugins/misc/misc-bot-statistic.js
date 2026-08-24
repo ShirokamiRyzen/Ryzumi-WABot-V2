@@ -71,6 +71,7 @@ export default {
         statText += `│ *Public Mode:* ${setting.is_public ? 'Aktif' : 'Mati'}\n`;
         statText += `│ *Register Mode:* ${setting.is_register ? 'Aktif' : 'Mati'}\n`;
         statText += `│ *GC Only Mode:* ${setting.is_gconly ? 'Aktif' : 'Mati'}\n`;
+        statText += `│ *Anti-Call:* ${setting.is_anticall ? 'Aktif' : 'Mati'}\n`;
         statText += `╰─────────────┈\n\n`;
 
         statText += `╭─「 *SYSTEM USAGE* 」\n`;

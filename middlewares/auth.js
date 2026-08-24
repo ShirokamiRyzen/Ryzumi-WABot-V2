@@ -11,7 +11,7 @@ export const processAuth = async (sock, msgData) => {
     if (msgData.senderJid.endsWith('@g.us') || msgData.senderJid === 'status@broadcast') {
         const [setting] = await Setting.findOrCreate({
             where: { id: 1 },
-            defaults: { is_public: true, is_register: true, is_gconly: false }
+            defaults: { is_public: true, is_register: true, is_gconly: false, is_autogpt: false, is_anticall: false }
         });
         return {
             user: {
@@ -131,7 +131,7 @@ export const processAuth = async (sock, msgData) => {
 
     const [setting] = await Setting.findOrCreate({
         where: { id: 1 },
-        defaults: { is_public: true, is_register: true, is_gconly: false }
+        defaults: { is_public: true, is_register: true, is_gconly: false, is_autogpt: false, is_anticall: false }
     });
 
     return { user, group, setting };

@@ -5,7 +5,7 @@ export default {
     category: 'misc',
     description: 'Mengaktifkan atau menonaktifkan fitur bot',
     async execute(sock, m, msgData, user, group) {
-        const availableFeatures = ['welcome', 'limit', 'public', 'register', 'gconly', 'ai'];
+        const availableFeatures = ['welcome', 'limit', 'public', 'register', 'gconly', 'ai', 'anticall'];
         const feature = msgData.args[0]?.toLowerCase();
         const action = msgData.commandName;
         const status = (action === 'enable' || action === 'on');
@@ -37,7 +37,7 @@ export default {
         }
 
         // Fitur khusus Global (Owner Only)
-        if (['public', 'register', 'gconly'].includes(feature)) {
+        if (['public', 'register', 'gconly', 'anticall'].includes(feature)) {
             if (!user.isOwner) {
                 return sock.sendMessage(msgData.remoteJid, {
                     text: `Maaf ya kak, cuma Owner Ryzumi yang boleh atur fitur *${feature}*~ (｡T ω T｡)`
@@ -46,7 +46,7 @@ export default {
 
             const [setting] = await Setting.findOrCreate({
                 where: { id: 1 },
-                defaults: { is_public: true, is_register: true, is_gconly: false, is_autogpt: false }
+                defaults: { is_public: true, is_register: true, is_gconly: false, is_autogpt: false, is_anticall: false }
             });
 
             if (feature === 'public') {
@@ -63,6 +63,11 @@ export default {
                 await setting.update({ is_gconly: status });
                 return sock.sendMessage(msgData.remoteJid, {
                     text: `Selesai! Mode *Group Only* sekarang sudah Ryzumi ${status ? 'aktifkan (hanya merespon di grup)' : 'matikan (merespon di grup & private)'} yaa~ (๑>ᴗ<๑)`
+                }, { quoted: m });
+            } else if (feature === 'anticall') {
+                await setting.update({ is_anticall: status });
+                return sock.sendMessage(msgData.remoteJid, {
+                    text: `Selesai! Fitur *Anti-Call* sekarang sudah Ryzumi ${status ? 'aktifkan (siapa pun yang menelpon atau video call ke chat pribadi bot akan otomatis diblokir)' : 'matikan (panggilan diizinkan)'} yaa~ (˶˃ ᵕ ˂˶)`
                 }, { quoted: m });
             }
         }

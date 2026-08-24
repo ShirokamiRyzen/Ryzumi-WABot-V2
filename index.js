@@ -78,7 +78,7 @@ async function connectToWhatsApp() {
             // Inisialisasi Setting default jika belum ada
             await Setting.findOrCreate({
                 where: { id: 1 },
-                defaults: { is_public: true, is_register: true, is_gconly: false }
+                defaults: { is_public: true, is_register: true, is_gconly: false, is_autogpt: false, is_anticall: false }
             });
 
             isDbConnected = true;
@@ -225,6 +225,16 @@ async function connectToWhatsApp() {
         for (const plugin of plugins) {
             if (plugin.onParticipantsUpdate) {
                 await plugin.onParticipantsUpdate(sock, update);
+            }
+        }
+    });
+
+    // Event Handler Panggilan Masuk (Anti-Call)
+    sock.ev.on('call', async (calls) => {
+        const { plugins } = await import('./libs/hot-reload.js');
+        for (const plugin of plugins) {
+            if (plugin.onCall) {
+                await plugin.onCall(sock, calls);
             }
         }
     });

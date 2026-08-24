@@ -15,8 +15,8 @@
     "semantic_hash": ""
   },
   "databases/orm/Setting.js": {
-    "mtime": 1786033272.8166828,
-    "ast_hash": "7f89bd26cde95794ce93ce43056da735",
+    "mtime": 1787550102.3786895,
+    "ast_hash": "175809bc68b59b510ff6b6825b46902b",
     "semantic_hash": ""
   },
   "databases/orm/User.js": {
@@ -25,8 +25,8 @@
     "semantic_hash": ""
   },
   "index.js": {
-    "mtime": 1782872262.0332658,
-    "ast_hash": "c106ed2c1ac0e8eb73a74792bbd25b31",
+    "mtime": 1787550112.3711855,
+    "ast_hash": "200344b9b71882cddca58dbdab941775",
     "semantic_hash": ""
   },
   "libs/adapter/messageAdapter.js": {
@@ -90,8 +90,8 @@
     "semantic_hash": ""
   },
   "middlewares/auth.js": {
-    "mtime": 1782948676.6507297,
-    "ast_hash": "18ff2de087a5a044d492d0ab3a41abf5",
+    "mtime": 1787550120.0933437,
+    "ast_hash": "aeae786ee5efbedf85a37b8806213126",
     "semantic_hash": ""
   },
   "middlewares/handler.js": {
@@ -285,13 +285,13 @@
     "semantic_hash": ""
   },
   "plugins/misc/misc-bot-statistic.js": {
-    "mtime": 1779587862.2549503,
-    "ast_hash": "6896c7e077d545af15454ac739bffe47",
+    "mtime": 1787550147.57332,
+    "ast_hash": "d233d3de6a6a745f3d106b32d5654304",
     "semantic_hash": ""
   },
   "plugins/misc/misc-enable-disable.js": {
-    "mtime": 1786284285.6249752,
-    "ast_hash": "e7944d03e2033107ccbfceb25b8f7f48",
+    "mtime": 1787550129.6020184,
+    "ast_hash": "2260ea0bb6f36ee3f2f4d97f0778d4f4",
     "semantic_hash": ""
   },
   "plugins/misc/misc-ping.js": {
@@ -527,6 +527,11 @@
   "plugins/ai/ai-minimax.js": {
     "mtime": 1787328344.9966612,
     "ast_hash": "4410b3180a6f405eaf634da5635a9de0",
+    "semantic_hash": ""
+  },
+  "plugins/owner/owner-anticall.js": {
+    "mtime": 1787550141.7189524,
+    "ast_hash": "7746ad7921788138c20cfba2eae910c3",
     "semantic_hash": ""
   }
 }

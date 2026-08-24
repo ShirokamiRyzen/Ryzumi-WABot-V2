@@ -22,6 +22,10 @@ const Setting = sequelize.define('Setting', {
     is_autogpt: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+    },
+    is_anticall: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 }, {
     tableName: 'settings',
