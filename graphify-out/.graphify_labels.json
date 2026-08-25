@@ -24,7 +24,7 @@
   "22": "messageAdapter.js",
   "23": "node-cron",
   "24": "node-fetch",
-  "25": "node-os-utils",
+  "25": "autoAiHandler.js",
   "26": "node-webpmux",
   "27": "nodemon",
   "28": "sequelize",
@@ -55,5 +55,6 @@
   "53": "sticker-get-exif.js",
   "54": "tool-fetch.js",
   "55": "3. Tata Penulisan & Maintenance Sistem",
-  "56": "dotenv"
+  "56": "dotenv",
+  "57": "baileys"
 }

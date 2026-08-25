@@ -2,6 +2,70 @@ import Setting from '../../databases/orm/Setting.js';
 import config from '../../config.js';
 import { resolveLidToJid } from '../../libs/lid-resolver.js';
 
+// Cache untuk deduplikasi event call agar tidak diproses berulang-ulang
+const processedCalls = new Set();
+
+/**
+ * Helper untuk memblokir JID secara aman dengan fallback raw IQ query jika Baileys Boom error
+ */
+async function blockUser(sock, jid, lid) {
+    if (!jid) return false;
+
+    // 1. Coba method standar Baileys
+    try {
+        await sock.updateBlockStatus(jid, 'block');
+        return true;
+    } catch (err) {
+        // Lanjut ke fallback raw query
+    }
+
+    // 2. Fallback kirim stanza IQ blocklist WhatsApp langsung
+    try {
+        const itemAttrs = { action: 'block', jid: lid || jid };
+        if (jid.endsWith('@s.whatsapp.net')) {
+            itemAttrs.pn_jid = jid;
+        }
+
+        await sock.query({
+            tag: 'iq',
+            attrs: {
+                xmlns: 'blocklist',
+                to: 's.whatsapp.net',
+                type: 'set'
+            },
+            content: [
+                {
+                    tag: 'item',
+                    attrs: itemAttrs
+                }
+            ]
+        });
+        return true;
+    } catch (err) {
+        // Fallback minimalis
+        try {
+            await sock.query({
+                tag: 'iq',
+                attrs: {
+                    xmlns: 'blocklist',
+                    to: 's.whatsapp.net',
+                    type: 'set'
+                },
+                content: [
+                    {
+                        tag: 'item',
+                        attrs: { action: 'block', jid: jid }
+                    }
+                ]
+            });
+            return true;
+        } catch (e) {
+            console.error(`[Anti-Call] Gagal memblokir ${jid}:`, e.message);
+            return false;
+        }
+    }
+}
+
 export default {
     command: ['anticall'],
     category: 'owner',
@@ -20,7 +84,7 @@ export default {
             await setting.update({ is_anticall: true });
             return sock.sendMessage(msgData.remoteJid, {
                 text: `Horeee! Fitur *Anti-Call* berhasil diaktifkan! (˶˃ ᵕ ˂˶)\n\n` +
-                    `Sekarang siapa pun yang menelpon atau video call ke chat pribadi nomor bot akan otomatis ditolak dan diblokir (kecuali nomor Owner & Bot) (๑>ᴗ<๑)`
+                    `Sekarang siapa pun yang menelpon atau video call ke chat pribadi nomor bot akan otomatis langsung ditolak dan diblokir tanpa chat (kecuali nomor Owner & Bot) (๑>ᴗ<๑)`
             }, { quoted: m });
         }
 
@@ -31,7 +95,6 @@ export default {
             }, { quoted: m });
         }
 
-        // Tampilkan status & panduan jika argumen tidak ada atau salah
         const statusText = setting.is_anticall ? '🟢 *Aktif*' : '🔴 *Nonaktif*';
         const helpText = `╭─「 *PENGATURAN ANTI-CALL* 」\n` +
             `│ *Status saat ini:* ${statusText}\n` +
@@ -40,7 +103,7 @@ export default {
             `• \`.anticall on\` (Aktifkan proteksi anti-call)\n` +
             `• \`.anticall off\` (Matikan proteksi anti-call)\n` +
             `• \`.enable anticall\` / \`.disable anticall\`\n\n` +
-            `_Catatan: Nomor Owner dan nomor bot sendiri tidak akan diblokir saat menelpon._ (๑>ᴗ<๑)`;
+            `_Catatan: Panggilan pribadi akan langsung di-reject dan diblokir seketika tanpa mengirim pesan ke penelpon._ (๑>ᴗ<๑)`;
 
         return sock.sendMessage(msgData.remoteJid, { text: helpText.trim() }, { quoted: m });
     },
@@ -54,96 +117,102 @@ export default {
 
             if (!setting || !setting.is_anticall) return;
 
-            const cleanNumber = (jid) => jid ? jid.split('@')[0].split(':')[0].replace(/[^0-9]/g, '') : '';
-            const ownerNumbers = (config.OWNER_NUMBER || '')
-                .split(',')
-                .map(n => cleanNumber(n))
-                .filter(Boolean);
-
-            const botNum = cleanNumber(sock.user?.id) || cleanNumber(config.BOT_NUMBER);
-            const botLidNum = cleanNumber(sock.user?.lid);
+            const cleanNum = (str) => (str || '').replace(/[^0-9]/g, '');
+            const ownerNums = (config.OWNER_NUMBER || '').split(',').map(cleanNum).filter(Boolean);
+            const botNum = cleanNum(sock.user?.id) || cleanNum(config.BOT_NUMBER);
+            const botLidNum = cleanNum(sock.user?.lid);
 
             for (const call of calls) {
-                // Hanya proses saat status call adalah 'offer' (panggilan masuk yang sedang berdering)
+                // Hanya proses status 'offer' (panggilan masuk yang pertama kali masuk)
                 if (call.status !== 'offer') continue;
 
-                // Jangan blokir panggilan grup, hanya panggilan chat pribadi ke bot
-                if (call.isGroup || call.from?.endsWith('@g.us')) continue;
+                // Deduplikasi: jika callId ini sudah diproses dalam 1 menit, lewati
+                if (processedCalls.has(call.id)) continue;
+                processedCalls.add(call.id);
+                setTimeout(() => processedCalls.delete(call.id), 60000);
 
-                let callerJid = resolveLidToJid(call.from, sock);
-                if (callerJid?.endsWith('@lid') && sock?.signalRepository?.lidMapping) {
-                    try {
-                        const pn = await sock.signalRepository.lidMapping.getPNForLID(callerJid);
-                        if (pn) {
-                            callerJid = `${pn.split(':')[0].split('@')[0]}@s.whatsapp.net`;
-                        }
-                    } catch (e) {
-                        // Abaikan error resolusi async
+                // Abaikan panggilan grup
+                if (call.isGroup || call.from?.endsWith('@g.us') || call.chatId?.endsWith('@g.us')) continue;
+
+                // Identifikasi nomor telepon asli (PN) dan LID
+                let phoneJid = null;
+                let lidJid = null;
+
+                if (call.callerPn) {
+                    const pn = cleanNum(call.callerPn);
+                    if (pn) phoneJid = `${pn}@s.whatsapp.net`;
+                }
+
+                for (const raw of [call.from, call.chatId]) {
+                    if (!raw) continue;
+                    if (raw.endsWith('@s.whatsapp.net')) {
+                        phoneJid = phoneJid || raw;
+                    } else if (raw.endsWith('@lid')) {
+                        lidJid = lidJid || raw;
                     }
                 }
 
-                const callerNum = cleanNumber(callerJid);
-                const rawCallerNum = cleanNumber(call.from);
+                // Coba resolve LID jika phoneJid belum dapat
+                if (!phoneJid && lidJid) {
+                    const resolved = resolveLidToJid(lidJid, sock);
+                    if (resolved && resolved.endsWith('@s.whatsapp.net')) {
+                        phoneJid = resolved;
+                    } else if (sock?.signalRepository?.lidMapping) {
+                        try {
+                            const pn = await sock.signalRepository.lidMapping.getPNForLID(lidJid);
+                            if (pn) phoneJid = `${pn.split(':')[0].split('@')[0]}@s.whatsapp.net`;
+                        } catch (e) {}
+                    }
+                }
+
+                const callerPhoneNum = cleanNum(phoneJid);
+                const callerLidNum = cleanNum(lidJid);
+                const rawFromNum = cleanNum(call.from);
 
                 // Pengecualian: Nomor Owner dan Nomor Bot itu sendiri
                 const isExempt = call.fromMe ||
-                    ownerNumbers.includes(callerNum) ||
-                    ownerNumbers.includes(rawCallerNum) ||
-                    callerNum === botNum ||
-                    rawCallerNum === botNum ||
-                    (botLidNum && (callerNum === botLidNum || rawCallerNum === botLidNum));
+                    ownerNums.some(n => n && (n === callerPhoneNum || n === rawFromNum)) ||
+                    botNum === callerPhoneNum ||
+                    botNum === rawFromNum ||
+                    (botLidNum && (botLidNum === callerLidNum || botLidNum === rawFromNum));
 
                 if (isExempt) continue;
 
                 const callType = call.isVideo ? 'Video Call' : 'Panggilan Suara';
 
-                // 1. Tolak Panggilan (Reject Call)
+                // 1. Tolak Panggilan Seketika (Reject Call)
                 try {
                     await sock.rejectCall(call.id, call.from);
-                } catch (err) {
-                    console.error('[Anti-Call] Gagal me-reject panggilan:', err.message);
-                }
-
-                // 2. Kirim pesan pemberitahuan sebelum blokir
-                const rejectMsg = `⚠️ *Panggilan Ditolak & Nomor Diblokir!*\n\n` +
-                    `Uwaaa! Maaf ya kak @${callerNum || rawCallerNum}, bot Ryzumi tidak menerima ${callType} ke chat pribadi! (｡T ω T｡)\n\n` +
-                    `Sesuai aturan keamanan *Anti-Call*, nomor kakak telah diblokir secara otomatis oleh sistem.\n` +
-                    `Jika tidak sengaja atau ingin membuka blokir, silakan hubungi Owner kami yaa~ (˶˃ ᵕ ˂˶)`;
-
-                try {
-                    await sock.sendMessage(call.from, {
-                        text: rejectMsg,
-                        mentions: [callerJid.endsWith('@s.whatsapp.net') ? callerJid : call.from]
-                    });
-                } catch (err) {
-                    console.error('[Anti-Call] Gagal mengirim pesan penolakan:', err.message);
-                }
-
-                // 3. Blokir nomor penelpon
-                try {
-                    await sock.updateBlockStatus(call.from, 'block');
-                    if (callerJid !== call.from && callerJid.endsWith('@s.whatsapp.net')) {
-                        await sock.updateBlockStatus(callerJid, 'block').catch(() => {});
+                    if (call.chatId && call.chatId !== call.from) {
+                        await sock.rejectCall(call.id, call.chatId).catch(() => {});
                     }
-                    console.log(`[Anti-Call] 🚫 Berhasil memblokir ${callerNum || rawCallerNum} (${callType}).`);
                 } catch (err) {
-                    console.error('[Anti-Call] Gagal memblokir user:', err.message);
+                    console.error('[Anti-Call] Gagal reject call:', err.message);
                 }
 
-                // 4. Kirim notifikasi ke Owner
+                // 2. Langsung Blokir Nomor Tanpa Chatting
+                if (phoneJid) await blockUser(sock, phoneJid, lidJid);
+                if (lidJid && lidJid !== phoneJid) await blockUser(sock, lidJid, phoneJid);
+                if (call.from && call.from !== phoneJid && call.from !== lidJid) await blockUser(sock, call.from);
+
+                const displayNum = callerPhoneNum ? `+${callerPhoneNum}` : (callerLidNum ? `LID:${callerLidNum}` : (call.from || 'Unknown'));
+                console.log(`[Anti-Call] 🚫 Berhasil menolak & memblokir penelpon: ${displayNum} (${callType})`);
+
+                // 3. Kirim notifikasi ringkas ke Owner
                 try {
                     const ownerTarget = config.OWNER_NUMBER.includes('@') ? config.OWNER_NUMBER : `${config.OWNER_NUMBER}@s.whatsapp.net`;
+                    const mentionJids = phoneJid ? [phoneJid] : [];
                     await sock.sendMessage(ownerTarget, {
                         text: `🛡️ *[NOTIFIKASI ANTI-CALL]*\n\n` +
-                            `Ryzumi baru saja memblokir penelpon otomatis nih kak!\n` +
-                            `• *Nomor:* @${callerNum || rawCallerNum}\n` +
+                            `Penelpon otomatis ditolak & diblokir:\n` +
+                            `• *Nomor:* ${callerPhoneNum ? `@${callerPhoneNum}` : displayNum}\n` +
                             `• *Tipe:* ${callType}\n` +
                             `• *Waktu:* ${new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })}\n\n` +
-                            `Sistem anti-call berjalan lancar! (๑>ᴗ<๑)`,
-                        mentions: [callerJid.endsWith('@s.whatsapp.net') ? callerJid : call.from]
+                            `_Nomor langsung diblokir tanpa pesan._`,
+                        mentions: mentionJids
                     });
                 } catch (err) {
-                    // Abaikan jika notifikasi owner gagal
+                    // Abaikan error notifikasi owner
                 }
             }
         } catch (error) {
