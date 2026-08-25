@@ -1,69 +1,146 @@
 import Setting from '../../databases/orm/Setting.js';
 import config from '../../config.js';
-import { resolveLidToJid } from '../../libs/lid-resolver.js';
+import { resolveLidToJid, lidCache } from '../../libs/lid-resolver.js';
+import groupCache from '../../libs/groupCache.js';
 
 // Cache untuk deduplikasi event call agar tidak diproses berulang-ulang
 const processedCalls = new Set();
 
 /**
- * Helper untuk memblokir JID secara aman dengan fallback raw IQ query jika Baileys Boom error
+ * Menyelesaikan (resolve) LID dan JID nomor telepon secara komprehensif
  */
-async function blockUser(sock, jid, lid) {
-    if (!jid) return false;
+async function resolveCallerIdentity(rawJid, sock, call) {
+    let phoneJid = null;
+    let lidJid = null;
 
-    // 1. Coba method standar Baileys
-    try {
-        await sock.updateBlockStatus(jid, 'block');
-        return true;
-    } catch (err) {
-        // Lanjut ke fallback raw query
+    // 1. Ambil nomor telepon langsung dari atribut panggilan WhatsApp jika ada
+    if (call?.callerPn) {
+        const clean = call.callerPn.replace(/[^0-9]/g, '');
+        if (clean) phoneJid = `${clean}@s.whatsapp.net`;
     }
 
-    // 2. Fallback kirim stanza IQ blocklist WhatsApp langsung
-    try {
-        const itemAttrs = { action: 'block', jid: lid || jid };
-        if (jid.endsWith('@s.whatsapp.net')) {
-            itemAttrs.pn_jid = jid;
-        }
+    if (rawJid?.endsWith('@s.whatsapp.net')) {
+        phoneJid = phoneJid || rawJid;
+    } else if (rawJid?.endsWith('@lid')) {
+        lidJid = rawJid;
+    }
 
-        await sock.query({
-            tag: 'iq',
-            attrs: {
-                xmlns: 'blocklist',
-                to: 's.whatsapp.net',
-                type: 'set'
-            },
-            content: [
-                {
-                    tag: 'item',
-                    attrs: itemAttrs
-                }
-            ]
-        });
-        return true;
-    } catch (err) {
-        // Fallback minimalis
+    if (call?.chatId?.endsWith('@s.whatsapp.net')) {
+        phoneJid = phoneJid || call.chatId;
+    } else if (call?.chatId?.endsWith('@lid')) {
+        lidJid = lidJid || call.chatId;
+    }
+
+    const lidNumber = lidJid ? lidJid.split('@')[0] : null;
+
+    // 2. Cek memori lidCache & reverse mapping session Baileys
+    if (lidJid && !phoneJid) {
+        const resolved = resolveLidToJid(lidJid, sock);
+        if (resolved && resolved.endsWith('@s.whatsapp.net')) {
+            phoneJid = resolved;
+        }
+    }
+
+    // 3. Cek Baileys signalRepository lidMapping
+    if (lidJid && !phoneJid && sock?.signalRepository?.lidMapping) {
         try {
-            await sock.query({
-                tag: 'iq',
-                attrs: {
-                    xmlns: 'blocklist',
-                    to: 's.whatsapp.net',
-                    type: 'set'
-                },
-                content: [
-                    {
-                        tag: 'item',
-                        attrs: { action: 'block', jid: jid }
-                    }
-                ]
-            });
-            return true;
-        } catch (e) {
-            console.error(`[Anti-Call] Gagal memblokir ${jid}:`, e.message);
-            return false;
+            const pn = await sock.signalRepository.lidMapping.getPNForLID(lidJid);
+            if (pn) {
+                const cleanPn = pn.split(':')[0].split('@')[0];
+                phoneJid = `${cleanPn}@s.whatsapp.net`;
+            }
+        } catch (e) {}
+    }
+
+    // 4. Cari dari seluruh metadata grup yang diikuti bot
+    if (lidJid && !phoneJid) {
+        for (const [_, metadata] of groupCache) {
+            if (!metadata?.participants) continue;
+            const match = metadata.participants.find(p => 
+                p.lid === lidJid || 
+                p.id === lidJid || 
+                (lidNumber && p.lid && p.lid.split('@')[0] === lidNumber)
+            );
+            if (match && match.id && match.id.endsWith('@s.whatsapp.net')) {
+                phoneJid = match.id;
+                break;
+            }
         }
     }
+
+    // 5. Daftarkan mapping ke memory cache agar Baileys mengenali nomor ini
+    if (phoneJid && lidJid) {
+        const pnUser = phoneJid.split('@')[0].split(':')[0];
+        const lidUser = lidJid.split('@')[0].split(':')[0];
+        lidCache.set(lidUser, phoneJid);
+        if (sock?.signalRepository?.lidMapping) {
+            try {
+                sock.signalRepository.lidMapping.mappingCache.set(`lid:${lidUser}`, pnUser);
+                sock.signalRepository.lidMapping.mappingCache.set(`pn:${pnUser}`, lidUser);
+            } catch (e) {}
+        }
+    }
+
+    return { phoneJid, lidJid, rawJid };
+}
+
+/**
+ * Memblokir nomor pengguna secara tuntas (baik JID maupun LID)
+ */
+async function executeBlock(sock, { phoneJid, lidJid, rawJid }) {
+    const pnUser = phoneJid ? phoneJid.split('@')[0].split(':')[0] : null;
+    const lidUser = lidJid ? lidJid.split('@')[0].split(':')[0] : null;
+
+    if (pnUser && lidUser && sock?.signalRepository?.lidMapping) {
+        try {
+            sock.signalRepository.lidMapping.mappingCache.set(`lid:${lidUser}`, pnUser);
+            sock.signalRepository.lidMapping.mappingCache.set(`pn:${pnUser}`, lidUser);
+        } catch (e) {}
+    }
+
+    const targets = [phoneJid, lidJid, rawJid].filter(Boolean);
+    let isBlocked = false;
+
+    // 1. Coba updateBlockStatus standar Baileys
+    for (const target of targets) {
+        try {
+            await sock.updateBlockStatus(target, 'block');
+            isBlocked = true;
+        } catch (err) {
+            // Lanjut ke fallback raw query jika Baileys internal mapping gagal
+        }
+    }
+
+    // 2. Fallback kirim stanza IQ Blocklist langsung ke server WhatsApp
+    if (!isBlocked) {
+        for (const target of targets) {
+            try {
+                const itemAttrs = { action: 'block', jid: target };
+                if (target.endsWith('@lid') && phoneJid) {
+                    itemAttrs.pn_jid = phoneJid;
+                }
+                await sock.query({
+                    tag: 'iq',
+                    attrs: {
+                        xmlns: 'blocklist',
+                        to: 's.whatsapp.net',
+                        type: 'set'
+                    },
+                    content: [
+                        {
+                            tag: 'item',
+                            attrs: itemAttrs
+                        }
+                    ]
+                });
+                isBlocked = true;
+            } catch (err) {
+                // Abaikan
+            }
+        }
+    }
+
+    return isBlocked;
 }
 
 export default {
@@ -123,10 +200,10 @@ export default {
             const botLidNum = cleanNum(sock.user?.lid);
 
             for (const call of calls) {
-                // Hanya proses status 'offer' (panggilan masuk yang pertama kali masuk)
+                // Hanya proses status 'offer' (panggilan baru masuk)
                 if (call.status !== 'offer') continue;
 
-                // Deduplikasi: jika callId ini sudah diproses dalam 1 menit, lewati
+                // Deduplikasi event
                 if (processedCalls.has(call.id)) continue;
                 processedCalls.add(call.id);
                 setTimeout(() => processedCalls.delete(call.id), 60000);
@@ -134,40 +211,12 @@ export default {
                 // Abaikan panggilan grup
                 if (call.isGroup || call.from?.endsWith('@g.us') || call.chatId?.endsWith('@g.us')) continue;
 
-                // Identifikasi nomor telepon asli (PN) dan LID
-                let phoneJid = null;
-                let lidJid = null;
-
-                if (call.callerPn) {
-                    const pn = cleanNum(call.callerPn);
-                    if (pn) phoneJid = `${pn}@s.whatsapp.net`;
-                }
-
-                for (const raw of [call.from, call.chatId]) {
-                    if (!raw) continue;
-                    if (raw.endsWith('@s.whatsapp.net')) {
-                        phoneJid = phoneJid || raw;
-                    } else if (raw.endsWith('@lid')) {
-                        lidJid = lidJid || raw;
-                    }
-                }
-
-                // Coba resolve LID jika phoneJid belum dapat
-                if (!phoneJid && lidJid) {
-                    const resolved = resolveLidToJid(lidJid, sock);
-                    if (resolved && resolved.endsWith('@s.whatsapp.net')) {
-                        phoneJid = resolved;
-                    } else if (sock?.signalRepository?.lidMapping) {
-                        try {
-                            const pn = await sock.signalRepository.lidMapping.getPNForLID(lidJid);
-                            if (pn) phoneJid = `${pn.split(':')[0].split('@')[0]}@s.whatsapp.net`;
-                        } catch (e) {}
-                    }
-                }
+                // Resolusi JID nomor telepon & LID secara lengkap
+                const { phoneJid, lidJid, rawJid } = await resolveCallerIdentity(call.from, sock, call);
 
                 const callerPhoneNum = cleanNum(phoneJid);
                 const callerLidNum = cleanNum(lidJid);
-                const rawFromNum = cleanNum(call.from);
+                const rawFromNum = cleanNum(rawJid);
 
                 // Pengecualian: Nomor Owner dan Nomor Bot itu sendiri
                 const isExempt = call.fromMe ||
@@ -190,10 +239,8 @@ export default {
                     console.error('[Anti-Call] Gagal reject call:', err.message);
                 }
 
-                // 2. Langsung Blokir Nomor Tanpa Chatting
-                if (phoneJid) await blockUser(sock, phoneJid, lidJid);
-                if (lidJid && lidJid !== phoneJid) await blockUser(sock, lidJid, phoneJid);
-                if (call.from && call.from !== phoneJid && call.from !== lidJid) await blockUser(sock, call.from);
+                // 2. Blokir Nomor Penelpon Secara Tuntas (Tanpa kirim chat apapun)
+                await executeBlock(sock, { phoneJid, lidJid, rawJid });
 
                 const displayNum = callerPhoneNum ? `+${callerPhoneNum}` : (callerLidNum ? `LID:${callerLidNum}` : (call.from || 'Unknown'));
                 console.log(`[Anti-Call] 🚫 Berhasil menolak & memblokir penelpon: ${displayNum} (${callType})`);
@@ -208,11 +255,11 @@ export default {
                             `• *Nomor:* ${callerPhoneNum ? `@${callerPhoneNum}` : displayNum}\n` +
                             `• *Tipe:* ${callType}\n` +
                             `• *Waktu:* ${new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })}\n\n` +
-                            `_Nomor langsung diblokir tanpa pesan._`,
+                            `_Panggilan langsung di-reject dan diblokir._`,
                         mentions: mentionJids
                     });
                 } catch (err) {
-                    // Abaikan error notifikasi owner
+                    // Abaikan jika notifikasi owner gagal
                 }
             }
         } catch (error) {

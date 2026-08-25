@@ -230,8 +230,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "libs_aimodels_uploadcompressedimage",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "uploadcompressedimage()"
     },
     {
@@ -252,8 +252,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "libs_aimodels_postaiwithretry",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "postaiwithretry()"
     },
     {
@@ -351,8 +351,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_aiprompt",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "aiprompt.js"
     },
     {
@@ -362,8 +362,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "libs_aiprompt_getautoaiprompt",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "getautoaiprompt()"
     },
     {
@@ -373,8 +373,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "libs_aiprompt_cleanairesponse",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "cleanairesponse()"
     },
     {
@@ -384,8 +384,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_autoaihandler",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "autoaihandler.js"
     },
     {
@@ -395,8 +395,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "libs_autoaihandler_forbidden_commands",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "forbidden_commands"
     },
     {
@@ -406,8 +406,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "libs_autoaihandler_parseexeccommand",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "parseexeccommand()"
     },
     {
@@ -417,8 +417,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "libs_autoaihandler_getquoteoption",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "getquoteoption()"
     },
     {
@@ -428,8 +428,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "libs_autoaihandler_handleautoai",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "handleautoai()"
     },
     {
@@ -571,8 +571,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_groupcache_groupcache",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 22,
+      "community_name": "messageAdapter.js",
       "norm_label": "groupcache"
     },
     {
@@ -615,8 +615,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_hot_reload",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "hot-reload.js"
     },
     {
@@ -626,8 +626,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "libs_hot_reload_plugins",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "plugins"
     },
     {
@@ -637,8 +637,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "libs_hot_reload_loadplugins",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "loadplugins()"
     },
     {
@@ -648,8 +648,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "libs_hot_reload_watchplugins",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "watchplugins()"
     },
     {
@@ -824,8 +824,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_handler",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "handler.js"
     },
     {
@@ -835,8 +835,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "middlewares_handler_plugindir",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "plugindir"
     },
     {
@@ -857,8 +857,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_validator",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "validator.js"
     },
     {
@@ -868,8 +868,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "middlewares_validator_validateplugin",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "validateplugin()"
     },
     {
@@ -1033,8 +1033,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_baileys",
-      "community": 57,
-      "community_name": "baileys",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "baileys"
     },
     {
@@ -1044,8 +1044,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "baileys",
-      "community": 57,
-      "community_name": "baileys",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "baileys"
     },
     {
@@ -1341,8 +1341,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "package_dependencies_node_os_utils",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 25,
+      "community_name": "node-os-utils",
       "norm_label": "node-os-utils"
     },
     {
@@ -1352,8 +1352,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "node_os_utils",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 25,
+      "community_name": "node-os-utils",
       "norm_label": "node-os-utils"
     },
     {
@@ -1605,8 +1605,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_auto",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "ai-auto.js"
     },
     {
@@ -1616,8 +1616,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "plugins_ai_ai_auto_execute",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "execute()"
     },
     {
@@ -1671,8 +1671,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_ai_ai_clear",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "ai-clear.js"
     },
     {
@@ -1682,8 +1682,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_ai_ai_clear_execute",
-      "community": 25,
-      "community_name": "autoAiHandler.js",
+      "community": 14,
+      "community_name": "executeAiRequest",
       "norm_label": "execute()"
     },
     {
@@ -2768,7 +2768,7 @@
       "label": "processedCalls",
       "file_type": "code",
       "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L6",
+      "source_location": "L7",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall_processedcalls",
       "community": 22,
@@ -2776,32 +2776,43 @@
       "norm_label": "processedcalls"
     },
     {
-      "label": "blockUser()",
+      "label": "resolveCallerIdentity()",
       "file_type": "code",
       "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
-      "id": "plugins_owner_owner_anticall_blockuser",
+      "id": "plugins_owner_owner_anticall_resolvecalleridentity",
       "community": 22,
       "community_name": "messageAdapter.js",
-      "norm_label": "blockuser()"
+      "norm_label": "resolvecalleridentity()"
+    },
+    {
+      "label": "executeBlock()",
+      "file_type": "code",
+      "source_file": "plugins/owner/owner-anticall.js",
+      "source_location": "L90",
+      "_origin": "ast",
+      "id": "plugins_owner_owner_anticall_executeblock",
+      "community": 22,
+      "community_name": "messageAdapter.js",
+      "norm_label": "executeblock()"
     },
     {
       "label": "execute()",
       "file_type": "code",
       "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L75",
+      "source_location": "L152",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall_execute",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "execute()"
     },
     {
       "label": "onCall()",
       "file_type": "code",
       "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L111",
+      "source_location": "L188",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall_oncall",
       "community": 22,
@@ -5222,7 +5233,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L76",
+      "source_location": "L153",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_owner_owner_anticall_execute",
@@ -5234,7 +5245,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L113",
+      "source_location": "L190",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_owner_owner_anticall_oncall",
@@ -7342,6 +7353,30 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/owner/owner-anticall.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_owner_owner_anticall",
+      "target": "libs_groupcache",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/owner/owner-anticall.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_owner_owner_anticall",
+      "target": "libs_groupcache_groupcache",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7593,6 +7628,18 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "plugins/owner/owner-anticall.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_owner_owner_anticall",
+      "target": "libs_lid_resolver_lidcache",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "middlewares/auth.js",
       "source_location": "L6",
       "weight": 1.0,
@@ -7701,13 +7748,13 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L157",
+      "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "plugins_owner_owner_anticall_oncall",
-      "target": "libs_lid_resolver_resolvelidtojid"
+      "source": "plugins_owner_owner_anticall_resolvecalleridentity",
+      "target": "libs_lid_resolver_resolvelidtojid",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -9710,18 +9757,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L11",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "plugins_owner_owner_anticall",
-      "target": "plugins_owner_owner_anticall_blockuser",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L75",
+      "source_location": "L152",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_owner_owner_anticall",
@@ -9732,7 +9768,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L111",
+      "source_location": "L90",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_owner_owner_anticall",
+      "target": "plugins_owner_owner_anticall_executeblock",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/owner/owner-anticall.js",
+      "source_location": "L188",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_owner_owner_anticall",
@@ -9743,7 +9790,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_owner_owner_anticall",
@@ -9751,15 +9798,38 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/owner/owner-anticall.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_owner_owner_anticall",
+      "target": "plugins_owner_owner_anticall_resolvecalleridentity",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "plugins/owner/owner-anticall.js",
-      "source_location": "L194",
+      "source_location": "L215",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_owner_owner_anticall_oncall",
-      "target": "plugins_owner_owner_anticall_blockuser",
+      "target": "plugins_owner_owner_anticall_resolvecalleridentity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/owner/owner-anticall.js",
+      "source_location": "L243",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_owner_owner_anticall_oncall",
+      "target": "plugins_owner_owner_anticall_executeblock",
       "confidence_score": 1.0
     },
     {
@@ -10424,5 +10494,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "970a2d67ab53b55d79b2e9aa053d38997465ee49"
+  "built_at_commit": "aeaa298886873444b7b0518ff96bf5320ec22894"
 }
