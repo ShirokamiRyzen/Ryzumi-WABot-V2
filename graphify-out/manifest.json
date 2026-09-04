@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "libs/sticker/sticker.js": {
-    "mtime": 1778087257.5773032,
-    "ast_hash": "081720b72a9d1a77fff7d6bdcad902a0",
+    "mtime": 1788490502.5998456,
+    "ast_hash": "4c669b7330ae8a993a3e100093e3dda5",
     "semantic_hash": ""
   },
   "libs/uploader.js": {
@@ -350,8 +350,8 @@
     "semantic_hash": ""
   },
   "plugins/sticker/sticker-brat.js": {
-    "mtime": 1778144800.6593509,
-    "ast_hash": "3a99e08362cb33fd6c2829f8cd5f488c",
+    "mtime": 1788490527.6025195,
+    "ast_hash": "70ad71340e9e9048cedb140023e0d798",
     "semantic_hash": ""
   },
   "plugins/sticker/sticker-get-exif.js": {
@@ -360,13 +360,13 @@
     "semantic_hash": ""
   },
   "plugins/sticker/sticker-qc.js": {
-    "mtime": 1778566955.3156867,
-    "ast_hash": "1bf5cc4a608054a27fb979e944f4b218",
+    "mtime": 1788490540.718437,
+    "ast_hash": "449290d1a9fe8fc66ceeb28f16d29363",
     "semantic_hash": ""
   },
   "plugins/sticker/sticker-sticker.js": {
-    "mtime": 1778592291.1124666,
-    "ast_hash": "c0a534b49312cc17d28c4e9e2fe6cb2f",
+    "mtime": 1788490517.3520353,
+    "ast_hash": "11c42e0c95a37c452beba52b591978d8",
     "semantic_hash": ""
   },
   "plugins/sticker/sticker-to-media.js": {

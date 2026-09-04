@@ -153,8 +153,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageadapter",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "messageadapter.js"
     },
     {
@@ -164,8 +164,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "libs_adapter_messageadapter_extractmessagedata",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "extractmessagedata()"
     },
     {
@@ -175,8 +175,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "messageunwrapper.js"
     },
     {
@@ -186,8 +186,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_unwrapmessage",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "unwrapmessage()"
     },
     {
@@ -197,8 +197,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_getmessagetype",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "getmessagetype()"
     },
     {
@@ -208,8 +208,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_getmessagecontent",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "getmessagecontent()"
     },
     {
@@ -505,8 +505,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "libs_baileys_utils_sendalbummessage",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "sendalbummessage()"
     },
     {
@@ -571,8 +571,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_groupcache_groupcache",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "groupcache"
     },
     {
@@ -659,8 +659,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_lid_resolver",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "lid-resolver.js"
     },
     {
@@ -670,8 +670,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "libs_lid_resolver_lidcache",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "lidcache"
     },
     {
@@ -681,8 +681,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "libs_lid_resolver_resolvelidtojid",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "resolvelidtojid()"
     },
     {
@@ -730,10 +730,21 @@
       "norm_label": "videotowebp()"
     },
     {
-      "label": "writeExif()",
+      "label": "formatStickerAuthor()",
       "file_type": "code",
       "source_file": "libs/sticker/sticker.js",
       "source_location": "L73",
+      "_origin": "ast",
+      "id": "libs_sticker_sticker_formatstickerauthor",
+      "community": 2,
+      "community_name": "ryzumiCDN",
+      "norm_label": "formatstickerauthor()"
+    },
+    {
+      "label": "writeExif()",
+      "file_type": "code",
+      "source_file": "libs/sticker/sticker.js",
+      "source_location": "L91",
       "_origin": "ast",
       "id": "libs_sticker_sticker_writeexif",
       "community": 2,
@@ -1033,8 +1044,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_baileys",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 1,
+      "community_name": "baileys",
       "norm_label": "baileys"
     },
     {
@@ -1044,8 +1055,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "baileys",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 1,
+      "community_name": "baileys",
       "norm_label": "baileys"
     },
     {
@@ -1077,8 +1088,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "package_dependencies_cheerio",
-      "community": 1,
-      "community_name": "cheerio",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "cheerio"
     },
     {
@@ -1088,8 +1099,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "cheerio",
-      "community": 1,
-      "community_name": "cheerio",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "cheerio"
     },
     {
@@ -2540,8 +2551,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_group_kick_member",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "kick-member.js"
     },
     {
@@ -2551,8 +2562,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_group_kick_member_execute",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "execute()"
     },
     {
@@ -2760,8 +2771,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "owner-anticall.js"
     },
     {
@@ -2771,8 +2782,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall_processedcalls",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "processedcalls"
     },
     {
@@ -2782,8 +2793,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall_resolvecalleridentity",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "resolvecalleridentity()"
     },
     {
@@ -2793,8 +2804,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall_executeblock",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "executeblock()"
     },
     {
@@ -2815,8 +2826,8 @@
       "source_location": "L188",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall_oncall",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "oncall()"
     },
     {
@@ -2848,8 +2859,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "owner-debug-info.js"
     },
     {
@@ -2859,8 +2870,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info_execute",
-      "community": 22,
-      "community_name": "messageAdapter.js",
+      "community": 0,
+      "community_name": "index.js",
       "norm_label": "execute()"
     },
     {
@@ -7784,6 +7795,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/sticker/sticker.js",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_sticker_sticker",
+      "target": "libs_sticker_sticker_formatstickerauthor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/sticker/sticker.js",
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
@@ -7817,7 +7839,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/sticker/sticker.js",
-      "source_location": "L73",
+      "source_location": "L91",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_sticker_sticker",
@@ -7981,6 +8003,90 @@
       "target": "libs_sticker_sticker_videotowebp"
     },
     {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/sticker/sticker.js",
+      "source_location": "L96",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_sticker_sticker_writeexif",
+      "target": "libs_sticker_sticker_formatstickerauthor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/sticker/sticker-brat.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_sticker_sticker_brat",
+      "target": "libs_sticker_sticker_formatstickerauthor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/sticker/sticker-brat.js",
+      "source_location": "L43",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_sticker_sticker_brat_execute",
+      "target": "libs_sticker_sticker_formatstickerauthor"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/sticker/sticker-qc.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_sticker_sticker_qc",
+      "target": "libs_sticker_sticker_formatstickerauthor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/sticker/sticker-qc.js",
+      "source_location": "L70",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_sticker_sticker_qc_execute",
+      "target": "libs_sticker_sticker_formatstickerauthor"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/sticker/sticker-sticker.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_sticker_sticker_sticker",
+      "target": "libs_sticker_sticker_formatstickerauthor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/sticker/sticker-sticker.js",
+      "source_location": "L44",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_sticker_sticker_sticker_execute",
+      "target": "libs_sticker_sticker_formatstickerauthor"
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7998,7 +8104,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/sticker/sticker-brat.js",
-      "source_location": "L46",
+      "source_location": "L45",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_sticker_sticker_brat_execute",
@@ -8022,7 +8128,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plugins/sticker/sticker-qc.js",
-      "source_location": "L69",
+      "source_location": "L72",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_sticker_sticker_qc_execute",
@@ -10494,5 +10600,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "aeaa298886873444b7b0518ff96bf5320ec22894"
+  "built_at_commit": "8244d827fead99e9b6c9b49bae20e685a7d512ea"
 }

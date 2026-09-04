@@ -68,14 +68,32 @@ async function videoToWebp(media) {
 }
 
 /**
+ * Format sticker author watermark: Name (+WhatsApp Number)
+ */
+function formatStickerAuthor(user, msgData) {
+    const jid = (user?.jid?.endsWith('@s.whatsapp.net') ? user.jid : '') ||
+                (msgData?.senderJid?.endsWith('@s.whatsapp.net') ? msgData.senderJid : '') ||
+                user?.jid || msgData?.senderJid || '';
+    const rawNumber = jid.split('@')[0].split(':')[0].replace(/[^0-9]/g, '');
+    const userNumber = rawNumber ? `+${rawNumber}` : '';
+
+    let userName = (user?.name || msgData?.pushName || '').trim();
+    if (!userName || (rawNumber && userName.replace(/[^0-9]/g, '') === rawNumber)) {
+        userName = 'User';
+    }
+
+    return userNumber ? `${userName} (${userNumber})` : userName;
+}
+
+/**
  * Create EXIF metadata and write to WebP
  */
 async function writeExif(media, metadata) {
     const img = new webpmux.Image();
     await img.load(media);
     
-    let packname = metadata?.packName || '';
-    let author = metadata?.packPublish || '';
+    let packname = metadata?.packName || 'Ryzumi Bot';
+    let author = metadata?.packPublish || (metadata?.user || metadata?.msgData ? formatStickerAuthor(metadata.user, metadata.msgData) : 'User');
 
     const json = {
         'sticker-pack-id': 'Ryzumi-WABot-V2',
@@ -95,4 +113,4 @@ async function writeExif(media, metadata) {
     return await img.save(null);
 }
 
-export { imageToWebp, videoToWebp, writeExif };
+export { imageToWebp, videoToWebp, writeExif, formatStickerAuthor };

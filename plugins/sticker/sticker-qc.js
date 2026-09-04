@@ -1,6 +1,6 @@
 import axios from 'axios';
 import fetch from 'node-fetch';
-import { writeExif, imageToWebp } from '../../libs/sticker/sticker.js';
+import { writeExif, imageToWebp, formatStickerAuthor } from '../../libs/sticker/sticker.js';
 import { ryzumiCDN } from '../../libs/uploader.js';
 
 export default {
@@ -65,7 +65,10 @@ export default {
             
             if (response.headers['content-type']?.includes('image')) {
                 const stickerBuffer = await imageToWebp(Buffer.from(response.data));
-                const exifData = { packName: config.BOT_NAME, packPublish: user.name };
+                const exifData = {
+                    packName: config.BOT_NAME || 'Ryzumi Bot',
+                    packPublish: formatStickerAuthor(user, msgData)
+                };
                 const finalSticker = await writeExif(stickerBuffer, exifData);
                 await sock.sendMessage(remoteJid, { sticker: finalSticker }, { quoted: m });
             } else {

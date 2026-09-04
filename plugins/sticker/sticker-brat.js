@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from '../../config.js';
-import { writeExif, imageToWebp, videoToWebp } from '../../libs/sticker/sticker.js';
+import { writeExif, imageToWebp, videoToWebp, formatStickerAuthor } from '../../libs/sticker/sticker.js';
 
 export default {
     command: ['brat', 'bratvid', 'bratvideo'],
@@ -38,10 +38,9 @@ export default {
                 stickerBuffer = await imageToWebp(data);
             }
 
-            // Tambahkan metadata EXIF (packname & author)
             const exifData = {
-                packName: config.BOT_NAME,
-                packPublish: user.name
+                packName: config.BOT_NAME || 'Ryzumi Bot',
+                packPublish: formatStickerAuthor(user, msgData)
             };
             const finalSticker = await writeExif(stickerBuffer, exifData);
 

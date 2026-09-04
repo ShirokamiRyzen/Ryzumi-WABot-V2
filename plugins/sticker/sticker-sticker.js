@@ -1,4 +1,4 @@
-import { imageToWebp, videoToWebp, writeExif } from '../../libs/sticker/sticker.js';
+import { imageToWebp, videoToWebp, writeExif, formatStickerAuthor } from '../../libs/sticker/sticker.js';
 
 export default {
     command: ['sticker', 's', 'stiker', 'sgif'],
@@ -41,7 +41,7 @@ export default {
 
             const exifData = {
                 packName: config.BOT_NAME || 'Ryzumi Bot',
-                packPublish: user.name || 'User'
+                packPublish: formatStickerAuthor(user, msgData)
             };
 
             const finalSticker = await writeExif(webpBuffer, exifData);
