@@ -37,6 +37,10 @@ const config = {
   // API Service
   API_RYZUMI: process.env.API_RYZUMI,
 
+  // AI OpenAI Compatible Service
+  OPENAI_BASE_URL: process.env.OPENAI_BASE_URL || 'https://router.ryzumi.net/v1',
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY || '',
+
   // Image Link
   RYZUMI_DEFAULT_PP: process.env.RYZUMI_DEFAULT_PP,
   RYZUMI_BANNER: process.env.RYZUMI_BANNER,

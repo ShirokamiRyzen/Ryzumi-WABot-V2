@@ -2,6 +2,7 @@
 /node_modules
 /package-lock.json
 /sessions
+/sessions_ai
 /tmp
 /.vscode
 /bun.lock

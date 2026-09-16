@@ -1,7 +1,7 @@
 {
   "config.js": {
-    "mtime": 1782522088.9432273,
-    "ast_hash": "e2a9f5c489d633acb92e9cbe60b5cfc8",
+    "mtime": 1789571825.9460142,
+    "ast_hash": "250f1a8ce7a7eaa8d7c7186843189be9",
     "semantic_hash": ""
   },
   "databases/connector.js": {
@@ -105,8 +105,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1778753110.5464926,
-    "ast_hash": "1520690bb8a11d82a2d6b1f25c27d721",
+    "mtime": 1788490650.798733,
+    "ast_hash": "c2aedd64a92d2f3fa65b4ffea1b37a31",
     "semantic_hash": ""
   },
   "plugins/account/account-register.js": {
@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "plugins/downloader/downloader-tiktok.js": {
-    "mtime": 1779001409.072583,
-    "ast_hash": "c31ca6d547eb2ccfa2f96aca4d14d8df",
+    "mtime": 1788545580.1193466,
+    "ast_hash": "877b817ba846fad5984bf4ff3dd81fcc",
     "semantic_hash": ""
   },
   "plugins/downloader/downloader-twitter.js": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "libs/autoAiHandler.js": {
-    "mtime": 1787397440.2781596,
-    "ast_hash": "402d976f00d5aaf9cc6a45d9610ccd4a",
+    "mtime": 1789572566.2424984,
+    "ast_hash": "81211f4c5c85b32151374e98848e0612",
     "semantic_hash": ""
   },
   "plugins/ai/ai-auto.js": {
@@ -495,8 +495,8 @@
     "semantic_hash": ""
   },
   "plugins/ai/ai-clear.js": {
-    "mtime": 1786630307.170513,
-    "ast_hash": "6a732040621e56f26b1ca4752b68aad2",
+    "mtime": 1789572474.0898142,
+    "ast_hash": "52418eebc911f5af60e7bdd496e182ed",
     "semantic_hash": ""
   },
   "plugins/ai/ai-claude.js": {
@@ -520,8 +520,8 @@
     "semantic_hash": ""
   },
   "libs/aiModels.js": {
-    "mtime": 1787397426.0799751,
-    "ast_hash": "16d9cc8892e9aa2cdb15b26c94b288df",
+    "mtime": 1789572417.228267,
+    "ast_hash": "48b36bfe33d71aaef24f642785f72faf",
     "semantic_hash": ""
   },
   "plugins/ai/ai-minimax.js": {
@@ -532,6 +532,21 @@
   "plugins/owner/owner-anticall.js": {
     "mtime": 1787621751.9620254,
     "ast_hash": "f2f67da9e3f693e4872f7ee3cce0c858",
+    "semantic_hash": ""
+  },
+  "libs/aiSessionManager.js": {
+    "mtime": 1789572013.2979665,
+    "ast_hash": "79c470994dc94d2098933b39bdb88af0",
+    "semantic_hash": ""
+  },
+  "libs/aiWebTools.js": {
+    "mtime": 1789571924.9768093,
+    "ast_hash": "30827b6944581e0d2f492d33943b9bba",
+    "semantic_hash": ""
+  },
+  "plugins/downloader/downloader-douyin.js": {
+    "mtime": 1788545550.8934026,
+    "ast_hash": "45b8a551b2dce834dde9889d9a8aa5f2",
     "semantic_hash": ""
   }
 }

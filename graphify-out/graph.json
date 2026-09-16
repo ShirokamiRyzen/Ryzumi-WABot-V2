@@ -21,8 +21,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "config_config",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 22,
+      "community_name": "config",
       "norm_label": "config"
     },
     {
@@ -153,8 +153,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageadapter",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "messageadapter.js"
     },
     {
@@ -164,8 +164,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "libs_adapter_messageadapter_extractmessagedata",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "extractmessagedata()"
     },
     {
@@ -175,8 +175,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "messageunwrapper.js"
     },
     {
@@ -186,8 +186,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_unwrapmessage",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "unwrapmessage()"
     },
     {
@@ -197,8 +197,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_getmessagetype",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "getmessagetype()"
     },
     {
@@ -208,8 +208,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "libs_adapter_messageunwrapper_getmessagecontent",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "getmessagecontent()"
     },
     {
@@ -220,7 +220,7 @@
       "_origin": "ast",
       "id": "libs_aimodels",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "aimodels.js"
     },
     {
@@ -231,117 +231,117 @@
       "_origin": "ast",
       "id": "libs_aimodels_uploadcompressedimage",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "uploadcompressedimage()"
     },
     {
-      "label": "compressImageToBase64()",
+      "label": "fetchOpenAiModels()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L52",
+      "source_location": "L48",
       "_origin": "ast",
-      "id": "libs_aimodels_compressimagetobase64",
+      "id": "libs_aimodels_fetchopenaimodels",
       "community": 14,
-      "community_name": "executeAiRequest",
-      "norm_label": "compressimagetobase64()"
-    },
-    {
-      "label": "postAiWithRetry()",
-      "file_type": "code",
-      "source_file": "libs/aiModels.js",
-      "source_location": "L77",
-      "_origin": "ast",
-      "id": "libs_aimodels_postaiwithretry",
-      "community": 14,
-      "community_name": "executeAiRequest",
-      "norm_label": "postaiwithretry()"
-    },
-    {
-      "label": "fetchAiModels()",
-      "file_type": "code",
-      "source_file": "libs/aiModels.js",
-      "source_location": "L105",
-      "_origin": "ast",
-      "id": "libs_aimodels_fetchaimodels",
-      "community": 14,
-      "community_name": "executeAiRequest",
-      "norm_label": "fetchaimodels()"
+      "community_name": "aiModels.js",
+      "norm_label": "fetchopenaimodels()"
     },
     {
       "label": "isVisionModel()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L137",
+      "source_location": "L95",
       "_origin": "ast",
       "id": "libs_aimodels_isvisionmodel",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "isvisionmodel()"
     },
     {
       "label": "getBrandRegex()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L147",
+      "source_location": "L106",
       "_origin": "ast",
       "id": "libs_aimodels_getbrandregex",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "getbrandregex()"
-    },
-    {
-      "label": "sortModels()",
-      "file_type": "code",
-      "source_file": "libs/aiModels.js",
-      "source_location": "L170",
-      "_origin": "ast",
-      "id": "libs_aimodels_sortmodels",
-      "community": 14,
-      "community_name": "executeAiRequest",
-      "norm_label": "sortmodels()"
     },
     {
       "label": "getVisionModels()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L201",
+      "source_location": "L129",
       "_origin": "ast",
       "id": "libs_aimodels_getvisionmodels",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "getvisionmodels()"
     },
     {
       "label": "getTextModels()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L237",
+      "source_location": "L154",
       "_origin": "ast",
       "id": "libs_aimodels_gettextmodels",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "gettextmodels()"
+    },
+    {
+      "label": "AI_WEB_TOOLS",
+      "file_type": "code",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L190",
+      "_origin": "ast",
+      "id": "libs_aimodels_ai_web_tools",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "ai_web_tools"
+    },
+    {
+      "label": "executeAiTool()",
+      "file_type": "code",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L233",
+      "_origin": "ast",
+      "id": "libs_aimodels_executeaitool",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "executeaitool()"
+    },
+    {
+      "label": "requestOpenAiSse()",
+      "file_type": "code",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L271",
+      "_origin": "ast",
+      "id": "libs_aimodels_requestopenaisse",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "requestopenaisse()"
     },
     {
       "label": "getQuoteOption()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L276",
+      "source_location": "L366",
       "_origin": "ast",
       "id": "libs_aimodels_getquoteoption",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "getquoteoption()"
     },
     {
       "label": "executeAiRequest()",
       "file_type": "code",
       "source_file": "libs/aiModels.js",
-      "source_location": "L297",
+      "source_location": "L386",
       "_origin": "ast",
       "id": "libs_aimodels_executeairequest",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "executeairequest()"
     },
     {
@@ -352,7 +352,7 @@
       "_origin": "ast",
       "id": "libs_aiprompt",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "aiprompt.js"
     },
     {
@@ -363,7 +363,7 @@
       "_origin": "ast",
       "id": "libs_aiprompt_getautoaiprompt",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "getautoaiprompt()"
     },
     {
@@ -374,8 +374,107 @@
       "_origin": "ast",
       "id": "libs_aiprompt_cleanairesponse",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "cleanairesponse()"
+    },
+    {
+      "label": "aiSessionManager.js",
+      "file_type": "code",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "libs_aisessionmanager",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "aisessionmanager.js"
+    },
+    {
+      "label": "SESSIONS_DIR",
+      "file_type": "code",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "libs_aisessionmanager_sessions_dir",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "sessions_dir"
+    },
+    {
+      "label": "getSessionFilePath()",
+      "file_type": "code",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "libs_aisessionmanager_getsessionfilepath",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "getsessionfilepath()"
+    },
+    {
+      "label": "getSessionHistory()",
+      "file_type": "code",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "libs_aisessionmanager_getsessionhistory",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "getsessionhistory()"
+    },
+    {
+      "label": "saveSessionHistory()",
+      "file_type": "code",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "libs_aisessionmanager_savesessionhistory",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "savesessionhistory()"
+    },
+    {
+      "label": "clearSession()",
+      "file_type": "code",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L71",
+      "_origin": "ast",
+      "id": "libs_aisessionmanager_clearsession",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "clearsession()"
+    },
+    {
+      "label": "aiWebTools.js",
+      "file_type": "code",
+      "source_file": "libs/aiWebTools.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "libs_aiwebtools",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "aiwebtools.js"
+    },
+    {
+      "label": "searchDuckDuckGo()",
+      "file_type": "code",
+      "source_file": "libs/aiWebTools.js",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "libs_aiwebtools_searchduckduckgo",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "searchduckduckgo()"
+    },
+    {
+      "label": "fetchWebPage()",
+      "file_type": "code",
+      "source_file": "libs/aiWebTools.js",
+      "source_location": "L74",
+      "_origin": "ast",
+      "id": "libs_aiwebtools_fetchwebpage",
+      "community": 14,
+      "community_name": "aiModels.js",
+      "norm_label": "fetchwebpage()"
     },
     {
       "label": "autoAiHandler.js",
@@ -385,7 +484,7 @@
       "_origin": "ast",
       "id": "libs_autoaihandler",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "autoaihandler.js"
     },
     {
@@ -396,7 +495,7 @@
       "_origin": "ast",
       "id": "libs_autoaihandler_forbidden_commands",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "forbidden_commands"
     },
     {
@@ -407,7 +506,7 @@
       "_origin": "ast",
       "id": "libs_autoaihandler_parseexeccommand",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "parseexeccommand()"
     },
     {
@@ -418,7 +517,7 @@
       "_origin": "ast",
       "id": "libs_autoaihandler_getquoteoption",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "getquoteoption()"
     },
     {
@@ -429,7 +528,7 @@
       "_origin": "ast",
       "id": "libs_autoaihandler_handleautoai",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "handleautoai()"
     },
     {
@@ -483,8 +582,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_baileys_utils",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 57,
+      "community_name": "group-welcome-leave.js",
       "norm_label": "baileys-utils.js"
     },
     {
@@ -494,8 +593,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "libs_baileys_utils_getpp",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 57,
+      "community_name": "group-welcome-leave.js",
       "norm_label": "getpp()"
     },
     {
@@ -505,8 +604,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "libs_baileys_utils_sendalbummessage",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "sendalbummessage()"
     },
     {
@@ -571,8 +670,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_groupcache_groupcache",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "groupcache"
     },
     {
@@ -615,8 +714,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_hot_reload",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 14,
+      "community_name": "aiModels.js",
       "norm_label": "hot-reload.js"
     },
     {
@@ -626,8 +725,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "libs_hot_reload_plugins",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 14,
+      "community_name": "aiModels.js",
       "norm_label": "plugins"
     },
     {
@@ -637,8 +736,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "libs_hot_reload_loadplugins",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 14,
+      "community_name": "aiModels.js",
       "norm_label": "loadplugins()"
     },
     {
@@ -648,8 +747,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "libs_hot_reload_watchplugins",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 14,
+      "community_name": "aiModels.js",
       "norm_label": "watchplugins()"
     },
     {
@@ -659,8 +758,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libs_lid_resolver",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "lid-resolver.js"
     },
     {
@@ -670,8 +769,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "libs_lid_resolver_lidcache",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "lidcache"
     },
     {
@@ -681,8 +780,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "libs_lid_resolver_resolvelidtojid",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "resolvelidtojid()"
     },
     {
@@ -835,8 +934,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middlewares_handler",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 14,
+      "community_name": "aiModels.js",
       "norm_label": "handler.js"
     },
     {
@@ -846,8 +945,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "middlewares_handler_plugindir",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 14,
+      "community_name": "aiModels.js",
       "norm_label": "plugindir"
     },
     {
@@ -857,8 +956,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "middlewares_handler_bothandler",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 14,
+      "community_name": "aiModels.js",
       "norm_label": "bothandler()"
     },
     {
@@ -869,7 +968,7 @@
       "_origin": "ast",
       "id": "middlewares_validator",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "validator.js"
     },
     {
@@ -880,7 +979,7 @@
       "_origin": "ast",
       "id": "middlewares_validator_validateplugin",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "validateplugin()"
     },
     {
@@ -1044,8 +1143,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_baileys",
-      "community": 1,
-      "community_name": "baileys",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "baileys"
     },
     {
@@ -1055,8 +1154,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "baileys",
-      "community": 1,
-      "community_name": "baileys",
+      "community": 7,
+      "community_name": "dependencies",
       "norm_label": "baileys"
     },
     {
@@ -1088,8 +1187,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "package_dependencies_cheerio",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 60,
+      "community_name": "cheerio",
       "norm_label": "cheerio"
     },
     {
@@ -1099,8 +1198,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "cheerio",
-      "community": 7,
-      "community_name": "dependencies",
+      "community": 60,
+      "community_name": "cheerio",
       "norm_label": "cheerio"
     },
     {
@@ -1617,7 +1716,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_auto",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-auto.js"
     },
     {
@@ -1628,7 +1727,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_auto_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1639,7 +1738,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_chatgpt",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-chatgpt.js"
     },
     {
@@ -1650,7 +1749,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_chatgpt_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1661,7 +1760,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_claude",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-claude.js"
     },
     {
@@ -1672,7 +1771,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_claude_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1683,18 +1782,18 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_clear",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-clear.js"
     },
     {
       "label": "execute()",
       "file_type": "code",
       "source_file": "plugins/ai/ai-clear.js",
-      "source_location": "L11",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_ai_ai_clear_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1705,7 +1804,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_deepseek",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-deepseek.js"
     },
     {
@@ -1716,7 +1815,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_deepseek_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1727,7 +1826,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_gemini",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-gemini.js"
     },
     {
@@ -1738,7 +1837,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_gemini_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1749,7 +1848,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_glm",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-glm.js"
     },
     {
@@ -1760,7 +1859,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_glm_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1771,7 +1870,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_grok",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-grok.js"
     },
     {
@@ -1782,7 +1881,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_grok_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1793,7 +1892,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-kimi.js"
     },
     {
@@ -1804,7 +1903,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_kimi_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1815,7 +1914,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_mimo",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-mimo.js"
     },
     {
@@ -1826,7 +1925,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_mimo_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1837,7 +1936,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_minimax",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-minimax.js"
     },
     {
@@ -1848,7 +1947,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_minimax_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1859,7 +1958,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_mistral",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-mistral.js"
     },
     {
@@ -1870,7 +1969,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_mistral_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1881,7 +1980,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_qwen",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-qwen.js"
     },
     {
@@ -1892,7 +1991,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_qwen_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1903,7 +2002,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_tencent",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "ai-tencent.js"
     },
     {
@@ -1914,7 +2013,7 @@
       "_origin": "ast",
       "id": "plugins_ai_ai_tencent_execute",
       "community": 14,
-      "community_name": "executeAiRequest",
+      "community_name": "aiModels.js",
       "norm_label": "execute()"
     },
     {
@@ -1924,8 +2023,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_all_in_one",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 22,
+      "community_name": "config",
       "norm_label": "downloader-all-in-one.js"
     },
     {
@@ -1935,8 +2034,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_all_in_one_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 22,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -1959,6 +2058,28 @@
       "id": "plugins_downloader_downloader_danbooru_execute",
       "community": 6,
       "community_name": "config.js",
+      "norm_label": "execute()"
+    },
+    {
+      "label": "downloader-douyin.js",
+      "file_type": "code",
+      "source_file": "plugins/downloader/downloader-douyin.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "plugins_downloader_downloader_douyin",
+      "community": 61,
+      "community_name": "downloader-douyin.js",
+      "norm_label": "downloader-douyin.js"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "plugins/downloader/downloader-douyin.js",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "plugins_downloader_downloader_douyin_execute",
+      "community": 61,
+      "community_name": "downloader-douyin.js",
       "norm_label": "execute()"
     },
     {
@@ -1990,8 +2111,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_instagram",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 62,
+      "community_name": "downloader-instagram.js",
       "norm_label": "downloader-instagram.js"
     },
     {
@@ -2001,8 +2122,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_instagram_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 62,
+      "community_name": "downloader-instagram.js",
       "norm_label": "execute()"
     },
     {
@@ -2012,8 +2133,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_krakenfiles",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 63,
+      "community_name": "downloader-krakenfiles.js",
       "norm_label": "downloader-krakenfiles.js"
     },
     {
@@ -2023,8 +2144,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_krakenfiles_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 63,
+      "community_name": "downloader-krakenfiles.js",
       "norm_label": "execute()"
     },
     {
@@ -2034,8 +2155,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_mediafire",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 64,
+      "community_name": "downloader-mediafire.js",
       "norm_label": "downloader-mediafire.js"
     },
     {
@@ -2045,8 +2166,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_mediafire_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 64,
+      "community_name": "downloader-mediafire.js",
       "norm_label": "execute()"
     },
     {
@@ -2056,8 +2177,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_mega",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 58,
+      "community_name": "downloader-mega.js",
       "norm_label": "downloader-mega.js"
     },
     {
@@ -2067,8 +2188,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_mega_formatsize",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 58,
+      "community_name": "downloader-mega.js",
       "norm_label": "formatsize"
     },
     {
@@ -2078,8 +2199,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_mega_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 58,
+      "community_name": "downloader-mega.js",
       "norm_label": "execute()"
     },
     {
@@ -2089,8 +2210,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pinterest",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 65,
+      "community_name": "downloader-pinterest.js",
       "norm_label": "downloader-pinterest.js"
     },
     {
@@ -2100,8 +2221,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pinterest_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 65,
+      "community_name": "downloader-pinterest.js",
       "norm_label": "execute()"
     },
     {
@@ -2111,8 +2232,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pixiv",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 66,
+      "community_name": "downloader-pixiv.js",
       "norm_label": "downloader-pixiv.js"
     },
     {
@@ -2122,8 +2243,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_pixiv_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 66,
+      "community_name": "downloader-pixiv.js",
       "norm_label": "execute()"
     },
     {
@@ -2155,8 +2276,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_threads",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 67,
+      "community_name": "downloader-threads.js",
       "norm_label": "downloader-threads.js"
     },
     {
@@ -2166,8 +2287,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_threads_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 67,
+      "community_name": "downloader-threads.js",
       "norm_label": "execute()"
     },
     {
@@ -2199,8 +2320,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_twitter",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 22,
+      "community_name": "config",
       "norm_label": "downloader-twitter.js"
     },
     {
@@ -2210,8 +2331,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_twitter_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 22,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -2221,8 +2342,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_ytmp3",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 22,
+      "community_name": "config",
       "norm_label": "downloader-ytmp3.js"
     },
     {
@@ -2232,8 +2353,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_downloader_downloader_ytmp3_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 22,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -2529,8 +2650,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 57,
+      "community_name": "group-welcome-leave.js",
       "norm_label": "group-welcome-leave.js"
     },
     {
@@ -2540,8 +2661,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_group_group_welcome_leave_onparticipantsupdate",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 57,
+      "community_name": "group-welcome-leave.js",
       "norm_label": "onparticipantsupdate()"
     },
     {
@@ -2551,8 +2672,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_group_kick_member",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "kick-member.js"
     },
     {
@@ -2562,8 +2683,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_group_kick_member_execute",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "execute()"
     },
     {
@@ -2573,8 +2694,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_main_main_menu",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 68,
+      "community_name": "main-menu.js",
       "norm_label": "main-menu.js"
     },
     {
@@ -2584,8 +2705,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_main_main_menu_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 68,
+      "community_name": "main-menu.js",
       "norm_label": "execute()"
     },
     {
@@ -2771,8 +2892,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "owner-anticall.js"
     },
     {
@@ -2782,8 +2903,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall_processedcalls",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "processedcalls"
     },
     {
@@ -2793,8 +2914,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall_resolvecalleridentity",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "resolvecalleridentity()"
     },
     {
@@ -2804,8 +2925,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall_executeblock",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "executeblock()"
     },
     {
@@ -2826,8 +2947,8 @@
       "source_location": "L188",
       "_origin": "ast",
       "id": "plugins_owner_owner_anticall_oncall",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "oncall()"
     },
     {
@@ -2859,8 +2980,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "owner-debug-info.js"
     },
     {
@@ -2870,8 +2991,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "plugins_owner_owner_debug_info_execute",
-      "community": 0,
-      "community_name": "index.js",
+      "community": 1,
+      "community_name": "messageAdapter.js",
       "norm_label": "execute()"
     },
     {
@@ -2903,8 +3024,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_owner_owner_eval",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 59,
+      "community_name": "owner-eval.js",
       "norm_label": "owner-eval.js"
     },
     {
@@ -2914,8 +3035,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "plugins_owner_owner_eval_execpromise",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 59,
+      "community_name": "owner-eval.js",
       "norm_label": "execpromise"
     },
     {
@@ -2925,8 +3046,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "plugins_owner_owner_eval_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 59,
+      "community_name": "owner-eval.js",
       "norm_label": "execute()"
     },
     {
@@ -2936,8 +3057,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_search_search_lyrics",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 69,
+      "community_name": "search-lyrics.js",
       "norm_label": "search-lyrics.js"
     },
     {
@@ -2947,8 +3068,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_search_search_lyrics_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 69,
+      "community_name": "search-lyrics.js",
       "norm_label": "execute()"
     },
     {
@@ -2958,8 +3079,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_search_search_pddikti",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 70,
+      "community_name": "search-pddikti.js",
       "norm_label": "search-pddikti.js"
     },
     {
@@ -2969,8 +3090,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_search_search_pddikti_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 70,
+      "community_name": "search-pddikti.js",
       "norm_label": "execute()"
     },
     {
@@ -2980,8 +3101,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_search_search_pinterest",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 22,
+      "community_name": "config",
       "norm_label": "search-pinterest.js"
     },
     {
@@ -2991,8 +3112,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_search_search_pinterest_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 22,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -3002,8 +3123,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_search_search_pixiv",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 71,
+      "community_name": "search-pixiv.js",
       "norm_label": "search-pixiv.js"
     },
     {
@@ -3013,8 +3134,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "plugins_search_search_pixiv_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 71,
+      "community_name": "search-pixiv.js",
       "norm_label": "execute()"
     },
     {
@@ -3156,8 +3277,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_alight_activator",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 72,
+      "community_name": "tool-alight-activator.js",
       "norm_label": "tool-alight-activator.js"
     },
     {
@@ -3167,8 +3288,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_tool_tool_alight_activator_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 72,
+      "community_name": "tool-alight-activator.js",
       "norm_label": "execute()"
     },
     {
@@ -3178,8 +3299,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_bapenda_jabar",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 22,
+      "community_name": "config",
       "norm_label": "tool-cek-bapenda-jabar.js"
     },
     {
@@ -3189,8 +3310,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_bapenda_jabar_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 22,
+      "community_name": "config",
       "norm_label": "execute()"
     },
     {
@@ -3200,8 +3321,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_pln",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 73,
+      "community_name": "tool-cek-pln.js",
       "norm_label": "tool-cek-pln.js"
     },
     {
@@ -3211,8 +3332,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_pln_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 73,
+      "community_name": "tool-cek-pln.js",
       "norm_label": "execute()"
     },
     {
@@ -3222,8 +3343,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_resi",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 74,
+      "community_name": "tool-cek-resi.js",
       "norm_label": "tool-cek-resi.js"
     },
     {
@@ -3233,8 +3354,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_tool_tool_cek_resi_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 74,
+      "community_name": "tool-cek-resi.js",
       "norm_label": "execute()"
     },
     {
@@ -3288,8 +3409,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "plugins_tool_tool_ssweb",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 75,
+      "community_name": "tool-ssweb.js",
       "norm_label": "tool-ssweb.js"
     },
     {
@@ -3299,8 +3420,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "plugins_tool_tool_ssweb_execute",
-      "community": 6,
-      "community_name": "config.js",
+      "community": 75,
+      "community_name": "tool-ssweb.js",
       "norm_label": "execute()"
     },
     {
@@ -3853,7 +3974,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L2",
+      "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler",
@@ -3936,18 +4057,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "plugins/ai/ai-clear.js",
-      "source_location": "L2",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "plugins_ai_ai_clear",
-      "target": "config",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "plugins/downloader/downloader-all-in-one.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -3965,6 +4074,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_downloader_downloader_danbooru",
+      "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/downloader/downloader-douyin.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_downloader_downloader_douyin",
       "target": "config",
       "confidence_score": 1.0
     },
@@ -4357,7 +4478,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L2",
+      "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler",
@@ -4440,18 +4561,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "plugins/ai/ai-clear.js",
-      "source_location": "L2",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "plugins_ai_ai_clear",
-      "target": "config_config",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "plugins/downloader/downloader-all-in-one.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -4469,6 +4578,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_downloader_downloader_danbooru",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/downloader/downloader-douyin.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_downloader_downloader_douyin",
       "target": "config_config",
       "confidence_score": 1.0
     },
@@ -5919,18 +6040,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L52",
+      "source_location": "L190",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
-      "target": "libs_aimodels_compressimagetobase64",
+      "target": "libs_aimodels_ai_web_tools",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L297",
+      "source_location": "L386",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5941,18 +6062,29 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L105",
+      "source_location": "L233",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
-      "target": "libs_aimodels_fetchaimodels",
+      "target": "libs_aimodels_executeaitool",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L147",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels",
+      "target": "libs_aimodels_fetchopenaimodels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L106",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5963,7 +6095,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L276",
+      "source_location": "L366",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5974,7 +6106,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L237",
+      "source_location": "L154",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5985,7 +6117,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L201",
+      "source_location": "L129",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -5996,7 +6128,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L137",
+      "source_location": "L95",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
@@ -6007,22 +6139,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L77",
+      "source_location": "L271",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels",
-      "target": "libs_aimodels_postaiwithretry",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "libs/aiModels.js",
-      "source_location": "L170",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libs_aimodels",
-      "target": "libs_aimodels_sortmodels",
+      "target": "libs_aimodels_requestopenaisse",
       "confidence_score": 1.0
     },
     {
@@ -6065,6 +6186,78 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels",
+      "target": "libs_aisessionmanager",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels",
+      "target": "libs_aisessionmanager_getsessionhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels",
+      "target": "libs_aisessionmanager_savesessionhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels",
+      "target": "libs_aiwebtools",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels",
+      "target": "libs_aiwebtools_fetchwebpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels",
+      "target": "libs_aiwebtools_searchduckduckgo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
@@ -6089,7 +6282,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L5",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler",
@@ -6117,6 +6310,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_claude",
+      "target": "libs_aimodels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-clear.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_clear",
       "target": "libs_aimodels",
       "confidence_score": 1.0
     },
@@ -6245,7 +6450,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L327",
+      "source_location": "L416",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_executeairequest",
@@ -6269,7 +6474,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L5",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler",
@@ -6293,47 +6498,11 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L377",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libs_aimodels_executeairequest",
-      "target": "libs_aimodels_postaiwithretry",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "libs/autoAiHandler.js",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libs_autoaihandler",
-      "target": "libs_aimodels_postaiwithretry",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "libs/autoAiHandler.js",
-      "source_location": "L177",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libs_autoaihandler_handleautoai",
-      "target": "libs_aimodels_postaiwithretry"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "libs/aiModels.js",
-      "source_location": "L238",
+      "source_location": "L155",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_gettextmodels",
-      "target": "libs_aimodels_fetchaimodels",
+      "target": "libs_aimodels_fetchopenaimodels",
       "confidence_score": 1.0
     },
     {
@@ -6341,11 +6510,11 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L202",
+      "source_location": "L130",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_getvisionmodels",
-      "target": "libs_aimodels_fetchaimodels",
+      "target": "libs_aimodels_fetchopenaimodels",
       "confidence_score": 1.0
     },
     {
@@ -6353,7 +6522,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L204",
+      "source_location": "L131",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_getvisionmodels",
@@ -6365,7 +6534,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L247",
+      "source_location": "L163",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_gettextmodels",
@@ -6377,7 +6546,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L211",
+      "source_location": "L138",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_getvisionmodels",
@@ -6389,31 +6558,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L250",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libs_aimodels_gettextmodels",
-      "target": "libs_aimodels_sortmodels",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "libs/aiModels.js",
-      "source_location": "L214",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libs_aimodels_getvisionmodels",
-      "target": "libs_aimodels_sortmodels",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "libs/aiModels.js",
-      "source_location": "L361",
+      "source_location": "L467",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_executeairequest",
@@ -6425,47 +6570,11 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L5",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler",
       "target": "libs_aimodels_getvisionmodels",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "libs/autoAiHandler.js",
-      "source_location": "L151",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libs_autoaihandler_handleautoai",
-      "target": "libs_aimodels_getvisionmodels"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "libs/aiModels.js",
-      "source_location": "L393",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libs_aimodels_executeairequest",
-      "target": "libs_aimodels_gettextmodels",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "libs/autoAiHandler.js",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libs_autoaihandler",
-      "target": "libs_aimodels_gettextmodels",
       "confidence_score": 1.0
     },
     {
@@ -6478,18 +6587,66 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
-      "target": "libs_aimodels_gettextmodels"
+      "target": "libs_aimodels_getvisionmodels"
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/aiModels.js",
-      "source_location": "L343",
+      "source_location": "L468",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_executeairequest",
-      "target": "libs_aimodels_getquoteoption",
+      "target": "libs_aimodels_gettextmodels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "libs_aimodels_gettextmodels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L153",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler_handleautoai",
+      "target": "libs_aimodels_gettextmodels"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "libs_aimodels_ai_web_tools",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L509",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels_executeairequest",
+      "target": "libs_aimodels_executeaitool",
       "confidence_score": 1.0
     },
     {
@@ -6498,11 +6655,155 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/aiModels.js",
-      "source_location": "L449",
+      "source_location": "L247",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels_executeaitool",
+      "target": "libs_aiwebtools_fetchwebpage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/aiModels.js",
+      "source_location": "L237",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels_executeaitool",
+      "target": "libs_aiwebtools_searchduckduckgo"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "libs_aimodels_executeaitool",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L221",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler_handleautoai",
+      "target": "libs_aimodels_executeaitool"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L486",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels_executeairequest",
+      "target": "libs_aimodels_requestopenaisse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "libs_aimodels_requestopenaisse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L199",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler_handleautoai",
+      "target": "libs_aimodels_requestopenaisse"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiModels.js",
+      "source_location": "L432",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels_executeairequest",
+      "target": "libs_aimodels_getquoteoption",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-clear.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_clear",
+      "target": "libs_aimodels_getquoteoption",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-clear.js",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_clear_execute",
+      "target": "libs_aimodels_getquoteoption"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/aiModels.js",
+      "source_location": "L545",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_aimodels_executeairequest",
       "target": "libs_aiprompt_cleanairesponse"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/aiModels.js",
+      "source_location": "L446",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels_executeairequest",
+      "target": "libs_aisessionmanager_getsessionhistory"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/aiModels.js",
+      "source_location": "L529",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aimodels_executeairequest",
+      "target": "libs_aisessionmanager_savesessionhistory"
     },
     {
       "relation": "imports",
@@ -6819,7 +7120,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L4",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler",
@@ -6831,7 +7132,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L4",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler",
@@ -6855,7 +7156,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L4",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler",
@@ -6868,11 +7169,220 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L232",
+      "source_location": "L259",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
       "target": "libs_aiprompt_cleanairesponse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L71",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aisessionmanager",
+      "target": "libs_aisessionmanager_clearsession",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aisessionmanager",
+      "target": "libs_aisessionmanager_getsessionfilepath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aisessionmanager",
+      "target": "libs_aisessionmanager_getsessionhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aisessionmanager",
+      "target": "libs_aisessionmanager_savesessionhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aisessionmanager",
+      "target": "libs_aisessionmanager_sessions_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "libs_aisessionmanager",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-clear.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_clear",
+      "target": "libs_aisessionmanager",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aisessionmanager_clearsession",
+      "target": "libs_aisessionmanager_getsessionfilepath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aisessionmanager_getsessionhistory",
+      "target": "libs_aisessionmanager_getsessionfilepath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiSessionManager.js",
+      "source_location": "L50",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aisessionmanager_savesessionhistory",
+      "target": "libs_aisessionmanager_getsessionfilepath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "libs_aisessionmanager_getsessionhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L171",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler_handleautoai",
+      "target": "libs_aisessionmanager_getsessionhistory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler",
+      "target": "libs_aisessionmanager_savesessionhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "libs/autoAiHandler.js",
+      "source_location": "L239",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_autoaihandler_handleautoai",
+      "target": "libs_aisessionmanager_savesessionhistory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/ai/ai-clear.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_clear",
+      "target": "libs_aisessionmanager_clearsession",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plugins/ai/ai-clear.js",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_ai_ai_clear_execute",
+      "target": "libs_aisessionmanager_clearsession"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiWebTools.js",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aiwebtools",
+      "target": "libs_aiwebtools_fetchwebpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "libs/aiWebTools.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libs_aiwebtools",
+      "target": "libs_aiwebtools_searchduckduckgo",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6923,7 +7433,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L3",
+      "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler",
@@ -6935,7 +7445,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L3",
+      "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler",
@@ -6967,24 +7477,12 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "plugins/ai/ai-clear.js",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "plugins_ai_ai_clear",
-      "target": "libs_autoaihandler",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "references",
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L239",
+      "source_location": "L266",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -6995,7 +7493,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L228",
+      "source_location": "L255",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -7007,7 +7505,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L234",
+      "source_location": "L261",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -7015,36 +7513,12 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "plugins/ai/ai-clear.js",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "plugins_ai_ai_clear",
-      "target": "libs_autoaihandler_getquoteoption",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "plugins/ai/ai-clear.js",
-      "source_location": "L31",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "plugins_ai_ai_clear_execute",
-      "target": "libs_autoaihandler_getquoteoption"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "libs/autoAiHandler.js",
-      "source_location": "L274",
+      "source_location": "L301",
       "weight": 1.0,
       "_origin": "ast",
       "source": "libs_autoaihandler_handleautoai",
@@ -9266,7 +9740,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "plugins/ai/ai-clear.js",
-      "source_location": "L11",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "plugins_ai_ai_clear",
@@ -9403,6 +9877,17 @@
       "_origin": "ast",
       "source": "plugins_downloader_downloader_danbooru",
       "target": "plugins_downloader_downloader_danbooru_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "plugins/downloader/downloader-douyin.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "plugins_downloader_downloader_douyin",
+      "target": "plugins_downloader_downloader_douyin_execute",
       "confidence_score": 1.0
     },
     {
@@ -10600,5 +11085,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8244d827fead99e9b6c9b49bae20e685a7d512ea"
+  "built_at_commit": "d39b90a68ac3fe8305292f8d26e66af3532a8aa8"
 }

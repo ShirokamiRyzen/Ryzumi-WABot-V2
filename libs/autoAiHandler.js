@@ -1,8 +1,8 @@
-import axios from 'axios';
 import config from '../config.js';
 import { validatePlugin } from '../middlewares/validator.js';
 import { getAutoAiPrompt, cleanAiResponse } from './aiPrompt.js';
-import { getVisionModels, getTextModels, uploadCompressedImage, postAiWithRetry } from './aiModels.js';
+import { getVisionModels, getTextModels, uploadCompressedImage, requestOpenAiSse, AI_WEB_TOOLS, executeAiTool } from './aiModels.js';
+import { getSessionHistory, saveSessionHistory } from './aiSessionManager.js';
 
 const FORBIDDEN_COMMANDS = ['eval', 'exec', 'delprem', 'addprem', 'backup', 'debug', 'enable', 'disable', 'on', 'off'];
 
@@ -99,13 +99,13 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
             await sock.sendPresenceUpdate('composing', msgData.remoteJid).catch(() => { });
         }
 
-        let session;
+        let sessionKey;
         if (msgData.isGroup) {
             const groupNumber = (msgData.remoteJid || '').split('@')[0].replace(/[^0-9]/g, '');
-            session = `ryzumi-wabot-${groupNumber}`;
+            sessionKey = `group_${groupNumber}`;
         } else {
             const rawNumber = (msgData.senderJid || m?.sender || '').split('@')[0].replace(/[^0-9]/g, '');
-            session = `ryzumi-wabot-${rawNumber || 'user'}`;
+            sessionKey = `user_${rawNumber || 'user'}`;
         }
 
         // Media inspection (Direct message or Quoted message)
@@ -147,9 +147,10 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
 
         const prompt = getAutoAiPrompt(cmdList);
 
-        // Fetch dynamic active models from API (strictly excluding Claude)
-        const visionModels = await getVisionModels({ allowClaude: false });
-        const textModels = await getTextModels({ allowClaude: false });
+        // Fetch candidate models
+        const candidateModels = imageUrl
+            ? await getVisionModels({ allowClaude: false })
+            : await getTextModels({ allowClaude: false });
 
         let baseContent = msgData.messageContent || '';
         if (msgData.isQuoted && msgData.quotedContent && !baseContent.includes(msgData.quotedContent)) {
@@ -158,71 +159,97 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
                 : msgData.quotedContent;
         }
 
-        let inputContent = baseContent;
+        if (!baseContent && imageUrl) {
+            baseContent = 'Jelaskan gambar ini';
+        } else if (!baseContent && mediaDescription) {
+            baseContent = `[Lampiran Media: User melampirkan media ${mediaDescription}]`;
+        } else if (!baseContent) {
+            baseContent = 'Halo Ryzumi!';
+        }
 
-        let data = null;
+        // Load local session history
+        const history = getSessionHistory(sessionKey);
 
-        // 1. Attempt Vision Model if Image is available
+        let userMsgContent;
         if (imageUrl) {
-            const visionInput = inputContent || 'Jelaskan gambar ini';
-            for (const modelName of visionModels) {
-                try {
-                    const payload = {
-                        text: visionInput,
-                        model: modelName,
-                        prompt: prompt,
-                        session: session,
-                        image: imageUrl
-                    };
-                    data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload, {
-                        retries: 3,
-                        timeout: 25000,
-                        delayMs: 5000
+            userMsgContent = [
+                { type: 'text', text: baseContent },
+                { type: 'image_url', image_url: { url: imageUrl } }
+            ];
+        } else {
+            userMsgContent = baseContent;
+        }
+
+        const messages = [
+            { role: 'system', content: prompt },
+            ...history,
+            { role: 'user', content: userMsgContent }
+        ];
+
+        let fullResult = null;
+
+        for (const model of candidateModels) {
+            try {
+                let currentMessages = [...messages];
+                let maxToolSteps = 5;
+
+                while (maxToolSteps > 0) {
+                    maxToolSteps--;
+
+                    const { content, toolCalls } = await requestOpenAiSse({
+                        model,
+                        messages: currentMessages,
+                        tools: AI_WEB_TOOLS,
+                        timeout: 60000
                     });
-                    if (data?.result) break;
-                } catch (err) {
-                    console.warn(`Auto AI vision model '${modelName}' failed after 3 retries: ${err.message}`);
+
+                    if (toolCalls && toolCalls.length > 0) {
+                        currentMessages.push({
+                            role: 'assistant',
+                            content: content || null,
+                            tool_calls: toolCalls
+                        });
+
+                        for (const toolCall of toolCalls) {
+                            let toolArgs = {};
+                            try {
+                                toolArgs = JSON.parse(toolCall.function.arguments || '{}');
+                            } catch (e) { }
+
+                            let toolResult = '';
+                            try {
+                                toolResult = await executeAiTool(toolCall.function.name, toolArgs);
+                            } catch (toolErr) {
+                                toolResult = JSON.stringify({ error: toolErr.message });
+                            }
+
+                            currentMessages.push({
+                                role: 'tool',
+                                tool_call_id: toolCall.id,
+                                content: toolResult
+                            });
+                        }
+                        continue;
+                    }
+
+                    if (content) {
+                        fullResult = content;
+                        history.push({ role: 'user', content: baseContent });
+                        history.push({ role: 'assistant', content: fullResult });
+                        saveSessionHistory(sessionKey, history);
+                        break;
+                    }
                 }
+
+                if (fullResult) break;
+            } catch (err) {
+                console.warn(`[Auto AI] Model '${model}' failed with SSE:`, err.message);
             }
         }
 
-        // 2. Fallback to Text Model (or primary handler if no image / vision failed)
-        if (!data || !data.result) {
-            // Annotate media context if media is attached so text-model understands user intent (e.g. "Buatin jadi sticker")
-            let textModelInput = baseContent;
-            if (mediaDescription) {
-                textModelInput = `[Lampiran Media: User melampirkan media ${mediaDescription}]\n\n[Pesan/Caption User]: ${baseContent || '(tidak ada caption)'}`;
-            }
-
-            if (!textModelInput) {
-                textModelInput = 'Halo Ryzumi!';
-            }
-
-            for (const modelName of textModels) {
-                try {
-                    const payload = {
-                        text: textModelInput,
-                        model: modelName,
-                        prompt: prompt,
-                        session: session
-                    };
-                    data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, {
-                        retries: 3,
-                        timeout: 25000,
-                        delayMs: 5000
-                    });
-                    if (data?.result) break;
-                } catch (err) {
-                    console.warn(`Auto AI text model '${modelName}' failed after 3 retries: ${err.message}`);
-                }
-            }
-        }
-
-        if (!data || !data.result) {
+        if (!fullResult) {
             return;
         }
-
-        const fullResult = data.result;
 
         // Parse tool/function execution from AI response
         const parsed = parseExecCommand(fullResult, msgData.messageContent);

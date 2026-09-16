@@ -3,18 +3,18 @@ import sharp from 'sharp';
 import config from '../config.js';
 import { ryzumiCDN } from './uploader.js';
 import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from './aiPrompt.js';
+import { searchDuckDuckGo, fetchWebPage } from './aiWebTools.js';
+import { getSessionHistory, saveSessionHistory } from './aiSessionManager.js';
 
-let cachedModels = null;
+let cachedOpenAiModels = null;
 let lastFetchTime = 0;
-const CACHE_TTL = 15000; // 15 seconds cache to stay reactive to dynamic proxy model updates
+const CACHE_TTL = 30000; // 30s cache
 
 /**
  * Compress an image buffer with sharp and upload it to Ryzumi CDN,
  * returning a publicly accessible HTTP URL for AI vision endpoints.
  * @param {Buffer} buffer 
  * @param {Object} options
- * @param {number} options.maxDimension
- * @param {number} options.quality
  * @returns {Promise<string|null>}
  */
 export async function uploadCompressedImage(buffer, { maxDimension = 1024, quality = 80 } = {}) {
@@ -41,113 +41,72 @@ export async function uploadCompressedImage(buffer, { maxDimension = 1024, quali
 }
 
 /**
- * Compress an image buffer and return a base64 Data URL (data:image/jpeg;base64,...).
- * Resizes large dimensions and optimizes JPEG quality to ensure minimal payload size.
- * @param {Buffer} buffer 
- * @param {Object} options
- * @param {number} options.maxDimension
- * @param {number} options.quality
- * @returns {Promise<string|null>}
- */
-export async function compressImageToBase64(buffer, { maxDimension = 1024, quality = 75 } = {}) {
-    if (!buffer || !Buffer.isBuffer(buffer)) return null;
-    try {
-        const compressedBuffer = await sharp(buffer)
-            .rotate() // auto-orient based on EXIF
-            .resize(maxDimension, maxDimension, { fit: 'inside', withoutEnlargement: true })
-            .jpeg({ quality, progressive: true })
-            .toBuffer();
-        return `data:image/jpeg;base64,${compressedBuffer.toString('base64')}`;
-    } catch (err) {
-        console.warn('Image compression with sharp failed, fallback to raw base64:', err.message);
-        return `data:image/jpeg;base64,${buffer.toString('base64')}`;
-    }
-}
-
-/**
- * Send request to AI endpoint with automated retry mechanism and fixed delay
- * @param {string} url 
- * @param {Object} payload 
- * @param {Object} options 
- * @param {number} options.retries
- * @param {number} options.timeout
- * @param {number} options.delayMs
- * @returns {Promise<any>}
- */
-export async function postAiWithRetry(url, payload, { retries = 3, timeout = 25000, delayMs = 5000 } = {}) {
-    let lastErr = null;
-    for (let attempt = 1; attempt <= retries; attempt++) {
-        try {
-            const res = await axios.post(url, payload, { timeout });
-            if (res?.data && (res.data.success || res.data.status) && res.data.result) {
-                return res.data;
-            }
-            const errorMsg = res?.data?.message || res?.data?.error || (res?.data?.errors ? res.data.errors.join(', ') : 'Invalid / empty AI response');
-            throw new Error(errorMsg);
-        } catch (err) {
-            const serverMsg = err?.response?.data?.message || err?.response?.data?.error || (err?.response?.data?.errors ? err.response.data.errors.join(', ') : null);
-            const detailedMsg = serverMsg ? `${err.message} (${serverMsg})` : err.message;
-            lastErr = new Error(detailedMsg);
-            if (attempt < retries) {
-                console.warn(`[AI Request] Attempt ${attempt}/${retries} failed for model '${payload?.model}': ${detailedMsg}. Retrying in ${delayMs / 1000} seconds...`);
-                await new Promise(resolve => setTimeout(resolve, delayMs));
-            }
-        }
-    }
-    throw lastErr;
-}
-
-/**
- * Fetch models dynamically from Ryzumi API / Proxy
+ * Fetch available OpenAI-compatible models from OPENAI_BASE_URL
  * @param {boolean} forceRefresh 
- * @returns {Promise<Array>}
+ * @returns {Promise<string[]>}
  */
-export async function fetchAiModels(forceRefresh = false) {
+export async function fetchOpenAiModels(forceRefresh = false) {
     const now = Date.now();
-    if (!forceRefresh && cachedModels && (now - lastFetchTime < CACHE_TTL)) {
-        return cachedModels;
+    if (!forceRefresh && cachedOpenAiModels && (now - lastFetchTime < CACHE_TTL)) {
+        return cachedOpenAiModels;
     }
 
     try {
-        const res = await axios.get(`${config.API_RYZUMI}/api/ai/models`, { timeout: 10000 });
-        let list = null;
-        if (res?.data?.data && Array.isArray(res.data.data)) {
-            list = res.data.data;
-        } else if (Array.isArray(res?.data)) {
-            list = res.data;
+        const baseURL = config.OPENAI_BASE_URL || 'https://router.ryzumi.net/v1';
+        const apiKey = config.OPENAI_API_KEY;
+
+        const res = await axios.get(`${baseURL}/models`, {
+            headers: {
+                ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {})
+            },
+            timeout: 10000
+        });
+
+        let list = [];
+        if (res.data?.data && Array.isArray(res.data.data)) {
+            list = res.data.data.map(m => m.id);
+        } else if (Array.isArray(res.data)) {
+            list = res.data.map(m => m.id || m);
         }
 
-        if (list && list.length > 0) {
-            cachedModels = list;
+        if (list.length > 0) {
+            cachedOpenAiModels = list;
             lastFetchTime = now;
-            return cachedModels;
+            return cachedOpenAiModels;
         }
     } catch (err) {
-        console.warn('Failed to fetch AI models from API_RYZUMI:', err.message);
+        console.warn('Failed to fetch OpenAI models from router:', err.message);
     }
 
-    return cachedModels || [];
+    return cachedOpenAiModels || [
+        'bandelbanget/auto',
+        'bandelbanget/deepseek-v4-pro',
+        'bandelbanget/deepseek-v4-flash',
+        'bandelbanget/glm-5.2',
+        'bandelbanget/kimi-k3'
+    ];
 }
 
 /**
- * Check if a model is vision capable
- * @param {Object} model 
+ * Check if a model is vision-capable based on name conventions
+ * @param {string} modelId 
  * @returns {boolean}
  */
-export function isVisionModel(model) {
-    if (!model) return false;
-    return model.vision === true || Boolean(model.modalities?.input?.includes('image'));
+export function isVisionModel(modelId) {
+    if (!modelId) return false;
+    const lower = modelId.toLowerCase();
+    return lower.includes('vision') || lower.includes('vl') || lower.includes('4v') || lower.includes('omni') || lower.includes('gemini') || lower.includes('claude') || lower.includes('gpt-5') || lower.includes('auto');
 }
 
 /**
- * Helper to build regex for brand filtering
+ * Helper to match brand preference in OpenAI models
  * @param {string} brand 
  * @returns {RegExp|null}
  */
 export function getBrandRegex(brand) {
     if (!brand) return null;
     const b = brand.toLowerCase().trim();
-    if (b.includes('tencent') || b.includes('hy3') || b.includes('hunyuan')) return /(tencent|hy3|hunyuan)/i;
+    if (b.includes('tencent') || b.includes('hy3') || b.includes('hunyuan')) return /(tencent|hy3|hy4|hunyuan)/i;
     if (b.includes('gpt') || b.includes('chatgpt') || b.includes('openai')) return /(gpt|chatgpt|openai)/i;
     if (b.includes('claude') || b.includes('anthropic') || b.includes('sonnet') || b.includes('opus')) return /(claude|anthropic|sonnet|opus)/i;
     if (b.includes('mimo') || b.includes('xiaomi')) return /(mimo|xiaomi)/i;
@@ -163,108 +122,239 @@ export function getBrandRegex(brand) {
 }
 
 /**
- * Sort models: enabled first, Grade A before Grade B, then lowest multiplier
- * @param {Array} models 
- * @returns {Array}
- */
-function sortModels(models) {
-    return [...models].sort((a, b) => {
-        const enabledDiff = (b.enabled === true ? 1 : 0) - (a.enabled === true ? 1 : 0);
-        if (enabledDiff !== 0) return enabledDiff;
-
-        const gradeWeight = (grade) => {
-            if (!grade) return 99;
-            const g = String(grade).toUpperCase();
-            if (g === 'A') return 1;
-            if (g === 'B') return 2;
-            if (g === 'C') return 3;
-            return 10;
-        };
-        const gradeDiff = gradeWeight(a.grade) - gradeWeight(b.grade);
-        if (gradeDiff !== 0) return gradeDiff;
-
-        const multDiff = (a.multiplier || 1) - (b.multiplier || 1);
-        if (multDiff !== 0) return multDiff;
-
-        return 0;
-    });
-}
-
-/**
- * Get vision models sorted by priority
+ * Get vision-capable models filtered and prioritized
  * @param {Object} options
- * @param {boolean} options.allowClaude
- * @param {string|null} options.brandFilter
- * @param {boolean} options.forceRefresh
  * @returns {Promise<string[]>}
  */
 export async function getVisionModels({ allowClaude = false, brandFilter = null, forceRefresh = false } = {}) {
-    const allModels = await fetchAiModels(forceRefresh);
-
-    let visionList = allModels.filter(m => isVisionModel(m));
+    const all = await fetchOpenAiModels(forceRefresh);
+    let filtered = all.filter(m => isVisionModel(m));
 
     if (!allowClaude) {
-        visionList = visionList.filter(m => !/claude/i.test(m.id));
+        filtered = filtered.filter(m => !/claude/i.test(m));
     }
 
     if (brandFilter) {
-        const brandRegex = getBrandRegex(brandFilter);
-        const matched = visionList.filter(m => brandRegex.test(m.id));
-        if (matched.length > 0) {
-            return sortModels(matched).map(m => m.id);
-        }
-        return [];
+        const regex = getBrandRegex(brandFilter);
+        const matched = filtered.filter(m => regex.test(m));
+        if (matched.length > 0) return matched;
     }
 
-    const sorted = sortModels(visionList);
-    const result = sorted.map(m => m.id);
-
-    if (result.length === 0) {
-        return allowClaude ? ['kimi-k3', 'claude-sonnet-5-b', 'claude-opus-5-b'] : ['kimi-k3'];
-    }
-
-    return result;
+    // Default fallback order
+    const priority = ['bandelbanget/deepseek-v4-flash-vision-exp', 'bandelbanget/auto'];
+    const rest = filtered.filter(m => !priority.includes(m));
+    return [...priority.filter(p => all.includes(p)), ...rest];
 }
 
 /**
- * Get text models sorted by priority
+ * Get text models filtered and prioritized
  * @param {Object} options
- * @param {boolean} options.allowClaude
- * @param {string|null} options.brandFilter
- * @param {boolean} options.forceRefresh
  * @returns {Promise<string[]>}
  */
 export async function getTextModels({ allowClaude = false, brandFilter = null, forceRefresh = false } = {}) {
-    const allModels = await fetchAiModels(forceRefresh);
-
-    let textList = allModels.filter(m => !m.vision || m.modalities?.input?.includes('text') || !m.modalities?.input || m.modalities?.input?.length === 0);
+    const all = await fetchOpenAiModels(forceRefresh);
+    let filtered = all;
 
     if (!allowClaude) {
-        textList = textList.filter(m => !/claude/i.test(m.id));
+        filtered = filtered.filter(m => !/claude/i.test(m));
     }
 
     if (brandFilter) {
-        const brandRegex = getBrandRegex(brandFilter);
-        const matched = textList.filter(m => brandRegex.test(m.id));
-        if (matched.length > 0) {
-            return sortModels(matched).map(m => m.id);
+        const regex = getBrandRegex(brandFilter);
+        const matched = filtered.filter(m => regex.test(m));
+        if (matched.length > 0) return matched;
+    }
+
+    // Prioritize high-performance active models
+    const preferredOrder = [
+        'bandelbanget/auto',
+        'bandelbanget/deepseek-v4-pro',
+        'bandelbanget/deepseek-v4-flash',
+        'bandelbanget/glm-5.2',
+        'bandelbanget/kimi-k3',
+        'bandelbanget/mimo-v2.5-pro',
+        'bandelbanget/minimax-m3'
+    ];
+
+    const sorted = [
+        ...preferredOrder.filter(p => filtered.includes(p)),
+        ...filtered.filter(m => !preferredOrder.includes(m))
+    ];
+
+    return sorted.length > 0 ? sorted : ['bandelbanget/auto'];
+}
+
+/**
+ * Web Search & Web Browsing Tools definition for OpenAI-compatible function calling
+ */
+export const AI_WEB_TOOLS = [
+    {
+        type: 'function',
+        function: {
+            name: 'search_web',
+            description: 'Mencari informasi terkini, berita, artikel, atau referensi di internet menggunakan mesin pencari DuckDuckGo Lite. Gunakan tool ini saat butuh info terbaru atau hal spesifik yang tidak kamu ketahui.',
+            parameters: {
+                type: 'object',
+                properties: {
+                    query: {
+                        type: 'string',
+                        description: 'Kata kunci pencarian spesifik (contoh: "jadwal rilis anime 2026", "harga emas hari ini")'
+                    }
+                },
+                required: ['query']
+            }
         }
-        return [];
+    },
+    {
+        type: 'function',
+        function: {
+            name: 'browse_web',
+            description: 'Membuka, menjelajahi, dan membaca isi halaman website, URL artikel, atau endpoint API (JSON, HTML, teks). Gunakan tool ini setelah mendapatkan URL dari pencarian atau jika user memberikan link web.',
+            parameters: {
+                type: 'object',
+                properties: {
+                    url: {
+                        type: 'string',
+                        description: 'Alamat URL website yang ingin dibuka dan dibaca isinya (contoh: "https://id.wikipedia.org/...")'
+                    }
+                },
+                required: ['url']
+            }
+        }
+    }
+];
+
+/**
+ * Execute tool call dynamically
+ * @param {string} name 
+ * @param {Object} args 
+ * @returns {Promise<string>}
+ */
+export async function executeAiTool(name, args) {
+    if (name === 'search_web') {
+        const query = args.query || args.q;
+        console.log(`[AI Tool: search_web] Query: "${query}"`);
+        const searchResults = await searchDuckDuckGo(query, 5);
+        if (!searchResults || searchResults.length === 0) {
+            return JSON.stringify({ status: 'not_found', message: 'Tidak ada hasil pencarian yang ditemukan di DuckDuckGo.' });
+        }
+        return JSON.stringify({ status: 'success', results: searchResults }, null, 2);
     }
 
-    const realModels = textList.filter(m => m.id !== 'auto');
-    const sorted = sortModels(realModels);
-    const result = sorted.map(m => m.id);
-
-    if (result.length === 0) {
-        return [
-            'kimi-k2.7-code', 'deepseek-v4-pro', 'kimi-k3', 'deepseek-v4-mod',
-            'glm-5.2', 'kimi-k2.7-code-highspeed', 'deepseek-v4-pro-0813', 'deepseek-v4-flash',
-            'glm-5.3', 'mimo-v2.5-pro', 'minimax-m3', 'hy3'
-        ];
+    if (name === 'browse_web') {
+        const url = args.url || args.link;
+        console.log(`[AI Tool: browse_web] URL: "${url}"`);
+        const page = await fetchWebPage(url);
+        return JSON.stringify({
+            status: 'success',
+            url: page.url,
+            contentType: page.contentType,
+            title: page.title || 'Untitled',
+            content: page.content
+        }, null, 2);
     }
 
-    return result;
+    throw new Error(`Unknown tool: ${name}`);
+}
+
+/**
+ * Request OpenAI Chat Completion with Server-Sent Events (SSE) Stream.
+ * Accurately handles long-running requests and parses streaming tool calls.
+ * 
+ * @param {Object} options
+ * @param {string} options.model
+ * @param {Array} options.messages
+ * @param {Array|null} options.tools
+ * @param {number} options.timeout
+ * @returns {Promise<{content: string, toolCalls: Array}>}
+ */
+export async function requestOpenAiSse({ model, messages, tools = null, timeout = 90000 }) {
+    const baseURL = config.OPENAI_BASE_URL || 'https://router.ryzumi.net/v1';
+    const apiKey = config.OPENAI_API_KEY;
+
+    const payload = {
+        model,
+        messages,
+        stream: true
+    };
+
+    if (tools && tools.length > 0) {
+        payload.tools = tools;
+        payload.tool_choice = 'auto';
+    }
+
+    const response = await axios.post(`${baseURL}/chat/completions`, payload, {
+        headers: {
+            'Content-Type': 'application/json',
+            ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {})
+        },
+        responseType: 'stream',
+        timeout
+    });
+
+    return new Promise((resolve, reject) => {
+        let content = '';
+        const toolCallsMap = new Map();
+        let buffer = '';
+
+        response.data.on('data', (chunk) => {
+            buffer += chunk.toString('utf-8');
+            const lines = buffer.split('\n');
+            buffer = lines.pop(); // keep unfinished line in buffer
+
+            for (const line of lines) {
+                const trimmed = line.trim();
+                if (!trimmed || trimmed.startsWith(':')) continue; // SSE comment or ping
+
+                if (trimmed.startsWith('data: ')) {
+                    const dataStr = trimmed.slice(6).trim();
+                    if (dataStr === '[DONE]') continue;
+
+                    try {
+                        const json = JSON.parse(dataStr);
+                        const delta = json.choices?.[0]?.delta;
+                        if (!delta) continue;
+
+                        if (delta.content) {
+                            content += delta.content;
+                        }
+
+                        if (delta.tool_calls && Array.isArray(delta.tool_calls)) {
+                            for (const tc of delta.tool_calls) {
+                                const idx = tc.index ?? 0;
+                                if (!toolCallsMap.has(idx)) {
+                                    toolCallsMap.set(idx, {
+                                        id: tc.id || `call_${Date.now()}_${idx}`,
+                                        type: 'function',
+                                        function: {
+                                            name: tc.function?.name || '',
+                                            arguments: tc.function?.arguments || ''
+                                        }
+                                    });
+                                } else {
+                                    const existing = toolCallsMap.get(idx);
+                                    if (tc.id) existing.id += tc.id;
+                                    if (tc.function?.name) existing.function.name += tc.function.name;
+                                    if (tc.function?.arguments) existing.function.arguments += tc.function.arguments;
+                                }
+                            }
+                        }
+                    } catch (parseErr) {
+                        // ignore malformed SSE chunk
+                    }
+                }
+            }
+        });
+
+        response.data.on('end', () => {
+            const toolCalls = Array.from(toolCallsMap.values()).filter(t => t.function.name);
+            resolve({ content, toolCalls });
+        });
+
+        response.data.on('error', (err) => {
+            reject(err);
+        });
+    });
 }
 
 /**
@@ -282,8 +372,7 @@ export function getQuoteOption(msgData, m) {
 }
 
 /**
- * Centralized executor for AI model requests
- * Handles dynamic model inspection, vision/text routing, fallbacks, and persona response.
+ * Centralized executor for AI model requests using OpenAI-compatible SSE and local sessions
  * 
  * @param {Object} options
  * @param {Object} options.sock
@@ -343,110 +432,118 @@ export async function executeAiRequest({
             }, getQuoteOption(msgData, m));
         }
 
-        let session;
+        // Determine session identifier (saved locally in sessions_ai folder)
+        let sessionKey;
         if (msgData.isGroup) {
             const groupNumber = (msgData.remoteJid || '').split('@')[0].replace(/[^0-9]/g, '');
-            session = `ryzumi-wabot-${groupNumber}`;
+            sessionKey = `group_${groupNumber}`;
         } else {
             const rawNumber = (msgData.senderJid || m?.sender || '').split('@')[0].replace(/[^0-9]/g, '');
-            session = `ryzumi-wabot-${rawNumber || 'user'}`;
+            sessionKey = `user_${rawNumber || 'user'}`;
         }
 
-        const prompt = RYZUMI_AI_SYSTEM_PROMPT;
-        let data = null;
+        // Load local session history
+        const history = getSessionHistory(sessionKey);
+
+        // Build current user message payload
+        let userMessageContent;
+        if (imageUrl) {
+            userMessageContent = [
+                { type: 'text', text: text },
+                { type: 'image_url', image_url: { url: imageUrl } }
+            ];
+        } else {
+            userMessageContent = text;
+        }
+
+        const messages = [
+            { role: 'system', content: RYZUMI_AI_SYSTEM_PROMPT },
+            ...history,
+            { role: 'user', content: userMessageContent }
+        ];
+
+        // Select models
+        let candidateModels = imageUrl
+            ? await getVisionModels({ allowClaude, brandFilter })
+            : await getTextModels({ allowClaude, brandFilter });
+
+        if (candidateModels.length === 0) {
+            candidateModels = ['bandelbanget/auto', 'bandelbanget/deepseek-v4-pro'];
+        }
+
+        let finalAnswer = '';
         let lastError = null;
 
-        // Step 1: Check dynamic models and determine Vision vs Text
-        if (imageUrl) {
-            let visionModels = await getVisionModels({ allowClaude, brandFilter });
+        // Loop candidate models
+        for (const model of candidateModels) {
+            try {
+                let currentMessages = [...messages];
+                let maxToolSteps = 5;
 
-            // If this brand doesn't have a vision model enabled, check all available vision models if not restricted
-            if (visionModels.length === 0 && !brandFilter) {
-                visionModels = await getVisionModels({ allowClaude: false });
-            }
+                while (maxToolSteps > 0) {
+                    maxToolSteps--;
 
-            for (const modelName of visionModels) {
-                try {
-                    const payload = {
-                        text: text,
-                        model: modelName,
-                        prompt: prompt,
-                        session: session,
-                        image: imageUrl
-                    };
-                    data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/vision-model`, payload, {
-                        retries: 3,
-                        timeout: 25000,
-                        delayMs: 5000
+                    const { content, toolCalls } = await requestOpenAiSse({
+                        model,
+                        messages: currentMessages,
+                        tools: AI_WEB_TOOLS,
+                        timeout: 60000
                     });
-                    if (data?.result) break;
-                } catch (err) {
-                    lastError = err;
-                    console.warn(`[${pluginName}] Vision model '${modelName}' failed after 3 retries, attempting fallback...`);
+
+                    // If tool calls were triggered
+                    if (toolCalls && toolCalls.length > 0) {
+                        currentMessages.push({
+                            role: 'assistant',
+                            content: content || null,
+                            tool_calls: toolCalls
+                        });
+
+                        for (const toolCall of toolCalls) {
+                            let toolArgs = {};
+                            try {
+                                toolArgs = JSON.parse(toolCall.function.arguments || '{}');
+                            } catch (e) { }
+
+                            let toolResult = '';
+                            try {
+                                toolResult = await executeAiTool(toolCall.function.name, toolArgs);
+                            } catch (toolErr) {
+                                toolResult = JSON.stringify({ error: toolErr.message });
+                            }
+
+                            currentMessages.push({
+                                role: 'tool',
+                                tool_call_id: toolCall.id,
+                                content: toolResult
+                            });
+                        }
+                        // Continue loop for AI to produce final answer with tool outputs
+                        continue;
+                    }
+
+                    if (content) {
+                        finalAnswer = content;
+                        // Update session history with final turns
+                        history.push({ role: 'user', content: text });
+                        history.push({ role: 'assistant', content: finalAnswer });
+                        saveSessionHistory(sessionKey, history);
+                        break;
+                    }
                 }
+
+                if (finalAnswer) break;
+            } catch (err) {
+                console.warn(`[${pluginName}] Model '${model}' failed with SSE:`, err.message);
+                lastError = err;
             }
         }
 
-        // Step 2: Fallback to Text Model (or primary text if no image)
-        if (!data || !data.result) {
-            const textInput = imageUrl ? `[Lampiran Media: User melampirkan gambar/foto]\n\n[Pertanyaan/Pesan]: ${text}` : text;
-            let textModels = await getTextModels({ allowClaude, brandFilter });
-
-            // Fallback to general enabled text models if brand has no available models
-            if (textModels.length === 0) {
-                textModels = await getTextModels({ allowClaude });
-            }
-
-            for (const modelName of textModels) {
-                try {
-                    const payload = {
-                        text: textInput,
-                        model: modelName,
-                        prompt: prompt,
-                        session: session
-                    };
-                    data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, {
-                        retries: 3,
-                        timeout: 25000,
-                        delayMs: 5000
-                    });
-                    if (data?.result) break;
-                } catch (err) {
-                    lastError = err;
-                    console.warn(`[${pluginName}] Text model '${modelName}' failed after 3 retries, attempting fallback...`);
-                }
-            }
+        if (!finalAnswer) {
+            throw new Error(lastError?.message || 'Gagal mendapatkan respon dari AI.. (╥﹏╥)');
         }
 
-        // Step 3: If still failing, force refresh models cache from endpoint and retry once
-        if (!data || !data.result) {
-            console.warn(`[${pluginName}] All models failed, force-refreshing endpoint model list and retrying...`);
-            const freshTextModels = await getTextModels({ allowClaude, forceRefresh: true });
-            for (const modelName of freshTextModels.slice(0, 3)) {
-                try {
-                    const payload = {
-                        text: imageUrl ? `[Lampiran Media: User melampirkan gambar/foto]\n\n[Pertanyaan/Pesan]: ${text}` : text,
-                        model: modelName,
-                        prompt: prompt,
-                        session: session
-                    };
-                    data = await postAiWithRetry(`${config.API_RYZUMI}/api/ai/post/text-model`, payload, {
-                        retries: 3,
-                        timeout: 25000,
-                        delayMs: 5000
-                    });
-                    if (data?.result) break;
-                } catch (err) {
-                    lastError = err;
-                }
-            }
-        }
-
-        if (!data || !data.result) {
-            throw new Error(lastError?.message || data?.message || data?.error || 'Gagal mendapatkan respon dari AI.. (╥﹏╥)');
-        }
-
-        await sock.sendMessage(msgData.remoteJid, { text: cleanAiResponse(data.result) }, getQuoteOption(msgData, m));
+        const cleanedResponse = cleanAiResponse(finalAnswer);
+        await sock.sendMessage(msgData.remoteJid, { text: cleanedResponse }, getQuoteOption(msgData, m));
 
     } catch (error) {
         console.error(`${pluginName} Plugin Error:`, error);
