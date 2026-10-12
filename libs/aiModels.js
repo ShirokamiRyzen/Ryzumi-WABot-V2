@@ -78,13 +78,13 @@ export async function fetchOpenAiModels(forceRefresh = false) {
         console.warn('Failed to fetch OpenAI models from router:', err.message);
     }
 
-    return cachedOpenAiModels || [
-        'bandelbanget/auto',
-        'bandelbanget/deepseek-v4-pro',
-        'bandelbanget/deepseek-v4-flash',
-        'bandelbanget/glm-5.2',
-        'bandelbanget/kimi-k3'
-    ];
+return cachedOpenAiModels || [
+'auto',
+'deepseek-v4-pro',
+'deepseek-v4-flash',
+'glm-5.2',
+'kimi-k3'
+];
 }
 
 /**
@@ -93,9 +93,10 @@ export async function fetchOpenAiModels(forceRefresh = false) {
  * @returns {boolean}
  */
 export function isVisionModel(modelId) {
-    if (!modelId) return false;
-    const lower = modelId.toLowerCase();
-    return lower.includes('vision') || lower.includes('vl') || lower.includes('4v') || lower.includes('omni') || lower.includes('gemini') || lower.includes('claude') || lower.includes('gpt-5') || lower.includes('auto');
+if (!modelId) return false;
+const lower = modelId.toLowerCase();
+if (lower === 'auto' || lower === 'auto-debug') return false;
+return lower.includes('vision') || lower.includes('vl') || lower.includes('4v') || lower.includes('omni') || lower.includes('gemini') || lower.includes('claude') || lower.includes('gpt-5');
 }
 
 /**
@@ -140,10 +141,10 @@ export async function getVisionModels({ allowClaude = false, brandFilter = null,
         if (matched.length > 0) return matched;
     }
 
-    // Default fallback order
-    const priority = ['bandelbanget/deepseek-v4-flash-vision-exp', 'bandelbanget/auto'];
-    const rest = filtered.filter(m => !priority.includes(m));
-    return [...priority.filter(p => all.includes(p)), ...rest];
+// Default fallback order
+const priority = ['deepseek-v4-flash-vision-exp'];
+const rest = filtered.filter(m => !priority.includes(m));
+return [...priority.filter(p => filtered.includes(p)), ...rest];
 }
 
 /**
@@ -166,22 +167,22 @@ export async function getTextModels({ allowClaude = false, brandFilter = null, f
     }
 
     // Prioritize high-performance active models
-    const preferredOrder = [
-        'bandelbanget/auto',
-        'bandelbanget/deepseek-v4-pro',
-        'bandelbanget/deepseek-v4-flash',
-        'bandelbanget/glm-5.2',
-        'bandelbanget/kimi-k3',
-        'bandelbanget/mimo-v2.5-pro',
-        'bandelbanget/minimax-m3'
-    ];
+const preferredOrder = [
+'auto',
+'deepseek-v4-pro',
+'deepseek-v4-flash',
+'glm-5.2',
+'kimi-k3',
+'mimo-v2.5-pro',
+'minimax-m3'
+];
 
-    const sorted = [
-        ...preferredOrder.filter(p => filtered.includes(p)),
-        ...filtered.filter(m => !preferredOrder.includes(m))
-    ];
+const sorted = [
+...preferredOrder.filter(p => filtered.includes(p)),
+...filtered.filter(m => !preferredOrder.includes(m))
+];
 
-    return sorted.length > 0 ? sorted : ['bandelbanget/auto'];
+return sorted.length > 0 ? sorted : ['auto'];
 }
 
 /**
@@ -468,7 +469,7 @@ export async function executeAiRequest({
             : await getTextModels({ allowClaude, brandFilter });
 
         if (candidateModels.length === 0) {
-            candidateModels = ['bandelbanget/auto', 'bandelbanget/deepseek-v4-pro'];
+            candidateModels = ['auto', 'deepseek-v4-pro'];
         }
 
         let finalAnswer = '';
