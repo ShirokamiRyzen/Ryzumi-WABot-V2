@@ -1,7 +1,6 @@
 import axios from 'axios';
 import sharp from 'sharp';
 import config from '../config.js';
-import { ryzumiCDN } from './uploader.js';
 import { RYZUMI_AI_SYSTEM_PROMPT, cleanAiResponse } from './aiPrompt.js';
 import { searchDuckDuckGo, fetchWebPage } from './aiWebTools.js';
 import { getSessionHistory, saveSessionHistory } from './aiSessionManager.js';
@@ -11,33 +10,27 @@ let lastFetchTime = 0;
 const CACHE_TTL = 30000; // 30s cache
 
 /**
- * Compress an image buffer with sharp and upload it to Ryzumi CDN,
- * returning a publicly accessible HTTP URL for AI vision endpoints.
- * @param {Buffer} buffer 
- * @param {Object} options
- * @returns {Promise<string|null>}
- */
-export async function uploadCompressedImage(buffer, { maxDimension = 1024, quality = 80 } = {}) {
-    if (!buffer || !Buffer.isBuffer(buffer)) return null;
-    let uploadBuf = buffer;
-    try {
-        uploadBuf = await sharp(buffer)
-            .rotate()
-            .resize(maxDimension, maxDimension, { fit: 'inside', withoutEnlargement: true })
-            .jpeg({ quality, progressive: true })
-            .toBuffer();
-    } catch (err) {
-        console.warn('Image compression with sharp failed, uploading original buffer:', err.message);
-    }
-
-    try {
-        const cdnRes = await ryzumiCDN(uploadBuf);
-        const url = cdnRes?.url || cdnRes?.result?.url || (typeof cdnRes?.result === 'string' ? cdnRes.result : (Array.isArray(cdnRes?.result) ? cdnRes.result[0]?.url : null));
-        return url;
-    } catch (cdnErr) {
-        console.warn('Upload to Ryzumi CDN failed:', cdnErr.message);
-        return null;
-    }
+* Compress an image buffer with sharp and return it as a base64 data URI
+* suitable for OpenAI-compatible vision endpoints. Remote CDN URLs are not
+* reliably fetchable by the providers, so the image is inlined instead.
+* @param {Buffer} buffer
+* @param {Object} options
+* @returns {Promise<string|null>}
+*/
+export async function compressImageToDataUri(buffer, { maxDimension = 1024, quality = 80 } = {}) {
+if (!buffer || !Buffer.isBuffer(buffer)) return null;
+try {
+const out = await sharp(buffer)
+.rotate()
+.resize(maxDimension, maxDimension, { fit: 'inside', withoutEnlargement: true })
+.jpeg({ quality, progressive: true })
+.toBuffer();
+return `data:image/jpeg;base64,${out.toString('base64')}`;
+} catch (err) {
+console.warn('Image compression with sharp failed, using original buffer:', err.message);
+const mime = 'image/jpeg';
+return `data:${mime};base64,${buffer.toString('base64')}`;
+}
 }
 
 /**
@@ -414,7 +407,7 @@ export async function executeAiRequest({
             try {
                 const buffer = await msgData.downloadMedia();
                 if (buffer) {
-                    imageUrl = await uploadCompressedImage(buffer);
+                    imageUrl = await compressImageToDataUri(buffer);
                 }
             } catch (uploadErr) {
                 console.warn(`[${pluginName}] Image processing failed:`, uploadErr.message);

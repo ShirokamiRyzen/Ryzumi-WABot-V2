@@ -1,7 +1,7 @@
 import config from '../config.js';
 import { validatePlugin } from '../middlewares/validator.js';
 import { getAutoAiPrompt, cleanAiResponse } from './aiPrompt.js';
-import { getVisionModels, getTextModels, uploadCompressedImage, requestOpenAiSse, AI_WEB_TOOLS, executeAiTool } from './aiModels.js';
+import { getVisionModels, getTextModels, compressImageToDataUri, requestOpenAiSse, AI_WEB_TOOLS, executeAiTool } from './aiModels.js';
 import { getSessionHistory, saveSessionHistory } from './aiSessionManager.js';
 
 const FORBIDDEN_COMMANDS = ['eval', 'exec', 'delprem', 'addprem', 'backup', 'debug', 'enable', 'disable', 'on', 'off'];
@@ -132,7 +132,7 @@ export async function handleAutoAi(sock, m, msgData, user, group, setting, plugi
             try {
                 const buffer = await msgData.downloadMedia();
                 if (buffer) {
-                    imageUrl = await uploadCompressedImage(buffer);
+                    imageUrl = await compressImageToDataUri(buffer);
                 }
             } catch (err) {
                 console.warn('Auto AI image processing failed:', err.message);
