@@ -81,8 +81,30 @@ return cachedOpenAiModels || [
 }
 
 /**
+ * Get user-configured model priority list from .env (AI_AUTO_MODELS).
+ * These are attempted first, in the exact order defined, before any
+ * auto-discovered models.
+ * @returns {string[]}
+ */
+export function getEnvPriorityModels() {
+  return Array.isArray(config.AI_AUTO_MODELS) ? config.AI_AUTO_MODELS : [];
+}
+
+/**
+ * Prepend the env-defined priority list to a candidate model list,
+ * keeping order and removing duplicates.
+ * @param {string[]} candidates
+ * @returns {string[]}
+ */
+function withEnvPriority(candidates) {
+  const envPriority = getEnvPriorityModels();
+  if (envPriority.length === 0) return candidates;
+  return [...envPriority, ...candidates.filter(m => !envPriority.includes(m))];
+}
+
+/**
  * Check if a model is vision-capable based on name conventions
- * @param {string} modelId 
+ * @param {string} modelId
  * @returns {boolean}
  */
 export function isVisionModel(modelId) {
@@ -134,10 +156,10 @@ export async function getVisionModels({ allowClaude = false, brandFilter = null,
         if (matched.length > 0) return matched;
     }
 
-// Default fallback order
-const priority = ['deepseek-v4-flash-vision-exp'];
-const rest = filtered.filter(m => !priority.includes(m));
-return [...priority.filter(p => filtered.includes(p)), ...rest];
+  // Default fallback order
+  const priority = ['deepseek-v4-flash-vision-exp'];
+  const rest = filtered.filter(m => !priority.includes(m));
+  return withEnvPriority([...priority.filter(p => filtered.includes(p)), ...rest]);
 }
 
 /**
@@ -170,12 +192,14 @@ const preferredOrder = [
 'minimax-m3'
 ];
 
-const sorted = [
-...preferredOrder.filter(p => filtered.includes(p)),
-...filtered.filter(m => !preferredOrder.includes(m))
-];
+  const sorted = [
+    ...preferredOrder.filter(p => filtered.includes(p)),
+    ...filtered.filter(m => !preferredOrder.includes(m))
+  ];
 
-return sorted.length > 0 ? sorted : ['auto'];
+  const ordered = withEnvPriority(sorted);
+
+  return ordered.length > 0 ? ordered : ['auto'];
 }
 
 /**
