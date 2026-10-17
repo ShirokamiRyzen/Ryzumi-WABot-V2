@@ -209,8 +209,8 @@ export const AI_WEB_TOOLS = [
     {
         type: 'function',
         function: {
-            name: 'search_web',
-            description: 'Mencari informasi terkini, berita, artikel, atau referensi di internet menggunakan mesin pencari DuckDuckGo Lite. Gunakan tool ini saat butuh info terbaru atau hal spesifik yang tidak kamu ketahui.',
+ name: 'search_web',
+ description: 'Mencari informasi terkini, berita, artikel, atau referensi di internet menggunakan layanan pencarian web Neko-Router (DuckDuckGo). Gunakan tool ini saat butuh info terbaru atau hal spesifik yang tidak kamu ketahui.',
             parameters: {
                 type: 'object',
                 properties: {
@@ -226,8 +226,8 @@ export const AI_WEB_TOOLS = [
     {
         type: 'function',
         function: {
-            name: 'browse_web',
-            description: 'Membuka, menjelajahi, dan membaca isi halaman website, URL artikel, atau endpoint API (JSON, HTML, teks). Gunakan tool ini setelah mendapatkan URL dari pencarian atau jika user memberikan link web.',
+ name: 'browse_web',
+ description: 'Membuka, menjelajahi, dan membaca isi halaman website, URL artikel, atau endpoint API (JSON, HTML, teks) melalui layanan fetch Neko-Router. Gunakan tool ini setelah mendapatkan URL dari pencarian atau jika user memberikan link web.',
             parameters: {
                 type: 'object',
                 properties: {
