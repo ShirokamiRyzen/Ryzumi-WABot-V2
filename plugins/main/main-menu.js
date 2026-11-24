@@ -137,8 +137,8 @@ export default {
         // Custom extendedTextMessage link preview
         const content = {
             extendedTextMessage: {
-                text: menuText.trim() + `\n\n${config.SOC_WEBSITE}`,
-                matchedText: config.SOC_WEBSITE,
+                text: menuText.trim() + `\n\n${config.SOC_GITHUB}`,
+                matchedText: config.SOC_GITHUB,
                 title: config.BOT_NAME || 'Ryzumi Starlette',
                 description: 'Haloo, Apa Kabar Kak? 🌸✨',
                 previewType: 0,
