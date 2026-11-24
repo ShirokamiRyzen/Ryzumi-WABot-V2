@@ -4,9 +4,9 @@ export default {
     command: ['sticker', 's', 'stiker', 'sgif'],
     category: 'sticker',
     isRegistered: true,
-    description: 'Mengubah gambar, video, atau gif (maksimal 10 detik) menjadi stiker WhatsApp.',
+    description: 'Mengubah gambar, video, atau gif menjadi stiker WhatsApp (video otomatis dipotong hingga 10 detik).',
     async execute(sock, m, msgData, user) {
-        const { config, remoteJid, isQuoted, isQuotedMedia, isMedia, messageType, quotedMsg, msg, quotedType, quotedMime, mime } = msgData;
+        const { config, remoteJid, isQuoted, isQuotedMedia, isMedia, messageType, quotedType, quotedMime, mime } = msgData;
 
         try {
             const isTargetQuoted = isQuoted && isQuotedMedia;
@@ -16,7 +16,6 @@ export default {
                 return msgData.reply('Kirim atau balas gambar/video yang mau dijadiin stiker ya kak~ (˶˃ ᵕ ˂˶) .ᐟ.ᐟ');
             }
 
-            const targetMsg = isTargetQuoted ? quotedMsg : msg;
             const type = isTargetQuoted ? quotedType : messageType;
             const mediaMime = isTargetQuoted ? quotedMime : mime;
 
@@ -25,10 +24,6 @@ export default {
             }
 
             const isVideoLike = /video|gif/.test(mediaMime) || type === 'videoMessage';
-            const seconds = Number(targetMsg[type]?.seconds || 0);
-            if (isVideoLike && seconds > 10) {
-                return msgData.reply('Aduuh, durasi videonya kepanjangan kak! Maksimal 10 detik aja yaa~ (๑>ᴗ<๑) 💢');
-            }
 
             await msgData.react('⏳');
 
