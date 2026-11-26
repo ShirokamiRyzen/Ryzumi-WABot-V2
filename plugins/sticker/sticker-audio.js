@@ -177,7 +177,7 @@ async function toOggOpus(buffer, tempFiles) {
             '-fflags', '+discardcorrupt',
             '-i', inputFile,
             '-vn',
-            '-t', '10',
+            '-t', '25',
             '-ar', '16000',
             '-ac', '1',
             '-c:a', 'libopus',
@@ -209,7 +209,7 @@ async function toOggOpus(buffer, tempFiles) {
         ]);
         const parsed = Math.ceil(parseFloat(stdout.trim()));
         if (!Number.isNaN(parsed) && parsed > 0) {
-            seconds = Math.min(parsed, 10);
+            seconds = Math.min(parsed, 25);
         }
     } catch {
         seconds = 5;

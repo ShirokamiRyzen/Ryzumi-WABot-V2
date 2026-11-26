@@ -4,7 +4,7 @@ export default {
     command: ['sticker', 's', 'stiker', 'sgif'],
     category: 'sticker',
     isRegistered: true,
-    description: 'Mengubah gambar, video, atau gif menjadi stiker WhatsApp (video otomatis dipotong hingga 10 detik).',
+    description: 'Mengubah gambar, video, atau gif menjadi stiker WhatsApp (video otomatis dipotong hingga 25 detik).',
     async execute(sock, m, msgData, user) {
         const { config, remoteJid, isQuoted, isQuotedMedia, isMedia, messageType, quotedType, quotedMime, mime } = msgData;
 

@@ -76,7 +76,7 @@ async function videoToWebp(media, maxBytes = MAX_ANIMATED_WEBP_BYTES) {
                         '-vf', `fps=${preset.fps},scale=${preset.size}:${preset.size}:flags=lanczos:force_original_aspect_ratio=decrease,format=rgba,pad=${preset.size}:${preset.size}:(ow-iw)/2:(oh-ih)/2:color=#00000000`,
                         '-loop', '0',
                         '-ss', '00:00:00',
-                        '-t', '00:00:10',
+                        '-t', '00:00:25',
                         '-preset', 'default',
                         '-q:v', String(preset.quality),
                         '-compression_level', '4',
