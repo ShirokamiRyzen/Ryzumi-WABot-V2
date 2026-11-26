@@ -1,4 +1,4 @@
-import { makeWASocket, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion } from 'baileys';
+import { makeWASocket, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, Browsers } from 'baileys';
 import chalk from 'chalk';
 import pino from 'pino';
 import config from './config.js';
@@ -11,7 +11,7 @@ import fs from 'fs';
 import { startCronJobs } from './libs/cronjob.js';
 import Group from './databases/orm/Group.js';
 import { setGroupMetadata } from './libs/groupCache.js';
-import { cacheMessage } from './libs/messageCache.js';
+import { cacheMessage, getCachedMessage } from './libs/messageCache.js';
 import Setting from './databases/orm/Setting.js';
 
 
@@ -112,7 +112,7 @@ async function connectToWhatsApp() {
         auth: state,
         logger: pino({ level: 'silent' }),
         version: waVersion,
-        browser: ["macOS", "Safari", "20.0.00"],
+        browser: Browsers.android('13'),
         printQRInTerminal: false,
         markOnlineOnConnect: true,
         keepAliveIntervalMs: 30000,
@@ -121,6 +121,7 @@ async function connectToWhatsApp() {
         maxMsgRetryCount: 5,
         generateHighQualityLinkPreview: true,
         syncFullHistory: false,
+        getMessage: async (key) => getCachedMessage(key?.id)?.message || undefined,
     });
 
     sock.ev.on('creds.update', saveCreds);

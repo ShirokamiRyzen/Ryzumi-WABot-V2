@@ -146,10 +146,35 @@ export const extractMessageData = (m, sock) => {
             if (!targetMsg || !targetType) return null;
 
             const mediaType = targetType.replace('Message', '');
-            const stream = await import('baileys').then(mod => mod.downloadContentFromMessage(
-                targetMsg[targetType] || targetMsg,
-                mediaType === 'sticker' ? 'image' : mediaType
-            ));
+            const baileysType = mediaType === 'sticker' ? 'image' : mediaType;
+            const mediaObj = targetMsg[targetType] || targetMsg;
+            const { downloadContentFromMessage, DEF_MEDIA_HOST } = await import('baileys');
+
+            // Hindari bug host placeholder seperti a.whatsapp.net pada Baileys 7.x saat directPath tersedia
+            let opts = {};
+            if (mediaObj?.directPath && mediaObj?.url) {
+                try {
+                    const host = new URL(mediaObj.url).host;
+                    if (host === 'a.whatsapp.net') {
+                        opts = { host: DEF_MEDIA_HOST || 'mmg.whatsapp.net' };
+                    }
+                } catch {
+                    opts = { host: DEF_MEDIA_HOST || 'mmg.whatsapp.net' };
+                }
+            }
+
+            let stream;
+            try {
+                stream = await downloadContentFromMessage(mediaObj, baileysType, opts);
+            } catch (err) {
+                if (mediaObj?.directPath && !opts.host && /ENOTFOUND|EAI_AGAIN/i.test(err?.message || '')) {
+                    stream = await downloadContentFromMessage(mediaObj, baileysType, {
+                        host: DEF_MEDIA_HOST || 'mmg.whatsapp.net'
+                    });
+                } else {
+                    throw err;
+                }
+            }
 
             let buffer = Buffer.from([]);
             for await (const chunk of stream) {

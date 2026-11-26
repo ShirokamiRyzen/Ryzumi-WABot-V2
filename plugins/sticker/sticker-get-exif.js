@@ -1,6 +1,5 @@
 import { format } from 'util';
 import webpmux from 'node-webpmux';
-import { downloadMediaMessage } from 'baileys';
 
 export default {
     command: ['getexif', 'exif'],
@@ -18,16 +17,9 @@ export default {
         }
 
         try {
-            // Mengunduh stiker
-            const buffer = await downloadMediaMessage(
-                { message: msgData.contextInfo.quotedMessage },
-                'buffer',
-                {},
-                {
-                    logger: sock.logger,
-                    reuploadRequest: sock.updateMediaMessage
-                }
-            );
+            // Mengunduh stiker melalui helper terpusat messageAdapter
+            const buffer = await msgData.downloadMedia();
+            if (!buffer) throw new Error('Gagal mengunduh stikernya kak.. (╥﹏╥)');
 
             const img = new webpmux.Image();
             await img.load(buffer);
