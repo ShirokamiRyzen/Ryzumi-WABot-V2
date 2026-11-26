@@ -11,9 +11,16 @@ export default {
         }
 
         const { quotedType, quotedMsg } = msgData;
-        if (!/image|video/i.test(quotedType)) {
+        if (!/image|video|audio/i.test(quotedType)) {
             return sock.sendMessage(msgData.remoteJid, {
-                text: 'Aduuh, pesan yang kakak balas itu bukan gambar atau video lhooo~ (๑>ᴗ<๑)'
+                text: 'Aduuh, pesan yang kakak balas itu bukan gambar, video, atau audio lhooo~ (๑>ᴗ<๑)'
+            }, { quoted: m });
+        }
+
+        const mediaContent = quotedMsg?.[quotedType];
+        if (!mediaContent?.url && !mediaContent?.directPath) {
+            return sock.sendMessage(msgData.remoteJid, {
+                text: 'Maafin aku kak, data media pesan sekali lihatnya sudah disembunyikan WhatsApp dan tidak ada di cache bot (kemungkinan dikirim sebelum bot aktif).. coba kirim ulang pesannya ya kak! (╥﹏╥)'
             }, { quoted: m });
         }
 
@@ -22,13 +29,21 @@ export default {
             const buffer = await msgData.downloadMedia();
             if (!buffer) throw new Error('Gagal mendownload media kak.. (╥﹏╥)');
 
-            const caption = quotedMsg[quotedType]?.caption || '';
-            const mediaObj = quotedType.includes('image') ? { image: buffer } : { video: buffer };
+            const caption = mediaContent.caption || '';
+            let payload;
+            if (quotedType.includes('image')) {
+                payload = { image: buffer, caption };
+            } else if (quotedType.includes('video')) {
+                payload = { video: buffer, caption };
+            } else {
+                payload = {
+                    audio: buffer,
+                    mimetype: mediaContent.mimetype || 'audio/ogg; codecs=opus',
+                    ptt: !!mediaContent.ptt
+                };
+            }
 
-            await sock.sendMessage(msgData.remoteJid, {
-                ...mediaObj,
-                caption: caption
-            }, { quoted: m });
+            await sock.sendMessage(msgData.remoteJid, payload, { quoted: m });
         } catch (error) {
             console.error('RVO Error:', error);
             await sock.sendMessage(msgData.remoteJid, { react: { text: '❌', key: m.key } });

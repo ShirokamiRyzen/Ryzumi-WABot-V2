@@ -1,11 +1,23 @@
 export const unwrapMessage = (msg) => {
     if (!msg) return {};
     let unwrapped = msg;
-    if (unwrapped.ephemeralMessage) unwrapped = unwrapped.ephemeralMessage.message;
-    if (unwrapped.viewOnceMessage) unwrapped = unwrapped.viewOnceMessage.message;
-    if (unwrapped.viewOnceMessageV2) unwrapped = unwrapped.viewOnceMessageV2.message;
-    if (unwrapped.viewOnceMessageV2Extension) unwrapped = unwrapped.viewOnceMessageV2Extension.message;
-    if (unwrapped.documentWithCaptionMessage) unwrapped = unwrapped.documentWithCaptionMessage.message;
+    const wrappers = [
+        'ephemeralMessage',
+        'viewOnceMessage',
+        'viewOnceMessageV2',
+        'viewOnceMessageV2Extension',
+        'documentWithCaptionMessage',
+        'editedMessage'
+    ];
+
+    let depth = 0;
+    while (unwrapped && depth < 10) {
+        const wrapperKey = wrappers.find(key => unwrapped[key]?.message);
+        if (!wrapperKey) break;
+        unwrapped = unwrapped[wrapperKey].message;
+        depth++;
+    }
+
     return unwrapped || {};
 };
 

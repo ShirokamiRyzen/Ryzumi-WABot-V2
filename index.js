@@ -11,6 +11,7 @@ import fs from 'fs';
 import { startCronJobs } from './libs/cronjob.js';
 import Group from './databases/orm/Group.js';
 import { setGroupMetadata } from './libs/groupCache.js';
+import { cacheMessage } from './libs/messageCache.js';
 import Setting from './databases/orm/Setting.js';
 
 
@@ -168,6 +169,9 @@ async function connectToWhatsApp() {
 
         for (const m of messages) {
             if (!m.message) continue;
+
+            // Simpan pesan ke cache agar media yang di-strip saat reply (seperti view-once) tetap bisa diproses
+            cacheMessage(m);
 
             // Abaikan pesan yang dikirim sebelum bot dinyalakan (menghindari spam command offline)
             const msgTime = m.messageTimestamp ? (typeof m.messageTimestamp === 'number' ? m.messageTimestamp : Number(m.messageTimestamp)) : 0;

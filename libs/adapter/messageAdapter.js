@@ -1,6 +1,7 @@
 import { resolveLidToJid } from '../lid-resolver.js';
 import { unwrapMessage, getMessageType, getMessageContent } from './messageUnwrapper.js';
 import { getPP, sendAlbumMessage } from '../baileys-utils.js';
+import { getCachedMessage } from '../messageCache.js';
 import config from '../../config.js';
 import User from '../../databases/orm/User.js';
 import Group from '../../databases/orm/Group.js';
@@ -45,8 +46,26 @@ export const extractMessageData = (m, sock) => {
     const contextInfo = msg[messageType]?.contextInfo || {};
     const isQuoted = !!contextInfo.quotedMessage;
 
-    const quotedMsg = isQuoted ? unwrapMessage(contextInfo.quotedMessage) : null;
-    const quotedType = isQuoted ? getMessageType(quotedMsg) : '';
+    let quotedMsg = isQuoted ? unwrapMessage(contextInfo.quotedMessage) : null;
+    let quotedType = isQuoted ? getMessageType(quotedMsg) : '';
+
+    // Fallback ke messageCache jika quotedMessage kehilangan url/directPath (misal reply pesan view-once)
+    if (isQuoted && contextInfo.stanzaId) {
+        const quotedMediaObj = quotedMsg?.[quotedType];
+        const isStrippedMedia = !quotedMediaObj || (!quotedMediaObj.url && !quotedMediaObj.directPath);
+        if (isStrippedMedia) {
+            const cached = getCachedMessage(contextInfo.stanzaId);
+            if (cached?.message) {
+                const unwrappedCached = unwrapMessage(cached.message);
+                const cachedType = getMessageType(unwrappedCached);
+                if (cachedType && unwrappedCached[cachedType]) {
+                    quotedMsg = unwrappedCached;
+                    quotedType = cachedType;
+                }
+            }
+        }
+    }
+
     const quotedContent = isQuoted ? getMessageContent(quotedMsg, quotedType) : '';
 
     const isMedia = /imageMessage|videoMessage|audioMessage|stickerMessage|documentMessage/.test(messageType);
