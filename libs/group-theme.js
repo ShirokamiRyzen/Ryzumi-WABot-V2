@@ -550,6 +550,38 @@ function encodeChatThemeSetting(setting, w) {
     return w;
 }
 
+function decodeChatThemeSetting(reader, length) {
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const out = {};
+    while (reader.pos < end) {
+        const tag = reader.uint32();
+        const field = tag >>> 3;
+        const wire = tag & 7;
+        if (field === 1 && wire === 0) out.settingTimestampMs = Number(reader.int64());
+        else if (field === 2 && wire === 0) out.clearTheme = reader.bool();
+        else if (field === 3 && wire === 2) out.colorSchemeId = reader.string();
+        else if (field === 13 && wire === 2) {
+            const subEnd = reader.pos + reader.uint32();
+            const ci = {};
+            while (reader.pos < subEnd) {
+                const st = reader.uint32();
+                const sf = st >>> 3;
+                const sw = st & 7;
+                if (sf === 1 && sw === 2) ci.directPath = reader.string();
+                else if (sf === 2 && sw === 2) ci.mediaKeyLen = reader.bytes().length;
+                else if (sf === 3 && sw === 2) ci.fileEncSha256Len = reader.bytes().length;
+                else if (sf === 4 && sw === 2) ci.fileSha256Len = reader.bytes().length;
+                else if (sf === 5 && sw === 5) ci.dimLevel = reader.float();
+                else reader.skipType(sw);
+            }
+            out.customImage = ci;
+        } else {
+            reader.skipType(wire);
+        }
+    }
+    return out;
+}
+
 export function ensureChatThemeProtoPatch() {
     const ProtocolMessage = proto?.Message?.ProtocolMessage;
     if (!ProtocolMessage || ProtocolMessage[PROTO_PATCH_SYMBOL]) return;
@@ -562,8 +594,34 @@ export function ensureChatThemeProtoPatch() {
         }
         return w;
     };
+
+    const originalDecode = ProtocolMessage.decode.bind(ProtocolMessage);
+    ProtocolMessage.decode = function patchedDecode(reader, length) {
+        const startPos = reader.pos;
+        const end = length === undefined ? reader.len : reader.pos + length;
+        const msg = originalDecode(reader, length);
+        if (msg && msg.type === PROTOCOL_TYPE_CHAT_THEME_SETTING) {
+            const savedPos = reader.pos;
+            reader.pos = startPos;
+            while (reader.pos < end) {
+                const tag = reader.uint32();
+                const field = tag >>> 3;
+                const wire = tag & 7;
+                if (field === 30 && wire === 2) {
+                    msg.chatThemeSetting = decodeChatThemeSetting(reader, reader.uint32());
+                } else {
+                    reader.skipType(wire);
+                }
+            }
+            reader.pos = savedPos;
+        }
+        return msg;
+    };
+
     ProtocolMessage[PROTO_PATCH_SYMBOL] = true;
 }
+
+ensureChatThemeProtoPatch();
 
 async function uploadCustomWallpaper(sock, imageBuffer) {
     if (typeof sock?.waUploadToServer !== 'function') {
@@ -583,12 +641,19 @@ async function uploadCustomWallpaper(sock, imageBuffer) {
         throw new ThemeError('UPLOAD_FAILED', 'Upload wallpaper ke server WhatsApp tidak lengkap.');
     }
 
+    console.log('[group-theme] Uploaded custom wallpaper:', {
+        directPath: img.directPath,
+        mediaKeyLen: img.mediaKey?.length,
+        fileEncSha256Len: img.fileEncSha256?.length,
+        fileSha256Len: img.fileSha256?.length,
+        bytes: imageBuffer.length,
+    });
+
     return {
         directPath: img.directPath,
         mediaKey: img.mediaKey,
         fileEncSha256: img.fileEncSha256,
         fileSha256: img.fileSha256,
-        dimLevel: 0,
     };
 }
 

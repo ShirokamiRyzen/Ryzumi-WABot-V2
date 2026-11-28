@@ -183,6 +183,9 @@ async function connectToWhatsApp() {
             const msgData = extractMessageData(m, sock);
 
             // Abaikan pesan sistem/metadata/protokol agar tidak mengganggu log dan eksekusi
+            if (m.message?.protocolMessage?.type === 34) {
+                console.log('[group-theme] Incoming CHAT_THEME_SETTING:', JSON.stringify(m.message.protocolMessage.chatThemeSetting || {}));
+            }
             const protocolTypes = ['messageContextInfo', 'senderKeyDistributionMessage', 'protocolMessage', 'peerDataOperationRequestMessage'];
             if (protocolTypes.includes(msgData.messageType)) continue;
 
