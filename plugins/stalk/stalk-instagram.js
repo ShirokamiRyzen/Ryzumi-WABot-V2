@@ -7,7 +7,7 @@ const formatNum = (num) => {
 };
 
 export default {
-    command: ['stalkig', 'stalkinstagram', 'igstalk', 'instagramstalk', 'cekig'],
+    command: ['igstalk', 'stalkinstagram', 'stalkig', 'instagramstalk', 'cekig'],
     category: 'stalk',
     isRegistered: true,
     limit: 1,

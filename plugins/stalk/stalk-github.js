@@ -13,7 +13,7 @@ const formatDate = (dateStr) => {
 };
 
 export default {
-    command: ['stalkgh', 'stalkgithub', 'ghstalk', 'githubstalk', 'cekgh'],
+    command: ['ghstalk', 'stalkgithub', 'stalkgh', 'githubstalk', 'cekgh'],
     category: 'stalk',
     isRegistered: true,
     limit: 1,
