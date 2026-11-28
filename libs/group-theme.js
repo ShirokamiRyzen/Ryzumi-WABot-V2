@@ -657,7 +657,10 @@ async function uploadCustomWallpaper(sock, imageBuffer) {
     }
 
     if (!directPath) {
-        throw new ThemeError('UPLOAD_FAILED', 'Upload wallpaper ke server WhatsApp gagal mendapatkan directPath.');
+        throw new ThemeError(
+            'UPLOAD_FAILED',
+            'Upload wallpaper ke server WhatsApp gagal mendapatkan directPath.'
+        );
     }
 
     return {
