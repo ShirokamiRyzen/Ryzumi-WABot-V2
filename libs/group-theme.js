@@ -1,6 +1,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import crypto from 'crypto';
 import axios from 'axios';
 import sharp from 'sharp';
 import ffmpeg from 'fluent-ffmpeg';
@@ -13,6 +14,8 @@ import {
     encodeSignedDeviceIdentity,
     isHostedLidUser,
     isHostedPnUser,
+    getBinaryNodeChild,
+    getBinaryNodeChildren,
 } from 'baileys';
 import { resolveLidToJid } from './lid-resolver.js';
 
@@ -568,14 +571,18 @@ function decodeChatThemeSetting(reader, length) {
                 const sf = st >>> 3;
                 const sw = st & 7;
                 if (sf === 1 && sw === 2) ci.directPath = reader.string();
-                else if (sf === 2 && sw === 2) ci.mediaKeyLen = reader.bytes().length;
-                else if (sf === 3 && sw === 2) ci.fileEncSha256Len = reader.bytes().length;
-                else if (sf === 4 && sw === 2) ci.fileSha256Len = reader.bytes().length;
+                else if (sf === 2 && sw === 2) ci.mediaKeyB64 = Buffer.from(reader.bytes()).toString('base64');
+                else if (sf === 3 && sw === 2) ci.fileEncSha256B64 = Buffer.from(reader.bytes()).toString('base64');
+                else if (sf === 4 && sw === 2) ci.fileSha256B64 = Buffer.from(reader.bytes()).toString('base64');
                 else if (sf === 5 && sw === 5) ci.dimLevel = reader.float();
-                else reader.skipType(sw);
+                else {
+                    ci[`unknown_${sf}_w${sw}`] = true;
+                    reader.skipType(sw);
+                }
             }
             out.customImage = ci;
         } else {
+            out[`field_${field}_w${wire}`] = true;
             reader.skipType(wire);
         }
     }
@@ -623,7 +630,125 @@ export function ensureChatThemeProtoPatch() {
 
 ensureChatThemeProtoPatch();
 
+function encryptWallpaperMedia(plainBuffer, hkdfInfo = 'WhatsApp Image Keys') {
+    const mediaKey = crypto.randomBytes(32);
+    const expanded = Buffer.from(
+        crypto.hkdfSync('sha256', mediaKey, Buffer.alloc(0), Buffer.from(hkdfInfo), 112)
+    );
+    const iv = expanded.subarray(0, 16);
+    const cipherKey = expanded.subarray(16, 48);
+    const macKey = expanded.subarray(48, 80);
+
+    const cipher = crypto.createCipheriv('aes-256-cbc', cipherKey, iv);
+    const ciphertext = Buffer.concat([cipher.update(plainBuffer), cipher.final()]);
+    const mac = crypto
+        .createHmac('sha256', macKey)
+        .update(iv)
+        .update(ciphertext)
+        .digest()
+        .subarray(0, 10);
+
+    const encBuffer = Buffer.concat([ciphertext, mac]);
+    const fileSha256 = crypto.createHash('sha256').update(plainBuffer).digest();
+    const fileEncSha256 = crypto.createHash('sha256').update(encBuffer).digest();
+
+    return { encBuffer, mediaKey, fileSha256, fileEncSha256 };
+}
+
+function toUploadToken(buf) {
+    return buf.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+async function fetchMediaConnWithBuckets(sock) {
+    const result = await sock.query({
+        tag: 'iq',
+        attrs: {
+            type: 'set',
+            xmlns: 'w:m',
+            to: 's.whatsapp.net',
+        },
+        content: [{ tag: 'media_conn', attrs: {} }],
+    });
+
+    const mediaConnNode = getBinaryNodeChild(result, 'media_conn');
+    if (!mediaConnNode) throw new Error('media_conn tidak ditemukan');
+
+    const hostNodes = getBinaryNodeChildren(mediaConnNode, 'host');
+    const hosts = hostNodes.map((h) => {
+        const uploadNode = getBinaryNodeChild(h, 'upload');
+        const buckets = uploadNode && Array.isArray(uploadNode.content)
+            ? uploadNode.content.map((c) => c.tag).filter(Boolean)
+            : [];
+        return {
+            hostname: h.attrs.hostname,
+            type: h.attrs.type,
+            buckets,
+        };
+    });
+
+    return {
+        auth: mediaConnNode.attrs.auth,
+        hosts,
+    };
+}
+
 async function uploadCustomWallpaper(sock, imageBuffer) {
+    if (typeof sock?.query === 'function') {
+        try {
+            const mediaConn = await fetchMediaConnWithBuckets(sock);
+            const allBuckets = [...new Set(mediaConn.hosts.flatMap((h) => h.buckets))];
+            console.log('[group-theme] media_conn upload buckets:', allBuckets);
+
+            const discovered = allBuckets.filter((b) => /theme|wallpaper/i.test(b));
+            const candidates = [
+                ...discovered,
+                'chat-theme-wallpaper',
+                'chat_theme_wallpaper',
+                'wallpaper',
+                'chat-wallpaper',
+                'chat-theme',
+            ];
+            const uniqueCandidates = [...new Set(candidates)];
+
+            const { encBuffer, mediaKey, fileSha256, fileEncSha256 } =
+                encryptWallpaperMedia(imageBuffer, 'WhatsApp Image Keys');
+            const token = toUploadToken(fileEncSha256);
+            const auth = encodeURIComponent(mediaConn.auth);
+
+            for (const bucket of uniqueCandidates) {
+                for (const host of mediaConn.hosts) {
+                    if (!host.hostname) continue;
+                    const url = `https://${host.hostname}/mms/${bucket}/${token}?auth=${auth}&token=${token}`;
+                    try {
+                        const res = await axios.post(url, encBuffer, {
+                            headers: {
+                                'Content-Type': 'application/octet-stream',
+                                Origin: 'https://web.whatsapp.com',
+                            },
+                            timeout: 30000,
+                            maxBodyLength: Infinity,
+                            maxContentLength: Infinity,
+                            validateStatus: () => true,
+                        });
+                        if (res.status === 200 && (res.data?.direct_path || res.data?.url)) {
+                            console.log('[group-theme] Uploaded wallpaper via bucket:', bucket, res.data.direct_path);
+                            return {
+                                directPath: res.data.direct_path,
+                                mediaKey,
+                                fileEncSha256,
+                                fileSha256,
+                            };
+                        }
+                    } catch {
+                        // Try next host/bucket
+                    }
+                }
+            }
+        } catch (err) {
+            console.error('[group-theme] Bucket upload fallback:', err.message);
+        }
+    }
+
     if (typeof sock?.waUploadToServer !== 'function') {
         throw new ThemeError(
             'UNSUPPORTED_TRANSPORT',
@@ -640,14 +765,6 @@ async function uploadCustomWallpaper(sock, imageBuffer) {
     if (!img?.directPath || !img?.mediaKey || !img?.fileEncSha256 || !img?.fileSha256) {
         throw new ThemeError('UPLOAD_FAILED', 'Upload wallpaper ke server WhatsApp tidak lengkap.');
     }
-
-    console.log('[group-theme] Uploaded custom wallpaper:', {
-        directPath: img.directPath,
-        mediaKeyLen: img.mediaKey?.length,
-        fileEncSha256Len: img.fileEncSha256?.length,
-        fileSha256Len: img.fileSha256?.length,
-        bytes: imageBuffer.length,
-    });
 
     return {
         directPath: img.directPath,
@@ -851,20 +968,6 @@ export async function setThemeGroup(sock, groupJid, content = {}, options = {}) 
     const messageId = generateMessageIDV2(sock?.user?.id);
     const ackPromise = waitForMessageAck(sock, messageId, 10000);
 
-    console.log('[group-theme] Sending media/chat_theme update:', {
-        groupJid,
-        messageId,
-        clearTheme: Boolean(chatThemeSetting.clearTheme),
-        colorSchemeId: chatThemeSetting.colorSchemeId || null,
-        wallpaperType: chatThemeSetting.solidColor
-            ? 'solidColor'
-            : chatThemeSetting.customImage
-            ? 'customImage'
-            : chatThemeSetting.defaultWallpaper
-            ? 'defaultWallpaper'
-            : null,
-    });
-
     try {
         const sentId = await relayGroupThemeStanza(sock, groupJid, protocolPayload, {
             messageId,
@@ -872,8 +975,6 @@ export async function setThemeGroup(sock, groupJid, content = {}, options = {}) 
         });
 
         const ack = await ackPromise;
-        console.log('[group-theme] Server ack:', ack ? ack.attrs : 'timeout/no-ack');
-
         if (ack?.attrs?.error) {
             throw new ThemeError(
                 'WA_ACK_ERROR',
