@@ -674,17 +674,13 @@ async function fetchMediaConnWithBuckets(sock) {
     if (!mediaConnNode) throw new Error('media_conn tidak ditemukan');
 
     const hostNodes = getBinaryNodeChildren(mediaConnNode, 'host');
-    const hosts = hostNodes.map((h) => {
-        const uploadNode = getBinaryNodeChild(h, 'upload');
-        const buckets = uploadNode && Array.isArray(uploadNode.content)
-            ? uploadNode.content.map((c) => c.tag).filter(Boolean)
-            : [];
-        return {
-            hostname: h.attrs.hostname,
-            type: h.attrs.type,
-            buckets,
-        };
-    });
+    const hosts = hostNodes.map((h) => ({
+        hostname: h.attrs.hostname,
+        type: h.attrs.type,
+        children: Array.isArray(h.content)
+            ? h.content.map((c) => ({ tag: c.tag, attrs: c.attrs, sub: Array.isArray(c.content) ? c.content.map((s) => s.tag) : [] }))
+            : [],
+    }));
 
     return {
         auth: mediaConnNode.attrs.auth,
@@ -692,56 +688,72 @@ async function fetchMediaConnWithBuckets(sock) {
     };
 }
 
+const WALLPAPER_BUCKET_CANDIDATES = [
+    'chat_theme',
+    'chat-theme',
+    'chat_theme_wallpaper',
+    'chat-theme-wallpaper',
+    'wallpaper',
+    'chat_wallpaper',
+    'chat-wallpaper',
+    'theme_wallpaper',
+    'theme-wallpaper',
+    'custom_wallpaper',
+    'custom-wallpaper',
+    'theme',
+    'background',
+    'chat_background',
+    'chat-background',
+];
+
 async function uploadCustomWallpaper(sock, imageBuffer) {
     if (typeof sock?.query === 'function') {
         try {
             const mediaConn = await fetchMediaConnWithBuckets(sock);
-            const allBuckets = [...new Set(mediaConn.hosts.flatMap((h) => h.buckets))];
-            console.log('[group-theme] media_conn upload buckets:', allBuckets);
+            const primaryHost = mediaConn.hosts.find((h) => h.hostname);
+            console.log('[group-theme] media_conn primary host:', JSON.stringify(primaryHost));
 
-            const discovered = allBuckets.filter((b) => /theme|wallpaper/i.test(b));
-            const candidates = [
-                ...discovered,
-                'chat-theme-wallpaper',
-                'chat_theme_wallpaper',
-                'wallpaper',
-                'chat-wallpaper',
-                'chat-theme',
-            ];
-            const uniqueCandidates = [...new Set(candidates)];
+            if (primaryHost) {
+                const { encBuffer, mediaKey, fileSha256, fileEncSha256 } =
+                    encryptWallpaperMedia(imageBuffer, 'WhatsApp Image Keys');
+                const token = toUploadToken(fileEncSha256);
+                const auth = encodeURIComponent(mediaConn.auth);
 
-            const { encBuffer, mediaKey, fileSha256, fileEncSha256 } =
-                encryptWallpaperMedia(imageBuffer, 'WhatsApp Image Keys');
-            const token = toUploadToken(fileEncSha256);
-            const auth = encodeURIComponent(mediaConn.auth);
-
-            for (const bucket of uniqueCandidates) {
-                for (const host of mediaConn.hosts) {
-                    if (!host.hostname) continue;
-                    const url = `https://${host.hostname}/mms/${bucket}/${token}?auth=${auth}&token=${token}`;
-                    try {
-                        const res = await axios.post(url, encBuffer, {
-                            headers: {
-                                'Content-Type': 'application/octet-stream',
-                                Origin: 'https://web.whatsapp.com',
-                            },
-                            timeout: 30000,
-                            maxBodyLength: Infinity,
-                            maxContentLength: Infinity,
-                            validateStatus: () => true,
-                        });
-                        if (res.status === 200 && (res.data?.direct_path || res.data?.url)) {
-                            console.log('[group-theme] Uploaded wallpaper via bucket:', bucket, res.data.direct_path);
-                            return {
-                                directPath: res.data.direct_path,
-                                mediaKey,
-                                fileEncSha256,
-                                fileSha256,
-                            };
+                const results = await Promise.all(
+                    WALLPAPER_BUCKET_CANDIDATES.map(async (bucket) => {
+                        const url = `https://${primaryHost.hostname}/mms/${bucket}/${token}?auth=${auth}&token=${token}`;
+                        try {
+                            const res = await axios.post(url, encBuffer, {
+                                headers: {
+                                    'Content-Type': 'application/octet-stream',
+                                    Origin: 'https://web.whatsapp.com',
+                                },
+                                timeout: 15000,
+                                maxBodyLength: Infinity,
+                                maxContentLength: Infinity,
+                                validateStatus: () => true,
+                            });
+                            return { bucket, status: res.status, data: res.data };
+                        } catch (e) {
+                            return { bucket, status: 0, error: e.message };
                         }
-                    } catch {
-                        // Try next host/bucket
-                    }
+                    })
+                );
+
+                console.log(
+                    '[group-theme] bucket probe:',
+                    results.map((r) => `${r.bucket}:${r.status}${r.data?.direct_path ? '->' + r.data.direct_path.slice(0, 24) : ''}`).join(', ')
+                );
+
+                const hit = results.find((r) => r.status === 200 && (r.data?.direct_path || r.data?.url));
+                if (hit) {
+                    console.log('[group-theme] Uploaded wallpaper via bucket:', hit.bucket, hit.data.direct_path);
+                    return {
+                        directPath: hit.data.direct_path,
+                        mediaKey,
+                        fileEncSha256,
+                        fileSha256,
+                    };
                 }
             }
         } catch (err) {
