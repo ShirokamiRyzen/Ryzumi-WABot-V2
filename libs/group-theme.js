@@ -5,7 +5,15 @@ import axios from 'axios';
 import sharp from 'sharp';
 import ffmpeg from 'fluent-ffmpeg';
 import { fileTypeFromBuffer } from 'file-type';
-import { proto, prepareWAMessageMedia, generateMessageIDV2 } from 'baileys';
+import {
+    proto,
+    prepareWAMessageMedia,
+    generateMessageIDV2,
+    encodeWAMessage,
+    encodeSignedDeviceIdentity,
+    isHostedLidUser,
+    isHostedPnUser,
+} from 'baileys';
 import { resolveLidToJid } from './lid-resolver.js';
 
 const MAX_WALLPAPER_BYTES = 10 * 1024 * 1024; // 10 MB
@@ -615,13 +623,128 @@ function waitForMessageAck(sock, messageId, timeoutMs = 10000) {
     });
 }
 
+async function relayGroupThemeStanza(sock, groupJid, protocolPayload, { messageId, metadata }) {
+    const canSendRaw =
+        typeof sock?.sendNode === 'function' &&
+        typeof sock?.signalRepository?.encryptGroupMessage === 'function' &&
+        typeof sock?.getUSyncDevices === 'function' &&
+        typeof sock?.assertSessions === 'function' &&
+        typeof sock?.createParticipantNodes === 'function' &&
+        sock?.authState?.keys;
+
+    if (!canSendRaw) {
+        return sock.relayMessage(groupJid, protocolPayload, {
+            messageId,
+            useCachedGroupMetadata: Boolean(metadata),
+        });
+    }
+
+    const groupData = metadata || (await sock.groupMetadata(groupJid));
+    const participantsList = Array.isArray(groupData?.participants)
+        ? groupData.participants.map((p) => p.id)
+        : [];
+
+    const senderKeyResult = await sock.authState.keys.get('sender-key-memory', [groupJid]);
+    const senderKeyMap = senderKeyResult?.[groupJid] || {};
+
+    const devices = await sock.getUSyncDevices(participantsList, true, false);
+    const bytes = encodeWAMessage(protocolPayload);
+
+    const meId = sock.authState?.creds?.me?.id || sock.user?.id;
+    const meLid = sock.authState?.creds?.me?.lid || sock.user?.lid;
+    const groupAddressingMode = groupData?.addressingMode || 'lid';
+    const groupSenderIdentity = groupAddressingMode === 'lid' && meLid ? meLid : meId;
+
+    const { ciphertext, senderKeyDistributionMessage } =
+        await sock.signalRepository.encryptGroupMessage({
+            group: groupJid,
+            data: bytes,
+            meId: groupSenderIdentity,
+        });
+
+    const extraAttrs = { mediatype: 'chat_theme' };
+    const senderKeyRecipients = [];
+    for (const device of devices) {
+        const deviceJid = device.jid;
+        if (
+            !senderKeyMap[deviceJid] &&
+            !isHostedLidUser(deviceJid) &&
+            !isHostedPnUser(deviceJid) &&
+            device.device !== 99
+        ) {
+            senderKeyRecipients.push(deviceJid);
+            senderKeyMap[deviceJid] = true;
+        }
+    }
+
+    const binaryNodeContent = [];
+    let shouldIncludeDeviceIdentity = false;
+
+    if (senderKeyRecipients.length > 0) {
+        const senderKeyMsg = {
+            senderKeyDistributionMessage: {
+                axolotlSenderKeyDistributionMessage: senderKeyDistributionMessage,
+                groupId: groupJid,
+            },
+        };
+        await sock.assertSessions(senderKeyRecipients);
+        const result = await sock.createParticipantNodes(
+            senderKeyRecipients,
+            senderKeyMsg,
+            extraAttrs
+        );
+        shouldIncludeDeviceIdentity = Boolean(result.shouldIncludeDeviceIdentity);
+        if (result.nodes?.length) {
+            binaryNodeContent.push({
+                tag: 'participants',
+                attrs: {},
+                content: result.nodes,
+            });
+        }
+    }
+
+    binaryNodeContent.push({
+        tag: 'enc',
+        attrs: { v: '2', type: 'skmsg', ...extraAttrs },
+        content: ciphertext,
+    });
+
+    if (shouldIncludeDeviceIdentity && sock.authState?.creds?.account) {
+        binaryNodeContent.push({
+            tag: 'device-identity',
+            attrs: {},
+            content: encodeSignedDeviceIdentity(sock.authState.creds.account, true),
+        });
+    }
+
+    await sock.authState.keys.set({ 'sender-key-memory': { [groupJid]: senderKeyMap } });
+
+    const attrs = {
+        id: messageId,
+        to: groupJid,
+        type: 'media',
+        addressing_mode: groupAddressingMode,
+    };
+    if (groupData?.ephemeralDuration && groupData.ephemeralDuration > 0) {
+        attrs.expiration = groupData.ephemeralDuration.toString();
+    }
+
+    await sock.sendNode({
+        tag: 'message',
+        attrs,
+        content: binaryNodeContent,
+    });
+
+    return messageId;
+}
+
 export async function setThemeGroup(sock, groupJid, content = {}, options = {}) {
     if (!groupJid || !groupJid.endsWith('@g.us')) {
         throw new ThemeError('INVALID_GROUP', 'Target JID bukan grup WhatsApp yang valid.');
     }
 
-    if (typeof sock?.relayMessage !== 'function') {
-        throw new ThemeError('UNSUPPORTED_TRANSPORT', 'Socket tidak mendukung relayMessage.');
+    if (typeof sock?.relayMessage !== 'function' && typeof sock?.sendNode !== 'function') {
+        throw new ThemeError('UNSUPPORTED_TRANSPORT', 'Socket tidak mendukung pengiriman tema.');
     }
 
     ensureChatThemeProtoPatch();
@@ -655,6 +778,7 @@ export async function setThemeGroup(sock, groupJid, content = {}, options = {}) 
     const protocolPayload = {
         protocolMessage: {
             type: PROTOCOL_TYPE_CHAT_THEME_SETTING,
+            timestampMs: nowMs,
             chatThemeSetting,
         },
     };
@@ -662,7 +786,7 @@ export async function setThemeGroup(sock, groupJid, content = {}, options = {}) 
     const messageId = generateMessageIDV2(sock?.user?.id);
     const ackPromise = waitForMessageAck(sock, messageId, 10000);
 
-    console.log('[group-theme] Sending theme update:', {
+    console.log('[group-theme] Sending media/chat_theme update:', {
         groupJid,
         messageId,
         clearTheme: Boolean(chatThemeSetting.clearTheme),
@@ -677,9 +801,9 @@ export async function setThemeGroup(sock, groupJid, content = {}, options = {}) 
     });
 
     try {
-        const sentId = await sock.relayMessage(groupJid, protocolPayload, {
+        const sentId = await relayGroupThemeStanza(sock, groupJid, protocolPayload, {
             messageId,
-            useCachedGroupMetadata: Boolean(options.metadata),
+            metadata: options.metadata,
         });
 
         const ack = await ackPromise;
