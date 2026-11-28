@@ -1,23 +1,26 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import crypto from 'crypto';
 import axios from 'axios';
 import sharp from 'sharp';
 import ffmpeg from 'fluent-ffmpeg';
 import { fileTypeFromBuffer } from 'file-type';
 import {
     proto,
-    prepareWAMessageMedia,
+    encryptedStream,
+    MEDIA_PATH_MAP,
+    MEDIA_HKDF_KEY_MAPPING,
     generateMessageIDV2,
     encodeWAMessage,
     encodeSignedDeviceIdentity,
     isHostedLidUser,
     isHostedPnUser,
-    getBinaryNodeChild,
-    getBinaryNodeChildren,
 } from 'baileys';
 import { resolveLidToJid } from './lid-resolver.js';
+
+const CHAT_WALLPAPER_MEDIA_TYPE = 'chat-wallpaper-image';
+MEDIA_PATH_MAP[CHAT_WALLPAPER_MEDIA_TYPE] = '/mms/chat-wallpaper-image';
+MEDIA_HKDF_KEY_MAPPING[CHAT_WALLPAPER_MEDIA_TYPE] = 'Chat Wallpaper';
 
 const MAX_WALLPAPER_BYTES = 10 * 1024 * 1024; // 10 MB
 const PROTOCOL_TYPE_CHAT_THEME_SETTING = 34;
@@ -638,21 +641,31 @@ async function uploadCustomWallpaper(sock, imageBuffer) {
         );
     }
 
-    const uploaded = await prepareWAMessageMedia(
-        { image: imageBuffer },
-        { upload: sock.waUploadToServer }
-    );
+    const upload = await encryptedStream(imageBuffer, CHAT_WALLPAPER_MEDIA_TYPE, {
+        logger: sock.logger,
+    });
 
-    const img = uploaded?.imageMessage;
-    if (!img?.directPath || !img?.mediaKey || !img?.fileEncSha256 || !img?.fileSha256) {
-        throw new ThemeError('UPLOAD_FAILED', 'Upload wallpaper ke server WhatsApp tidak lengkap.');
+    let directPath;
+    try {
+        const uploaded = await sock.waUploadToServer(upload.encFilePath, {
+            mediaType: CHAT_WALLPAPER_MEDIA_TYPE,
+            fileEncSha256B64: upload.fileEncSha256.toString('base64'),
+        });
+        directPath = uploaded?.directPath;
+    } finally {
+        await fs.promises.unlink(upload.encFilePath).catch(() => undefined);
+    }
+
+    if (!directPath) {
+        throw new ThemeError('UPLOAD_FAILED', 'Upload wallpaper ke server WhatsApp gagal mendapatkan directPath.');
     }
 
     return {
-        directPath: img.directPath,
-        mediaKey: img.mediaKey,
-        fileEncSha256: img.fileEncSha256,
-        fileSha256: img.fileSha256,
+        directPath,
+        mediaKey: upload.mediaKey,
+        fileEncSha256: upload.fileEncSha256,
+        fileSha256: upload.fileSha256,
+        dimLevel: 0,
     };
 }
 

@@ -183,15 +183,6 @@ async function connectToWhatsApp() {
             const msgData = extractMessageData(m, sock);
 
             // Abaikan pesan sistem/metadata/protokol agar tidak mengganggu log dan eksekusi
-            if (m.message?.protocolMessage?.type === 34) {
-                console.log('[group-theme] INCOMING CHAT_THEME_SETTING:', JSON.stringify({
-                    from: m.key?.remoteJid,
-                    participant: m.key?.participant,
-                    id: m.key?.id,
-                    timestampMs: m.message.protocolMessage.timestampMs,
-                    chatThemeSetting: m.message.protocolMessage.chatThemeSetting,
-                }, null, 2));
-            }
             const protocolTypes = ['messageContextInfo', 'senderKeyDistributionMessage', 'protocolMessage', 'peerDataOperationRequestMessage'];
             if (protocolTypes.includes(msgData.messageType)) continue;
 
