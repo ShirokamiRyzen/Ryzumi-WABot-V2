@@ -5,7 +5,7 @@ import axios from 'axios';
 import sharp from 'sharp';
 import ffmpeg from 'fluent-ffmpeg';
 import { fileTypeFromBuffer } from 'file-type';
-import { proto, prepareWAMessageMedia } from 'baileys';
+import { proto, prepareWAMessageMedia, generateMessageIDV2 } from 'baileys';
 import { resolveLidToJid } from './lid-resolver.js';
 
 const MAX_WALLPAPER_BYTES = 10 * 1024 * 1024; // 10 MB
@@ -584,6 +584,37 @@ async function uploadCustomWallpaper(sock, imageBuffer) {
     };
 }
 
+function waitForMessageAck(sock, messageId, timeoutMs = 10000) {
+    if (!sock?.ws || typeof sock.ws.on !== 'function') {
+        return Promise.resolve(null);
+    }
+
+    return new Promise((resolve) => {
+        let settled = false;
+        const onAck = (node) => {
+            if (node?.attrs?.id !== messageId) return;
+            cleanup();
+            resolve(node);
+        };
+        const cleanup = () => {
+            if (settled) return;
+            settled = true;
+            clearTimeout(timer);
+            if (typeof sock.ws.off === 'function') {
+                sock.ws.off('CB:ack,class:message', onAck);
+            } else if (typeof sock.ws.removeListener === 'function') {
+                sock.ws.removeListener('CB:ack,class:message', onAck);
+            }
+        };
+        const timer = setTimeout(() => {
+            cleanup();
+            resolve(null);
+        }, timeoutMs);
+
+        sock.ws.on('CB:ack,class:message', onAck);
+    });
+}
+
 export async function setThemeGroup(sock, groupJid, content = {}, options = {}) {
     if (!groupJid || !groupJid.endsWith('@g.us')) {
         throw new ThemeError('INVALID_GROUP', 'Target JID bukan grup WhatsApp yang valid.');
@@ -628,17 +659,45 @@ export async function setThemeGroup(sock, groupJid, content = {}, options = {}) 
         },
     };
 
+    const messageId = generateMessageIDV2(sock?.user?.id);
+    const ackPromise = waitForMessageAck(sock, messageId, 10000);
+
+    console.log('[group-theme] Sending theme update:', {
+        groupJid,
+        messageId,
+        clearTheme: Boolean(chatThemeSetting.clearTheme),
+        colorSchemeId: chatThemeSetting.colorSchemeId || null,
+        wallpaperType: chatThemeSetting.solidColor
+            ? 'solidColor'
+            : chatThemeSetting.customImage
+            ? 'customImage'
+            : chatThemeSetting.defaultWallpaper
+            ? 'defaultWallpaper'
+            : null,
+    });
+
     try {
-        const msgId = await sock.relayMessage(groupJid, protocolPayload, {
-            additionalAttributes: {
-                type: 'media',
-                mediatype: 'chat_theme',
-            },
+        const sentId = await sock.relayMessage(groupJid, protocolPayload, {
+            messageId,
             useCachedGroupMetadata: Boolean(options.metadata),
         });
-        if (msgId) acceptedMessageIds.push(msgId);
-        return { messageIds: acceptedMessageIds, chatThemeSetting };
+
+        const ack = await ackPromise;
+        console.log('[group-theme] Server ack:', ack ? ack.attrs : 'timeout/no-ack');
+
+        if (ack?.attrs?.error) {
+            throw new ThemeError(
+                'WA_ACK_ERROR',
+                `Server WhatsApp menolak perubahan tema (error ${ack.attrs.error}).`,
+                { acceptedMessageIds }
+            );
+        }
+
+        if (sentId) acceptedMessageIds.push(sentId);
+        return { messageIds: acceptedMessageIds, chatThemeSetting, ack: ack?.attrs || null };
     } catch (err) {
+        if (err instanceof ThemeError) throw err;
+        console.error('[group-theme] Relay error:', err);
         throw new ThemeError(
             'RELAY_FAILED',
             `Gagal mengirim perubahan tema grup ke WhatsApp: ${err.message}`,
